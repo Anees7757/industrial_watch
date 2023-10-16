@@ -3,8 +3,8 @@ import 'package:industrial_watch/views/screens/admin/production/batch/productDet
 import 'package:provider/provider.dart';
 
 import '../../../../../view-models/admin/production/production_viewmodel.dart';
-import '../../../../../widgets/custom_appbar.dart';
-import '../../../../../widgets/custom_textfield.dart';
+import '../../../../widgets/custom_appbar.dart';
+import '../../../../widgets/custom_textfield.dart';
 
 class BatchDetailsScreen extends StatefulWidget {
   Map<String, dynamic> batch;

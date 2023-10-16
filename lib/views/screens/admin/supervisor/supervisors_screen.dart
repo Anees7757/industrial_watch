@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../view-models/admin/supervisor/supervisorsView_viewmodel.dart';
-import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_dialogbox.dart';
-import '../../../../widgets/custom_textfield.dart';
+import '../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_dialogbox.dart';
+import '../../../widgets/custom_textfield.dart';
 
 class SupervisorScreen extends StatefulWidget {
   const SupervisorScreen({super.key});

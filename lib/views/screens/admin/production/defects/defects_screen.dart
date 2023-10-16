@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../widgets/custom_appbar.dart';
+import '../../../../widgets/custom_appbar.dart';
 import 'imagesDetail_screen.dart';
 
 class DefectsScreen extends StatefulWidget {

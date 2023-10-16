@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view-models/admin/admin_viewmodel.dart';
-import '../../../widgets/custom_Button.dart';
-import '../../../widgets/logout_dialog.dart';
+import '../../widgets/custom_Button.dart';
+import '../../widgets/logout_dialog.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_textfield.dart';
+import '../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_textfield.dart';
 
 class EditSectionScreen extends StatefulWidget {
   String section;

@@ -3,7 +3,7 @@ import 'package:industrial_watch/views/screens/admin/section/sectionDetails_scre
 import 'package:provider/provider.dart';
 
 import '../../../../view-models/admin/section/sections_viewmodel.dart';
-import '../../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_Button.dart';
 
 class SectionsScreen extends StatefulWidget {
   const SectionsScreen({super.key});

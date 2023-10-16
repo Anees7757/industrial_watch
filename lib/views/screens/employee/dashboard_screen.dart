@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view-models/employee/employee_viewmodel.dart';
-import '../../../widgets/logout_dialog.dart';
+import '../../widgets/logout_dialog.dart';
 
 class EmployeeDashboard extends StatefulWidget {
   const EmployeeDashboard({super.key});

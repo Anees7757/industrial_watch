@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/custom_snackbar.dart';
+import '../../views/widgets/custom_snackbar.dart';
 
 class LoginViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();

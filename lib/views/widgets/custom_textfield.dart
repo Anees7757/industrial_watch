@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../view-models/admin/production/production_viewmodel.dart';
+import '../../view-models/admin/production/production_viewmodel.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -11,15 +11,15 @@ class CustomTextField extends StatefulWidget {
   final TextInputType textInputType;
   final bool isFocus;
 
-  CustomTextField({
-    Key? key,
-    required this.controller,
-    required this.hintText,
-    required this.action,
-    this.obscureText = true,
-    required this.textInputType,
-    required this.isFocus
-  }) : super(key: key);
+  CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      required this.action,
+      this.obscureText = true,
+      required this.textInputType,
+      required this.isFocus})
+      : super(key: key);
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -42,9 +42,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText:
                 (widget.hintText == 'Password') ? widget.obscureText : false,
             decoration: InputDecoration(
-              prefixIcon: (widget.hintText == 'Search' || widget.hintText == 'Search ')
-                  ? const Icon(Icons.search, color: Color(0xFF575757))
-                  : null,
+              prefixIcon:
+                  (widget.hintText == 'Search' || widget.hintText == 'Search ')
+                      ? const Icon(Icons.search, color: Color(0xFF575757))
+                      : null,
               hintText: widget.hintText,
               border: InputBorder.none,
               filled: true,
@@ -67,11 +68,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       },
                     )
                   : ((widget.hintText == 'Search' &&
-                          Provider.of<ProductionViewModel>(context,
-                                  listen: false)
-                              .searchController
-                              .text
-                              .isNotEmpty) || widget.hintText == 'Search ')
+                              Provider.of<ProductionViewModel>(context,
+                                      listen: false)
+                                  .searchController
+                                  .text
+                                  .isNotEmpty) ||
+                          widget.hintText == 'Search ')
                       ? IconButton(
                           splashRadius: 20,
                           icon: const Icon(

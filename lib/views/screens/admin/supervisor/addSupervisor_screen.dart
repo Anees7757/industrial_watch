@@ -4,8 +4,8 @@ import 'package:multiselect/multiselect.dart';
 
 import '../../../../view-models/admin/section/sections_viewmodel.dart';
 import '../../../../view-models/admin/supervisor/addSupervisor_viewmodel.dart';
-import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_textfield.dart';
+import '../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_textfield.dart';
 
 class AddSupervisorScreen extends StatefulWidget {
   const AddSupervisorScreen({super.key});

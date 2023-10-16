@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../widgets/custom_snackbar.dart';
+import '../../../views/widgets/custom_snackbar.dart';
 import '../section/addSection_viewmodel.dart';
 
 class RulesViewModel extends ChangeNotifier {

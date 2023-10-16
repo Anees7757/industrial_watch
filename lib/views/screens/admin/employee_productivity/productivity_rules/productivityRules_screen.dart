@@ -3,9 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../../../../../view-models/admin/employee_productivity/rules_viewmodel.dart';
 import '../../../../../view-models/admin/section/addSection_viewmodel.dart';
-import '../../../../../widgets/custom_Button.dart';
-import '../../../../../widgets/custom_dialogbox.dart';
-import '../../../../../widgets/custom_textfield.dart';
+import '../../../../widgets/custom_Button.dart';
+import '../../../../widgets/custom_dialogbox.dart';
+import '../../../../widgets/custom_textfield.dart';
+
 
 
 class ProductivityRulesScreen extends StatefulWidget {

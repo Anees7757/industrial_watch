@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../view-models/admin/production/production_viewmodel.dart';
-import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_appbar.dart';
-import '../../../../widgets/custom_textfield.dart';
+import '../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_appbar.dart';
+import '../../../widgets/custom_textfield.dart';
 import 'batch/createBatch_screen.dart';
 
 class ProductionScreen extends StatefulWidget {

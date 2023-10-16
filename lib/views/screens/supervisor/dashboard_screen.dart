@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view-models/supervisor/supervisor_viewmodel.dart';
-import '../../../widgets/custom_Button.dart';
-import '../../../widgets/logout_dialog.dart';
+import '../../widgets/custom_Button.dart';
+import '../../widgets/logout_dialog.dart';
 
 class SupervisorDashboard extends StatefulWidget {
   const SupervisorDashboard({super.key});

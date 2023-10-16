@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../widgets/custom_Button.dart';
-import '../../../../../widgets/custom_appbar.dart';
-import '../../../../../widgets/custom_productCom.dart';
+import '../../../../widgets/custom_Button.dart';
+import '../../../../widgets/custom_appbar.dart';
+import '../../../../widgets/custom_productCom.dart';
 import '../defects/defects_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {

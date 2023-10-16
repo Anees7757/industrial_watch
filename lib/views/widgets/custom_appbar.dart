@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../view-models/admin/production/createBatch_viewModel.dart';
+import '../../view-models/admin/production/createBatch_viewModel.dart';
 
 AppBar customAppBar(BuildContext context, String title) {
   return AppBar(

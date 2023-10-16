@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:industrial_watch/view-models/admin/production/production_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import '../../../widgets/custom_dialogbox.dart';
-import '../../../widgets/custom_textfield.dart';
+import '../../../views/widgets/custom_dialogbox.dart';
+import '../../../views/widgets/custom_textfield.dart';
 
 class CreateBatchViewModel extends ChangeNotifier {
   TextEditingController batchController = TextEditingController();
