@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget customButton(BuildContext context, String btnTitle, double height, double width){
+Widget customButton(
+    BuildContext context, String btnTitle, double height, double width) {
   return Container(
     height: height,
     width: width,
@@ -14,8 +15,7 @@ Widget customButton(BuildContext context, String btnTitle, double height, double
             blurRadius: 7,
             offset: const Offset(0, 3),
           ),
-        ]
-     ),
+        ]),
     child: Center(
       child: Text(
         btnTitle,

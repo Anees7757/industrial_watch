@@ -28,6 +28,7 @@ class _AddSupervisorScreenState extends State<AddSupervisorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Add Supervisor'),
@@ -45,17 +46,17 @@ class _AddSupervisorScreenState extends State<AddSupervisorScreen> {
             ),
             const SizedBox(height: 10),
             CustomTextField(
-                controller: _addSupervisorViewModel!.usernameController,
-                hintText: 'Username',
-                action: TextInputAction.next,
+              controller: _addSupervisorViewModel!.usernameController,
+              hintText: 'Username',
+              action: TextInputAction.next,
               textInputType: TextInputType.text,
               isFocus: false,
             ),
             const SizedBox(height: 10),
             CustomTextField(
-                controller: _addSupervisorViewModel!.passwordController,
-                hintText: 'Password ',
-                action: TextInputAction.next,
+              controller: _addSupervisorViewModel!.passwordController,
+              hintText: 'Password ',
+              action: TextInputAction.next,
               textInputType: TextInputType.text,
               isFocus: false,
             ),

@@ -6,10 +6,10 @@ class LoginViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Future<void> login(BuildContext context) async {
+  login(BuildContext context) {
     if (emailController.text.trim() != "" &&
         passwordController.text.trim() != "") {
-      String email = emailController.text;
+      String email = emailController.text.trim();
 
       switch (email) {
         case 'admin':
@@ -39,6 +39,7 @@ class LoginViewModel extends ChangeNotifier {
     } else {
       customSnackBar(context, 'All field must be filled');
     }
+
     notifyListeners();
   }
 }

@@ -8,6 +8,7 @@ import '../../../views/widgets/custom_textfield.dart';
 class CreateBatchViewModel extends ChangeNotifier {
   TextEditingController batchController = TextEditingController();
   TextEditingController toleranceController = TextEditingController();
+  TextEditingController anglesController = TextEditingController();
 
   //dialog Controllers
   TextEditingController materialNameController = TextEditingController();
@@ -53,7 +54,7 @@ class CreateBatchViewModel extends ChangeNotifier {
   }
 
   void showDialog(context) {
-    customDialogBox(context, dialogData(), () {
+    customDialogBox(context, dialogData(context), () {
       Navigator.pop(context);
     }, () {
       rawMaterials.add({
@@ -71,7 +72,18 @@ class CreateBatchViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget dialogData() {
+  List<String> units = [
+    'G',
+    'KG',
+  ];
+
+  String selectedQuantityUnit = '';
+  String selectedQuantityPerItemUnit = '';
+
+  Widget dialogData(context) {
+    selectedQuantityUnit = units.first;
+    selectedQuantityPerItemUnit = units.first;
+
     return Column(
       children: [
         const Text('Add Material',
@@ -86,23 +98,63 @@ class CreateBatchViewModel extends ChangeNotifier {
           hintText: 'Name',
           action: TextInputAction.next,
           textInputType: TextInputType.text,
-          isFocus: true,
-        ),
-        const SizedBox(height: 10),
-        CustomTextField(
-            controller: quantityController,
-            hintText: 'Quantity',
-            action: TextInputAction.next,
-            textInputType: TextInputType.number,
           isFocus: false,
         ),
         const SizedBox(height: 10),
-        CustomTextField(
-            controller: quantityPerItemController,
-            hintText: 'Quantity per item',
-            action: TextInputAction.done,
-            textInputType: TextInputType.number,
-          isFocus: false,
+        Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            CustomTextField(
+              controller: quantityController,
+              hintText: 'Quantity',
+              action: TextInputAction.next,
+              textInputType: TextInputType.number,
+              isFocus: false,
+            ),
+            DropdownButton(
+              value: selectedQuantityUnit,
+              items: units
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (v) {
+                selectedQuantityUnit = v!;
+                notifyListeners();
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            CustomTextField(
+              controller: quantityPerItemController,
+              hintText: 'Quantity per item',
+              action: TextInputAction.done,
+              textInputType: TextInputType.number,
+              isFocus: false,
+            ),
+            DropdownButton(
+              value: selectedQuantityPerItemUnit,
+              items: units
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (v) {
+                selectedQuantityPerItemUnit = v!;
+                notifyListeners();
+              },
+            ),
+          ],
         ),
         const SizedBox(height: 25),
       ],

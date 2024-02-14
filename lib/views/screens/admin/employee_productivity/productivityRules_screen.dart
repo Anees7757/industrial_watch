@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../view-models/admin/employee_productivity/rules_viewmodel.dart';
-import '../../../../../view-models/admin/section/addSection_viewmodel.dart';
-import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_dialogbox.dart';
-import '../../../../widgets/custom_textfield.dart';
-
-
+import '../../../../view-models/admin/employee_productivity/rules_viewmodel.dart';
+import '../../../../view-models/admin/section/addSection_viewmodel.dart';
+import '../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_dialogbox.dart';
+import '../../../widgets/custom_textfield.dart';
 
 class ProductivityRulesScreen extends StatefulWidget {
   const ProductivityRulesScreen({super.key});
@@ -42,10 +40,7 @@ class _ProductivityRulesScreenState extends State<ProductivityRulesScreen> {
         automaticallyImplyLeading: true,
         title: const Text('Productivity Rules'),
       ),
-      body:
-
-
-      Container(
+      body: Container(
         margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
         child: _addSectionViewModel!.rules.isEmpty
             ? const Center(

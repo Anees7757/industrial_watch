@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../widgets/custom_Button.dart';
+import '../../../widgets/custom_gridview.dart';
 
 class EmployeeProductivityScreen extends StatefulWidget {
   const EmployeeProductivityScreen({super.key});
@@ -13,69 +14,70 @@ class EmployeeProductivityScreen extends StatefulWidget {
 
 class _EmployeeProductivityScreenState
     extends State<EmployeeProductivityScreen> {
+  final List<String> titles = [
+    'Productivity Rules',
+    'Add Employee',
+    'Employees Record',
+    'Employees Ranking'
+  ];
+
+  final List<String> icons = [
+    'assets/icons/rules.png',
+    'assets/icons/add_employee.png',
+    'assets/icons/employee_record.png',
+    'assets/icons/employee_rankings.png'
+  ];
+
+  final List<String> navigationVal = [
+    'rules',
+    'add_employee',
+    'employee_record',
+    'employee_ranking'
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final Widget svg = SvgPicture.asset(
+      'assets/images/dashboard_box.svg',
+      alignment: Alignment.topCenter,
+      // colorFilter: ColorFilter.mode(
+      //   Theme.of(context).primaryColor,
+      //   BlendMode.lighten,
+      // ),
+    );
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light),
     );
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: const Color(0xFFF7F7F7),
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Employee Productivity'),
         elevation: 0.0,
+        backgroundColor: Colors.transparent,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          const SizedBox(height: 50),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      topRight: Radius.circular(50)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 7,
-                      offset: const Offset(0, -3),
-                    ),
-                  ]),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // Provider.of<AdminViewModel>(context, listen: false)
-                      //     .navigate(context, 'section');
-                      Navigator.of(context).pushNamed('/rules');
-                    },
-                    child: customButton(
-                        context, 'Productivity Rules', 78.29, double.infinity),
-                  ),
-                  const SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () {
-                      // Provider.of<AdminViewModel>(context, listen: false)
-                      //     .navigate(context, 'supervisor');
-                    },
-                    child: customButton(
-                        context, 'Add Employee', 78.29, double.infinity),
-                  ),
-                  const SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: () {
-                      // Provider.of<AdminViewModel>(context, listen: false)
-                      //     .navigate(context, 'productivity');
-                    },
-                    child: customButton(
-                        context, 'Employee Record', 78.29, double.infinity),
-                  ),
-                ],
-              ),
+          svg,
+          Container(
+            margin: const EdgeInsets.only(top: 130),
+            padding: const EdgeInsets.only(top: 10),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF7F7F7),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Column(
+              children: [
+                CustomGridView(
+                  titles: titles,
+                  navigationVal: navigationVal,
+                  icons: icons,
+                  dashboard: 'productivity',
+                ),
+              ],
             ),
           ),
         ],

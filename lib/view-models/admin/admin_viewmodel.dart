@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AdminViewModel extends ChangeNotifier {
-
   void logout(context) {
     Navigator.of(context).pushReplacementNamed('/login');
     notifyListeners();

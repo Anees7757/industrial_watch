@@ -32,7 +32,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       borderRadius: BorderRadius.circular(20),
       child: Container(
         height: 56.79,
-        color: const Color(0xFFDDDDDD).withOpacity(0.5),
+        color: widget.hintText == 'Search Employee'
+            ? Colors.white
+            : const Color(0xFFDDDDDD).withOpacity(0.5),
         child: Center(
           child: TextField(
             autofocus: widget.isFocus,
@@ -42,10 +44,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText:
                 (widget.hintText == 'Password') ? widget.obscureText : false,
             decoration: InputDecoration(
-              prefixIcon:
-                  (widget.hintText == 'Search' || widget.hintText == 'Search ')
-                      ? const Icon(Icons.search, color: Color(0xFF575757))
-                      : null,
+              prefixIcon: (widget.hintText.contains('Search'))
+                  ? const Icon(Icons.search, color: Color(0xFF575757))
+                  : null,
               hintText: widget.hintText,
               border: InputBorder.none,
               filled: true,

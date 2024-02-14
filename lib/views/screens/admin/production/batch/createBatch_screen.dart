@@ -18,12 +18,11 @@ class _CreateBatchScreenState extends State<CreateBatchScreen> {
   Widget build(BuildContext context) {
     return Consumer<CreateBatchViewModel>(
         builder: (context, dataProvider, child) {
-      return WillPopScope(
-        onWillPop: () async {
+      return PopScope(
+        onPopInvoked: (pop) async {
           dataProvider.batchController.clear();
           dataProvider.toleranceController.clear();
           dataProvider.rawMaterials.clear();
-          return true;
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -36,6 +35,14 @@ class _CreateBatchScreenState extends State<CreateBatchScreen> {
                 CustomTextField(
                   controller: dataProvider.batchController,
                   hintText: 'Batch#',
+                  action: TextInputAction.next,
+                  textInputType: TextInputType.number,
+                  isFocus: true,
+                ),
+                const SizedBox(height: 8),
+                CustomTextField(
+                  controller: dataProvider.anglesController,
+                  hintText: 'No. of angles',
                   action: TextInputAction.next,
                   textInputType: TextInputType.number,
                   isFocus: true,

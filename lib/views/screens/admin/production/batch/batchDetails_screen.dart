@@ -1,139 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:industrial_watch/views/screens/admin/production/batch/productDetails_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:industrial_watch/views/screens/admin/production/batch/products_screen.dart';
 
-import '../../../../../view-models/admin/production/production_viewmodel.dart';
+import '../../../../widgets/custom_Button.dart';
 import '../../../../widgets/custom_appbar.dart';
-import '../../../../widgets/custom_textfield.dart';
+import '../../../../widgets/custom_productCom.dart';
+import '../defects/defects_screen.dart';
 
-class BatchDetailsScreen extends StatefulWidget {
-  Map<String, dynamic> batch;
+class BatchDetailScreen extends StatefulWidget {
+  String? batchNo;
 
-  BatchDetailsScreen({super.key, required this.batch});
+  BatchDetailScreen({super.key, required this.batchNo});
 
   @override
-  State<BatchDetailsScreen> createState() => _BatchDetailsScreenState();
+  State<BatchDetailScreen> createState() => _BatchDetailScreenState();
 }
 
-class _BatchDetailsScreenState extends State<BatchDetailsScreen> {
+class _BatchDetailScreenState extends State<BatchDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: customAppBar(context, widget.batch.keys.first),
-      body: Consumer<ProductionViewModel>(
-        builder: (context, dataProvider, child) {
-          return Container(
-            margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-            child: Column(
+      appBar: customAppBar(context, widget.batchNo!),
+      body: Container(
+        margin: const EdgeInsets.fromLTRB(40, 30, 40, 0),
+        child: Column(
+          children: [
+            customProductCom('Product Name', 'Disc'),
+            const SizedBox(height: 15),
+            customProductCom('Expected Yield', '98%'),
+            const SizedBox(height: 15),
+            customProductCom('Output Yield', '70%'),
+            const SizedBox(height: 50),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomTextField(
-                  controller: dataProvider.searchController,
-                  hintText: 'Search ',
-                  action: TextInputAction.search,
-                  textInputType: TextInputType.number,
-                  isFocus: false,
-                ),
-                const SizedBox(height: 10),
-                widget.batch.values.isEmpty
-                    ? const Center(
-                        child: Text('No Product'),
-                      )
-                    : dataProvider.filteredBatches.isEmpty
-                        ? Expanded(
-                            child: ListView.builder(
-                              itemCount:
-                                  widget.batch.values.elementAt(0).length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  children: [
-                                    ListTile(
-                                      title: Text(
-                                          widget.batch.values
-                                              .elementAt(0)[index],
-                                          overflow: TextOverflow.visible,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                      trailing: const Icon(
-                                          Icons.arrow_forward_ios_rounded),
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProductDetailScreen(
-                                                    batchNo:
-                                                        widget.batch.keys.first,
-                                                    productNo: widget
-                                                        .batch.values
-                                                        .elementAt(0)[index]),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    (index !=
-                                            widget.batch.values
-                                                    .elementAt(0)
-                                                    .length -
-                                                1)
-                                        ? const Divider(
-                                            height: 5,
-                                            thickness: 1,
-                                            color: Color(0xFFBFBFBF),
-                                          )
-                                        : const SizedBox(),
-                                  ],
-                                );
-                              },
-                            ),
-                          )
-                        : Expanded(
-                            child: ListView.builder(
-                              itemCount:
-                                  widget.batch.values.elementAt(0).length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  children: [
-                                    ListTile(
-                                      title: Text(
-                                          widget.batch.values
-                                              .elementAt(0)[index],
-                                          overflow: TextOverflow.visible,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                          )),
-                                      trailing: const Icon(
-                                          Icons.arrow_forward_ios_rounded),
-                                      onTap: () {
-                                        // Navigator.of(context).push(
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) => SectionDetailsScreen(
-                                        //       section: _sectionsViewModel!.sections[index],
-                                        //     ),
-                                        //   ),
-                                        // );
-                                      },
-                                    ),
-                                    (index !=
-                                            widget.batch.values
-                                                    .elementAt(0)
-                                                    .length -
-                                                1)
-                                        ? const Divider(
-                                            height: 5,
-                                            thickness: 1,
-                                            color: Color(0xFFBFBFBF),
-                                          )
-                                        : const SizedBox(),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
+                Text('Formula',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+                SizedBox(width: 5),
+                Text('per item',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic)),
               ],
             ),
-          );
-        },
+            DataTable(
+              columns: const [
+                DataColumn(
+                  label: Text('#'),
+                ),
+                DataColumn(
+                  label: Text('Material'),
+                ),
+                DataColumn(
+                  label: Text('Quantity'),
+                ),
+              ],
+              rows: const [
+                DataRow(cells: [
+                  DataCell(Text('1')),
+                  DataCell(Text('Iron')),
+                  DataCell(Text('500 G')),
+                ]),
+                DataRow(cells: [
+                  DataCell(Text('2')),
+                  DataCell(Text('Copper')),
+                  DataCell(Text('90 G')),
+                ])
+              ],
+            ),
+          ],
+        ),
+      ),
+      bottomSheet: Container(
+        height: 100,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Center(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProductsScreen(
+                    batchNo: widget.batchNo!,
+                  ),
+                ),
+              );
+            },
+            child: customButton(context, 'Defects', 56.79, double.infinity),
+          ),
+        ),
       ),
     );
   }

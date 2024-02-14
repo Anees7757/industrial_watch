@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/views/screens/admin/production/batch/batchDetails_screen.dart';
+import 'package:industrial_watch/views/screens/admin/production/defects/defects_screen.dart';
 
-import '../../../views/screens/admin/production/batch/batchDetails_screen.dart';
+import '../../../views/screens/admin/production/batch/products_screen.dart';
 
 class ProductionViewModel extends ChangeNotifier {
   TextEditingController searchController = TextEditingController();
@@ -38,9 +40,9 @@ class ProductionViewModel extends ChangeNotifier {
   }
 
   navigate(BuildContext context, String key) {
-    Map<String, dynamic> batch = {key: batches[key]};
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => BatchDetailsScreen(batch: batch)));
+      builder: (context) => BatchDetailScreen(batchNo: key),
+    ));
     notifyListeners();
   }
 

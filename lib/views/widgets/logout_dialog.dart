@@ -23,14 +23,14 @@ Future logoutDialogBox(BuildContext context, void Function() primaryBtn) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  OutlinedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ),
+                  TextButton(
+                    // style: ButtonStyle(
+                    //   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    //     RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(20.0),
+                    //     ),
+                    //   ),
+                    // ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
