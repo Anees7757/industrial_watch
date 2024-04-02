@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:industrial_watch/views/widgets/custom_dialogbox.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view-models/auth/login_viewmodel.dart';
@@ -35,23 +36,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 const Text("An AI based monitoring system"),
                 const SizedBox(height: 150),
-                Consumer<LoginViewModel>(
-                    builder: (context, viewModel, child) {
+                Consumer<LoginViewModel>(builder: (context, viewModel, child) {
                   return CustomTextField(
-                      controller: viewModel.emailController,
-                      hintText: 'Username/Email',
-                      action: TextInputAction.next,
+                    controller: viewModel.usernameController,
+                    hintText: 'Username/Email',
+                    action: TextInputAction.next,
                     textInputType: TextInputType.text,
                     isFocus: false,
                   );
                 }),
                 const SizedBox(height: 10),
-                Consumer<LoginViewModel>(
-                    builder: (context, viewModel, child) {
+                Consumer<LoginViewModel>(builder: (context, viewModel, child) {
                   return CustomTextField(
-                      controller: viewModel.passwordController,
-                      hintText: 'Password',
-                      action: TextInputAction.done,
+                    controller: viewModel.passwordController,
+                    hintText: 'Password',
+                    action: TextInputAction.done,
                     textInputType: TextInputType.text,
                     isFocus: false,
                   );

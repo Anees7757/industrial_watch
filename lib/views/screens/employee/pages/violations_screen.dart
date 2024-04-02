@@ -33,7 +33,7 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
             radius: 18,
             backgroundColor: Colors.blue.shade300,
             child: Text(
-              employees[2].name[0].toUpperCase(),
+              userData['name'].toString()[0].toUpperCase(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

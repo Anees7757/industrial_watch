@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:industrial_watch/global/global.dart';
+import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
+import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:industrial_watch/views/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,9 +43,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
   ];
 
   @override
-  void dispose() {
-    Provider.of<AdminViewModel>(context, listen: false);
-    super.dispose();
+  void initState() {
+    String? userDataString = DataSharedPrefrences.getUser();
+    if (userDataString.isNotEmpty) {
+      userData = jsonDecode(userDataString);
+    }
+    super.initState();
   }
 
   @override
@@ -86,17 +94,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
             textDirection: TextDirection.ltr,
             children: [
               svg,
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 40),
-                    Text('Welcome,',
+                    const SizedBox(height: 40),
+                    const Text('Welcome,',
                         style: TextStyle(fontSize: 16, color: Colors.white)),
-                    SizedBox(height: 5),
-                    Text('Muhammad Ali',
-                        style: TextStyle(
+                    const SizedBox(height: 5),
+                    Text(userData['name'].toString().capitalize(),
+                        style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                             color: Colors.white)),

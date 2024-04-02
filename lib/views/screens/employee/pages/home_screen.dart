@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../../global/global.dart';
+import '../../../../utils/shared_prefs/shared_prefs.dart';
 
 class EmployeeHomeScreen extends StatefulWidget {
   const EmployeeHomeScreen({super.key});
@@ -12,17 +16,26 @@ class EmployeeHomeScreen extends StatefulWidget {
 
 class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
   @override
+  void initState() {
+    String? userDataString = DataSharedPrefrences.getUser();
+    if (userDataString != null && userDataString.isNotEmpty) {
+      userData = jsonDecode(userDataString);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(employees[2].name),
+        title: Text(userData['name'].toString().capitalize()),
         actions: [
           CircleAvatar(
             radius: 18,
             backgroundColor: Colors.blue.shade300,
             child: Text(
-              employees[2].name[0].toUpperCase(),
+              userData['name'].toString()[0].toUpperCase(),
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,

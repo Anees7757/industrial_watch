@@ -56,8 +56,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       splashRadius: 20,
                       icon: Icon(
                         widget.obscureText
-                            ? Icons.visibility_off
-                            : Icons.visibility,
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: const Color(0xFF575757),
                       ),
                       onPressed: () {

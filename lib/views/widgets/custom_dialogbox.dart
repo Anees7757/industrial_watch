@@ -14,33 +14,35 @@ Future customDialogBox(
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 25, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 25, 16, 25),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               contents,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => secondaryBtn(),
-                    child: const Text('Cancel'),
-                  ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+              primaryText.isEmpty
+                  ? const SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => secondaryBtn(),
+                          child: const Text('Cancel'),
                         ),
-                      ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                          ),
+                          onPressed: () => primaryBtn(),
+                          child: Text(primaryText),
+                        ),
+                      ],
                     ),
-                    onPressed: () => primaryBtn(),
-                    child: Text(primaryText),
-                  ),
-                ],
-              ),
             ],
           ),
         ),

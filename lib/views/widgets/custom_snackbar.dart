@@ -10,7 +10,7 @@ void customSnackBar(BuildContext context, String msg) {
       ),
     ),
     elevation: 0.0,
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds: 3),
     behavior: SnackBarBehavior.floating,
   );
 

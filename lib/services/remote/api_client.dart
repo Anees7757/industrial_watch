@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:industrial_watch/utils/error_screen.dart';
 
 import '../../utils/request_methods.dart';
 
@@ -25,6 +27,7 @@ class ApiClient {
     Function()? beforeSend,
     Function(dynamic data)? onSuccess,
     Function(dynamic error)? onError,
+    required BuildContext context,
   }) {
     if (beforeSend != null) {
       beforeSend();
@@ -35,7 +38,7 @@ class ApiClient {
       data: jsonEncode(body),
       headers: headers,
       queryParameters: queryParameters,
-      method: requestMethod == RequestMethod.GET ? 'GET' : 'POST',
+      method: getHttpMethod(requestMethod!),
     );
 
     Dio().fetch(options).then((value) {
@@ -43,9 +46,27 @@ class ApiClient {
         onSuccess(value.data);
       } else if (onSuccess != null && value.statusCode == 201) {
         print('Data Added Successfully');
+      } else {
+        onError!(value);
+        showErrorScreen(context, value.statusCode!, value.statusMessage!);
       }
     }).onError((error, stackTrace) {
       onError!(error);
     });
+  }
+}
+
+String getHttpMethod(RequestMethod requestMethod) {
+  switch (requestMethod) {
+    case RequestMethod.GET:
+      return 'GET';
+    case RequestMethod.POST:
+      return 'POST';
+    case RequestMethod.PUT:
+      return 'PUT';
+    case RequestMethod.DELETE:
+      return 'DELETE';
+    default:
+      return 'GET';
   }
 }

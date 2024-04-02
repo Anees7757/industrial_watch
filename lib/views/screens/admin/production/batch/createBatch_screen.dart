@@ -100,8 +100,8 @@ class _CreateBatchScreenState extends State<CreateBatchScreen> {
               ],
             ),
           ),
-          bottomSheet: Container(
-            height: 100,
+          bottomNavigationBar: Container(
+            height: 80,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Center(
               child: GestureDetector(

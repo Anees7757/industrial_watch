@@ -143,8 +143,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ],
           ),
         ),
-        bottomSheet: SizedBox(
-          height: 100,
+        bottomNavigationBar: SizedBox(
+          height: 80,
           child: Center(
             child: GestureDetector(
               onTap: () {

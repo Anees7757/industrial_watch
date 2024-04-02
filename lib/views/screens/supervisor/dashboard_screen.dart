@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:provider/provider.dart';
 
+import '../../../global/global.dart';
+import '../../../utils/shared_prefs/shared_prefs.dart';
 import '../../../view-models/supervisor/supervisor_viewmodel.dart';
 import '../../widgets/custom_gridview.dart';
 import '../../widgets/logout_dialog.dart';
@@ -32,6 +37,14 @@ class _SupervisorDashboardState extends State<SupervisorDashboard> {
     'before_defect_monitoring',
     'attendance',
   ];
+  @override
+  void initState() {
+    String? userDataString = DataSharedPrefrences.getUser();
+    if (userDataString != null && userDataString.isNotEmpty) {
+      userData = jsonDecode(userDataString);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,17 +85,17 @@ class _SupervisorDashboardState extends State<SupervisorDashboard> {
             textDirection: TextDirection.ltr,
             children: [
               svg,
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 40),
-                    Text('Welcome,',
+                    const SizedBox(height: 40),
+                    const Text('Welcome,',
                         style: TextStyle(fontSize: 16, color: Colors.white)),
-                    SizedBox(height: 5),
-                    Text('Anwar Ali',
-                        style: TextStyle(
+                    const SizedBox(height: 5),
+                    Text(userData['name'].toString().capitalize(),
+                        style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 18,
                             color: Colors.white)),

@@ -15,6 +15,8 @@ import 'package:industrial_watch/view-models/supervisor/supervisor_viewmodel.dar
 import '../view-models/admin/employee_productivity/addEmployee_viewmodel.dart';
 import '../view-models/admin/employee_productivity/employee_details/summary_viewmodel.dart';
 import '../view-models/admin/production/products_viewmodel.dart';
+import '../view-models/admin/section/editSection_viewmodel.dart';
+import '../view-models/admin/section/sectionDetails_viewmodel.dart';
 import '../view-models/employee/editProfile_viewmodel.dart';
 import '../view-models/employee/summary_viewmodel.dart';
 
@@ -35,6 +37,9 @@ dynamic providers = [
     create: (context) => SectionsViewModel(),
   ),
   ChangeNotifierProvider(
+    create: (context) => EditSectionViewModel(),
+  ),
+  ChangeNotifierProvider(
     create: (context) => SupervisorsViewModel(),
   ),
   ChangeNotifierProvider(
@@ -45,6 +50,9 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => AddSectionViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => SectionDetailViewModel(),
   ),
   ChangeNotifierProvider(
     create: (context) => CreateBatchViewModel(),

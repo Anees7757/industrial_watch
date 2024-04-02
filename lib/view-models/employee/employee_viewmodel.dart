@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/shared_prefs/shared_prefs.dart';
+
 class EmployeeViewModel extends ChangeNotifier {
   void logout(context) {
-    Navigator.of(context).pushReplacementNamed('/login');
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+    DataSharedPrefrences.removeUser();
     notifyListeners();
   }
 

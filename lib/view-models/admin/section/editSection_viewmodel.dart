@@ -3,7 +3,7 @@ import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';
 
-class AddSectionViewModel extends ChangeNotifier {
+class EditSectionViewModel extends ChangeNotifier {
   TextEditingController sectionController = TextEditingController();
   List<TextEditingController> fineController = [];
 
@@ -15,7 +15,7 @@ class AddSectionViewModel extends ChangeNotifier {
 
   Map<String, bool> checkboxValues = {};
 
-  Future<void> addSection(context) async {
+  Future<void> addSection(context, Map<String, dynamic> section) async {
     if (sectionController.text.isNotEmpty) {
       if (checkboxValues.containsValue(true)) {
         int index = 0;
@@ -23,7 +23,7 @@ class AddSectionViewModel extends ChangeNotifier {
           if (i.value == true) {
             selectedRules.add({
               'rule_id': rules
-                  .where((element) => element['name'] == i.key)
+                  .where((element) => element['rule_name'] == i.key)
                   .first['id'],
               'fine': fineController[index].text,
               'allowed_time': selectedTime[index].text
@@ -33,34 +33,35 @@ class AddSectionViewModel extends ChangeNotifier {
         }
 
         Map<String, dynamic> newSection = {
+          'id': section['id'],
           'name': sectionController.text,
           'rules': selectedRules,
         };
 
         print(newSection);
-
-        await ApiRepo().apiFetch(
-          context: context,
-          path: 'Section/insert_section',
-          body: newSection,
-          requestMethod: RequestMethod.POST,
-          beforeSend: () {
-            print('Processing Data');
-          },
-          onSuccess: (data) {
-            print('Data Processed');
-            print(data);
-            customSnackBar(context, data['message']);
-            sectionController.clear();
-            selectedRules.clear();
-            fineController.clear();
-            Navigator.pop(context);
-          },
-          onError: (error) {
-            print(error.toString());
-            customSnackBar(context, error.toString());
-          },
-        );
+        //
+        // await ApiRepo().apiFetch(
+        //   context: context,
+        //   path: 'Section/insert_section',
+        //   body: newSection,
+        //   requestMethod: RequestMethod.POST,
+        //   beforeSend: () {
+        //     print('Processing Data');
+        //   },
+        //   onSuccess: (data) {
+        //     print('Data Processed');
+        //     print(data);
+        //     customSnackBar(context, data['message']);
+        //     sectionController.clear();
+        //     selectedRules.clear();
+        //     fineController.clear();
+        //     Navigator.pop(context);
+        //   },
+        //   onError: (error) {
+        //     print(error.toString());
+        //     customSnackBar(context, error.toString());
+        //   },
+        // );
       } else {
         customSnackBar(context, "Choose at least one rule");
       }
@@ -79,11 +80,11 @@ class AddSectionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getRules(BuildContext context) async {
+  Future<void> getRules(BuildContext context, int id) async {
     loading = true;
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Rule/get_all_rules',
+      path: 'Section/get_section_rules?id=$id',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         loading = true;
@@ -93,18 +94,19 @@ class AddSectionViewModel extends ChangeNotifier {
         try {
           print('Data Processed');
           print(data);
-          rules = await data;
+          rules = await data['rules'];
           rules = rules.toSet().toList();
-          for (int i = 0; i < rules.length; i++) {
+          for (var i in rules) {
             fineController.add(TextEditingController());
-          }
-
-          for (var rule in rules.map((e) => e['name']).toList()) {
-            checkboxValues[rule] = false;
+            checkboxValues[i['rule_name']] = true;
             selectedTime.add(TextEditingController());
           }
+          for (var i = 0; i < rules.length; i++) {
+            fineController[i].text = rules[i]['fine'].toStringAsFixed(2);
+            selectedTime[i].text = rules[i]['allowed_time'].toString();
+          }
 
-          print(selectedTime);
+          print(checkboxValues);
 
           loading = false;
           notifyListeners();

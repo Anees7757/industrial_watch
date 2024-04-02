@@ -2,6 +2,8 @@ import 'package:industrial_watch/models/violation_model.dart';
 
 import '../models/employee_model.dart';
 
+Map<String, dynamic> userData = {};
+
 List<Employee> employees = [
   Employee(
     id: 005,
