@@ -21,25 +21,32 @@ class AddSupervisorViewModel extends ChangeNotifier {
         usernameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty &&
         selectedSections.isNotEmpty) {
-      SupervisorsViewModel supervisorsViewModel =
-          Provider.of<SupervisorsViewModel>(context, listen: false);
-      // Map<String, dynamic> user = {
-      //   nameController.text: {
-      //     'username': usernameController.text,
-      //     'password': passwordController.text,
-      //     'sections': selectedSections
-      //   },
-      // };
-      // supervisorsViewModel.supervisors.addAll(user);
+      List<Map<String, dynamic>> selectedSectionsList = [];
 
-      print(supervisorsViewModel.supervisors);
+      for (var element in sections) {
+        if (selectedSections.contains(element.key)) {
+          selectedSectionsList.add({
+            'section_id': element['id'],
+            'name': element['name'],
+          });
+        }
+      }
 
-      nameController.clear();
-      usernameController.clear();
-      passwordController.clear();
-      selectedSections.clear();
+      Map<String, dynamic> supervisor = {
+        'name': nameController.text,
+        'username': usernameController.text,
+        'password': passwordController.text,
+        'role': 'Supervisor',
+        'sections': selectedSectionsList
+      };
+      print(supervisor);
 
-      Navigator.of(context).pop();
+      // nameController.clear();
+      // usernameController.clear();
+      // passwordController.clear();
+      // selectedSections.clear();
+      //
+      // Navigator.of(context).pop();
       notifyListeners();
     } else {
       customSnackBar(

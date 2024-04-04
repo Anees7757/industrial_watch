@@ -1,8 +1,11 @@
 import 'package:industrial_watch/view-models/admin/employee_productivity/ranking_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/production/inventory_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/production/rawMaterials_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:industrial_watch/view-models/admin/admin_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/rules_viewmodel.dart';
-import 'package:industrial_watch/view-models/admin/production/createBatch_viewModel.dart';
+import 'package:industrial_watch/view-models/admin/production/addProduct_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/production_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/section/addSection_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/section/sections_viewmodel.dart';
@@ -14,7 +17,7 @@ import 'package:industrial_watch/view-models/supervisor/supervisor_viewmodel.dar
 
 import '../view-models/admin/employee_productivity/addEmployee_viewmodel.dart';
 import '../view-models/admin/employee_productivity/employee_details/summary_viewmodel.dart';
-import '../view-models/admin/production/products_viewmodel.dart';
+import '../view-models/admin/production/inventoryDetail_viewmodel.dart';
 import '../view-models/admin/section/editSection_viewmodel.dart';
 import '../view-models/admin/section/sectionDetails_viewmodel.dart';
 import '../view-models/employee/editProfile_viewmodel.dart';
@@ -55,13 +58,10 @@ dynamic providers = [
     create: (context) => SectionDetailViewModel(),
   ),
   ChangeNotifierProvider(
-    create: (context) => CreateBatchViewModel(),
-  ),
-  ChangeNotifierProvider(
     create: (context) => RulesViewModel(),
   ),
   ChangeNotifierProvider(
-    create: (context) => ProductsViewModel(),
+    create: (context) => AddProductViewModel(),
   ),
   ChangeNotifierProvider(
     create: (context) => EmployeesRankingViewModel(),
@@ -77,5 +77,17 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => EditProfileViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => RawMaterialsViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => InventoryViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => InventoryDetailViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => BatchViewModel(),
   ),
 ];

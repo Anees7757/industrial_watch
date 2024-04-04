@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future customDialogBox(
@@ -29,6 +30,7 @@ Future customDialogBox(
                           onPressed: () => secondaryBtn(),
                           child: const Text('Cancel'),
                         ),
+                        const SizedBox(width: 5),
                         ElevatedButton(
                           style: ButtonStyle(
                             shape: MaterialStateProperty.all<

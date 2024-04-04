@@ -41,7 +41,7 @@ class AddSectionViewModel extends ChangeNotifier {
 
         await ApiRepo().apiFetch(
           context: context,
-          path: 'Section/insert_section',
+          path: 'Section/InsertSection',
           body: newSection,
           requestMethod: RequestMethod.POST,
           beforeSend: () {

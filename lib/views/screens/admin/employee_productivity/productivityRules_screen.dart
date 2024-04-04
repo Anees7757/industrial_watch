@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../view-models/admin/employee_productivity/rules_viewmodel.dart';
-import '../../../../view-models/admin/section/addSection_viewmodel.dart';
 import '../../../widgets/custom_Button.dart';
 import '../../../widgets/custom_dialogbox.dart';
 import '../../../widgets/custom_textfield.dart';
@@ -16,13 +14,10 @@ class ProductivityRulesScreen extends StatefulWidget {
 }
 
 class _ProductivityRulesScreenState extends State<ProductivityRulesScreen> {
-  AddSectionViewModel? _addSectionViewModel;
   RulesViewModel? _rulesViewModel;
 
   @override
   void initState() {
-    _addSectionViewModel =
-        Provider.of<AddSectionViewModel>(context, listen: false);
     _rulesViewModel = Provider.of<RulesViewModel>(context, listen: false);
     _rulesViewModel?.getRules(context);
     super.initState();
@@ -112,9 +107,10 @@ class _ProductivityRulesScreenState extends State<ProductivityRulesScreen> {
                 ]),
                 () => _rulesViewModel!.navigate(context),
                 () {
-                  _rulesViewModel!.addRule(context).then((_) {
-                    _refreshRules(context);
-                  });
+                  _rulesViewModel!.addRule(context);
+                  // .then((_) {
+                  //   _refreshRules(context);
+                  // });
                 },
                 'Add',
               );

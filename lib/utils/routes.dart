@@ -1,15 +1,17 @@
+import 'package:industrial_watch/views/screens/admin/production/addProduct_screen.dart';
+import 'package:industrial_watch/views/screens/admin/production/batch/batch_screen.dart';
 import 'package:industrial_watch/views/screens/employee/pages/home_screen.dart';
 
-import '../views/screens/admin/employee_productivity/employee_record/record_details/employee_details/attendance.dart';
 import '../views/screens/admin/employee_productivity/employee_record/employee_record.dart';
 import '../views/screens/admin/employee_productivity/rankings_screen.dart';
+import '../views/screens/admin/production/inventory/inventory_screen.dart';
+import '../views/screens/admin/production/production_dashboard.dart';
+import '../views/screens/admin/production/rawMaterial_screen.dart';
 import '../views/screens/auth/login_screen.dart';
 import 'package:industrial_watch/views/screens/admin/dashboard_screen.dart';
 import 'package:industrial_watch/views/screens/admin/employee_productivity/empProdDashboard_screen.dart';
 import 'package:industrial_watch/views/screens/admin/employee_productivity/add_employee_screen.dart';
 import 'package:industrial_watch/views/screens/admin/employee_productivity/productivityRules_screen.dart';
-import 'package:industrial_watch/views/screens/admin/production/batch/createBatch_screen.dart';
-import 'package:industrial_watch/views/screens/admin/production/production.dart';
 import 'package:industrial_watch/views/screens/admin/section/addSection_screen.dart';
 import 'package:industrial_watch/views/screens/admin/section/sections_screen.dart';
 import 'package:industrial_watch/views/screens/admin/supervisor/addSupervisor_screen.dart';
@@ -29,11 +31,14 @@ dynamic routes = {
   '/supervisorsView': (context) => const SupervisorScreen(),
   '/addSupervisor': (context) => const AddSupervisorScreen(),
   '/production': (context) => const ProductionScreen(),
-  '/createBatch': (context) => const CreateBatchScreen(),
   '/employeeProductivity': (context) => const EmployeeProductivityScreen(),
   '/rules': (context) => const ProductivityRulesScreen(),
   '/add_employee': (context) => const AddEmployeeScreen(),
   '/employee_ranking': (context) => const EmployeesRankingScreen(),
   '/employee_record': (context) => const EmployeeRecordScreen(),
   '/before_defect_monitoring': (context) => const OnBoardingScreen(),
+  '/raw_materials': (context) => const RawMaterialScreen(),
+  '/add_product': (context) => const AddProductScreen(),
+  '/inventory': (context) => const InventoryScreen(),
+  '/batch': (context) => const BatchScreen(),
 };

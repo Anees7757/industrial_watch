@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../../view-models/admin/production/createBatch_viewModel.dart';
+import '../../view-models/admin/production/addProduct_viewmodel.dart';
 
 AppBar customAppBar(BuildContext context, String title) {
   return AppBar(
@@ -36,7 +36,7 @@ AppBar customAppBar(BuildContext context, String title) {
     ),
     backgroundColor: Colors.transparent,
     elevation: 0.0,
-    actions: title == 'Create Batch'
+    actions: title == ''
         ? [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 10),
@@ -53,10 +53,11 @@ AppBar customAppBar(BuildContext context, String title) {
                     ]),
                 child: FilledButton(
                   onPressed: () {
-                    CreateBatchViewModel createBatchViewModel =
-                    Provider.of<CreateBatchViewModel>(context, listen: false);
+                    AddProductViewModel addProductViewModel =
+                        Provider.of<AddProductViewModel>(context,
+                            listen: false);
 
-                    createBatchViewModel.showDialog(context);
+                    addProductViewModel.showDialog(context);
                   },
                   child: const Text('Add Material'),
                 ),

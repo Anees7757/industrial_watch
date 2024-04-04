@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';
@@ -13,7 +12,7 @@ class RulesViewModel extends ChangeNotifier {
     loading = true;
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Rule/get_all_rules',
+      path: 'Rule/GetAllRules',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');
@@ -38,17 +37,17 @@ class RulesViewModel extends ChangeNotifier {
       if (!rules.contains(ruleController.text)) {
         await ApiRepo().apiFetch(
           context: context,
-          path: 'Rule/add_rule?name=${ruleController.text}',
+          path: 'Rule/AddRule?name=${ruleController.text}',
           requestMethod: RequestMethod.POST,
           beforeSend: () {
             print('Processing Data');
           },
-          onSuccess: (data) {
+          onSuccess: (data) async {
             print(data['message']);
             customSnackBar(context, data['message']);
             // rules.add(
             //     {'id': '${rules.last['id'] + 1}', 'name': ruleController.text});
-            getRules(context);
+            await getRules(context);
             notifyListeners();
           },
           onError: (error) {
@@ -75,7 +74,7 @@ class RulesViewModel extends ChangeNotifier {
   Future<void> delete(BuildContext context, int index) async {
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Rule/delete_rule?id=${rules[index]['id']}',
+      path: 'Rule/DeleteRule?id=${rules[index]['id']}',
       requestMethod: RequestMethod.DELETE,
       beforeSend: () {
         print('Processing Data');
@@ -84,12 +83,13 @@ class RulesViewModel extends ChangeNotifier {
         print(data['message']);
         rules.removeAt(index);
         customSnackBar(context, data['message']);
+        notifyListeners();
       },
       onError: (error) {
         print(error.toString());
         customSnackBar(context, error.toString());
+        notifyListeners();
       },
     );
-    notifyListeners();
   }
 }

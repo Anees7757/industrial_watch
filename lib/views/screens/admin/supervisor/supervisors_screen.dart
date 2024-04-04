@@ -82,8 +82,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
                                             Text(
                                                 _supervisorViewModel!
                                                     .supervisors
-                                                    .elementAt(
-                                                        index)['username'],
+                                                    .elementAt(index)['name'],
                                                 overflow: TextOverflow.visible,
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(

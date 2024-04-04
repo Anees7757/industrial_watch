@@ -13,7 +13,7 @@ class SectionsViewModel extends ChangeNotifier {
     loading = true;
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Section/get_all_sections',
+      path: 'Section/GetAllSections',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/view-models/admin/production/production_viewmodel.dart';
 import 'package:industrial_watch/view-models/employee/employee_viewmodel.dart';
 import 'package:industrial_watch/view-models/supervisor/supervisor_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -41,8 +42,11 @@ class _CustomGridViewState extends State<CustomGridView> {
               } else if (widget.dashboard == 'supervisor') {
                 Provider.of<SupervisorViewModel>(context, listen: false)
                     .navigate(context, widget.navigationVal[index]);
-              } else {
+              } else if (widget.dashboard == 'production') {
                 Provider.of<EmployeeViewModel>(context, listen: false)
+                    .navigate(context, widget.navigationVal[index]);
+              } else {
+                Provider.of<ProductionViewModel>(context, listen: false)
                     .navigate(context, widget.navigationVal[index]);
               }
             },
@@ -77,7 +81,8 @@ class _CustomGridViewState extends State<CustomGridView> {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  (widget.titles[index].contains(' '))
+                  (widget.titles[index].contains(' ') &&
+                          widget.titles[index].length > 13)
                       ? const SizedBox(height: 9)
                       : const SizedBox(height: 18),
                   Text(
