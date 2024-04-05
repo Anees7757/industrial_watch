@@ -3,6 +3,7 @@ import 'package:industrial_watch/views/screens/admin/production/inventory/invent
 import 'package:provider/provider.dart';
 import '../../../../../view-models/admin/production/inventory_viewmodel.dart';
 import '../../../../widgets/custom_Button.dart';
+import '../../../../widgets/custom_dialogbox.dart';
 
 class InventoryScreen extends StatefulWidget {
   const InventoryScreen({super.key});
@@ -19,11 +20,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
     _inventoryViewModel =
         Provider.of<InventoryViewModel>(context, listen: false);
     _inventoryViewModel?.getInventory(context);
+    _inventoryViewModel!.getMaterials(context);
     super.initState();
   }
 
   Future<void> _refreshRawMaterials(BuildContext context) async {
     _inventoryViewModel!.getInventory(context);
+    _inventoryViewModel!.getMaterials(context);
   }
 
   @override
@@ -133,37 +136,15 @@ class _InventoryScreenState extends State<InventoryScreen> {
         child: Center(
           child: GestureDetector(
             onTap: () {
-              // customDialogBox(
-              //   context,
-              //   Column(children: [
-              //     const Row(
-              //       children: [
-              //         Text('Add Raw Material',
-              //             overflow: TextOverflow.visible,
-              //             textAlign: TextAlign.left,
-              //             style: TextStyle(
-              //               fontSize: 18,
-              //               fontWeight: FontWeight.w600,
-              //             )),
-              //       ],
-              //     ),
-              //     const SizedBox(height: 20),
-              //     const Text('Price:'),
-              //     CustomTextField(
-              //       controller: _inventoryViewModel!.priceController,
-              //       hintText: 'Price',
-              //       action: TextInputAction.done,
-              //       textInputType: TextInputType.number,
-              //       isFocus: true,
-              //     ),
-              //     const SizedBox(height: 25),
-              //   ]),
-              //   () => _inventoryViewModel!.navigate(context),
-              //   () {
-              //     _inventoryViewModel!.addStock(context);
-              //   },
-              //   'Add',
-              // );
+              customDialogBox(
+                context,
+                _inventoryViewModel!.dialogData(context),
+                () => _inventoryViewModel!.navigate(context),
+                () {
+                  _inventoryViewModel!.addStock(context);
+                },
+                'Add',
+              );
             },
             child: customButton(context, 'Add Stock', 50, 211),
           ),

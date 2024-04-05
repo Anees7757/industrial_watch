@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_dialogbox.dart';
@@ -10,8 +9,6 @@ class AddProductViewModel extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController toleranceController = TextEditingController();
 
-  //dialog Controllers
-  // TextEditingController choosedMaterialController = TextEditingController();
   int selectedMaterialId = -1;
   TextEditingController quantityController = TextEditingController();
 
@@ -20,8 +17,8 @@ class AddProductViewModel extends ChangeNotifier {
     'Right',
     'Top',
     'Bottom',
-    'Front',
-    'Back',
+    'Front Flip',
+    'Back Flip',
   ];
   List<String> selectedAngles = [];
   List<dynamic> rawMaterials = [];
@@ -61,7 +58,7 @@ class AddProductViewModel extends ChangeNotifier {
       newProduct = {
         "name": nameController.text,
         "rejection_tolerance": double.parse(toleranceController.text),
-        "inspection_angles": selectedAngles.join(', '),
+        "inspection_angles": selectedAngles.join(','),
         "materials": selectedMaterials.map((e) {
           return {
             "raw_material_id": e['raw_material_id'],
