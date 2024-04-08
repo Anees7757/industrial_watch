@@ -77,8 +77,8 @@ class InventoryViewModel extends ChangeNotifier {
 
         dynamic data = {
           'raw_material_id': rawMaterialId,
-          'unit': selectedUnit,
-          'price_per_unit': double.parse(priceController.text),
+          // 'unit': selectedUnit,
+          'price_per_kg': double.parse(priceController.text),
           'quantity': int.parse(quantityController.text)
         };
         print(data);
@@ -117,26 +117,26 @@ class InventoryViewModel extends ChangeNotifier {
     Navigator.pop(context);
     quantityController.clear();
     priceController.clear();
+    rawMaterialId = -1;
     notifyListeners();
   }
 
-  List<String> units = [
-    'G',
-    'KG',
-  ];
-
-  String selectedQuantityUnit = '';
+  // List<String> units = [
+  //   'G',
+  //   'KG',
+  // ];
+  //
+  // String selectedQuantityUnit = '';
 
   Widget dialogData(context) {
     rawMaterials = rawMaterials.toSet().toList();
     print(rawMaterials);
-    selectedQuantityUnit = units.first;
+    // selectedQuantityUnit = units.first;
 
     return StatefulBuilder(builder: (context, setState) {
       return Column(
         children: [
-          const Text('Add Material',
-              textAlign: TextAlign.center,
+          const Text('Add Stock',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -156,6 +156,8 @@ class InventoryViewModel extends ChangeNotifier {
               // height: 56.79,
               color: const Color(0xFFDDDDDD).withOpacity(0.5),
               child: DropdownButton(
+                isExpanded: true,
+                underline: const SizedBox(),
                 value: rawMaterialId,
                 items: rawMaterials.map<DropdownMenuItem<int>>((map) {
                   return DropdownMenuItem<int>(
@@ -174,7 +176,7 @@ class InventoryViewModel extends ChangeNotifier {
           const SizedBox(height: 10),
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text('Quantity:'),
+            child: Text('Quantity/KG:'),
           ),
           const SizedBox(height: 5),
           Stack(
@@ -187,27 +189,27 @@ class InventoryViewModel extends ChangeNotifier {
                 textInputType: TextInputType.number,
                 isFocus: false,
               ),
-              DropdownButton(
-                value: selectedQuantityUnit,
-                items: units
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (v) {
-                  selectedQuantityUnit = v!;
-                  setState(() {});
-                },
-              ),
+              // DropdownButton(
+              //   value: selectedQuantityUnit,
+              //   items: units
+              //       .map(
+              //         (e) => DropdownMenuItem(
+              //           value: e,
+              //           child: Text(e),
+              //         ),
+              //       )
+              //       .toList(),
+              //   onChanged: (v) {
+              //     selectedQuantityUnit = v!;
+              //     setState(() {});
+              //   },
+              // ),
             ],
           ),
           const SizedBox(height: 10),
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text('Price per item:'),
+            child: Text('Price/KG:'),
           ),
           const SizedBox(height: 5),
           CustomTextField(

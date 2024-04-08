@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Consumer<LoginViewModel>(builder: (context, viewModel, child) {
                   return CustomTextField(
                     controller: viewModel.usernameController,
-                    hintText: 'Username/Email',
+                    hintText: 'Username',
                     action: TextInputAction.next,
                     textInputType: TextInputType.text,
                     isFocus: false,
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Provider.of<LoginViewModel>(context, listen: false)
                         .login(context);
                   },
-                  child: customButton(context, 'Login', 56.79, double.infinity),
+                  child: customButton(context, 'Login', 52, double.infinity),
                 ),
               ],
             ),

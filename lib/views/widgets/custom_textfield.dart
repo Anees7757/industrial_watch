@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
   late bool obscureText;
   final TextInputType textInputType;
   final bool isFocus;
+  late bool readOnly;
 
   CustomTextField(
       {Key? key,
@@ -18,7 +19,8 @@ class CustomTextField extends StatefulWidget {
       required this.action,
       this.obscureText = true,
       required this.textInputType,
-      required this.isFocus})
+      required this.isFocus,
+      this.readOnly = false})
       : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             : const Color(0xFFDDDDDD).withOpacity(0.5),
         child: Center(
           child: TextField(
+            readOnly: widget.readOnly,
             autofocus: widget.isFocus,
             controller: widget.controller,
             keyboardType: widget.textInputType,

@@ -29,7 +29,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
       return PopScope(
         onPopInvoked: (pop) async {
           dataProvider.nameController.clear();
-          dataProvider.toleranceController.clear();
           dataProvider.rawMaterials.clear();
           dataProvider.selectedMaterials.clear();
           dataProvider.selectedAngles.clear();
@@ -42,16 +41,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _showLabel('Product Name:'),
+                _showLabel('Product Name'),
                 CustomTextField(
                   controller: dataProvider.nameController,
-                  hintText: 'Screw 1-12',
+                  hintText: 'e.g Screw 1-12',
                   action: TextInputAction.next,
                   textInputType: TextInputType.text,
                   isFocus: false,
                 ),
                 const SizedBox(height: 8),
-                _showLabel('Inspection Angles:'),
+                _showLabel('Inspection Angles'),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
@@ -76,15 +75,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           fontSize: 14, color: Color(0xFF616161)),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                _showLabel('Rejection Tolerance:'),
-                CustomTextField(
-                  controller: dataProvider.toleranceController,
-                  hintText: '0.9',
-                  action: TextInputAction.done,
-                  textInputType: TextInputType.number,
-                  isFocus: false,
                 ),
                 const SizedBox(height: 30),
                 const Row(
@@ -154,8 +144,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 onTap: () {
                   dataProvider.addProduct(context);
                 },
-                child: customButton(
-                    context, 'Add Product', 56.79, double.infinity),
+                child:
+                    customButton(context, 'Add Product', 52, double.infinity),
               ),
             ),
           ),

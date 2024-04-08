@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             useMaterial3: false,
             primaryColor: Colors.blue,
+            pageTransitionsTheme: const PageTransitionsTheme(builders: {
+              TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            }),
           ),
           initialRoute: userData.isEmpty
               ? '/login'

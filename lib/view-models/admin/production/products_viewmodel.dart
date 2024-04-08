@@ -4,24 +4,24 @@ import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';
 
-class BatchViewModel extends ChangeNotifier {
-  List<dynamic> batches = [];
+class ProductViewModel extends ChangeNotifier {
+  List<dynamic> linkedProducts = [];
 
   bool loading = true;
 
-  Future<void> getBatches(BuildContext context, String id) async {
+  Future<void> getProducts(BuildContext context) async {
     loading = true;
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Production/GetAllBatches?product_number=$id',
+      path: 'Production/GetLinkedProducts',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');
       },
       onSuccess: (data) {
         print('Data Processed');
-        batches = data;
-        batches = batches.toSet().toList();
+        linkedProducts = data;
+        linkedProducts = linkedProducts.toSet().toList();
         loading = false;
         notifyListeners();
       },

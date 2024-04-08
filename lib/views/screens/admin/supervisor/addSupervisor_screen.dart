@@ -111,8 +111,7 @@ class _AddSupervisorScreenState extends State<AddSupervisorScreen> {
               _addSupervisorViewModel!.selectedSections.clear();
               //dialog box
             },
-            child:
-                customButton(context, 'Create Account', 56.79, double.infinity),
+            child: customButton(context, 'Create Account', 52, double.infinity),
           ),
         ),
       ),

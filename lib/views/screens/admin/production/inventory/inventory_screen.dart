@@ -36,6 +36,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Inventory'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () => _refreshRawMaterials(context),
@@ -53,7 +56,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         scrollDirection: Axis.vertical,
                         child: FittedBox(
                           child: DataTable(
-                            dataRowHeight: 60,
+                            dataRowHeight: 80,
                             columns: const [
                               DataColumn(
                                 label: Text(

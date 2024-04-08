@@ -157,7 +157,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
                   .whenComplete(() => setState(() {}));
             },
             child: customButton(
-                context, 'Add Supervisor', 56.79, double.infinity), // 211
+                context, 'Add Supervisor', 52, double.infinity), // 211
           ),
         ),
       ),

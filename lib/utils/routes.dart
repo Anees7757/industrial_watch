@@ -1,11 +1,10 @@
 import 'package:industrial_watch/views/screens/admin/production/addProduct_screen.dart';
-import 'package:industrial_watch/views/screens/admin/production/batch/batch_screen.dart';
-import 'package:industrial_watch/views/screens/employee/pages/home_screen.dart';
-
 import '../views/screens/admin/employee_productivity/employee_record/employee_record.dart';
 import '../views/screens/admin/employee_productivity/rankings_screen.dart';
 import '../views/screens/admin/production/inventory/inventory_screen.dart';
 import '../views/screens/admin/production/production_dashboard.dart';
+import '../views/screens/admin/production/products/linkProduct_screen.dart';
+import '../views/screens/admin/production/products/products_screen.dart';
 import '../views/screens/admin/production/rawMaterial_screen.dart';
 import '../views/screens/auth/login_screen.dart';
 import 'package:industrial_watch/views/screens/admin/dashboard_screen.dart';
@@ -40,5 +39,6 @@ dynamic routes = {
   '/raw_materials': (context) => const RawMaterialScreen(),
   '/add_product': (context) => const AddProductScreen(),
   '/inventory': (context) => const InventoryScreen(),
-  '/batch': (context) => const BatchScreen(),
+  '/products': (context) => const ProductScreen(),
+  '/linkProduct': (context) => const LinkProductScreen(),
 };

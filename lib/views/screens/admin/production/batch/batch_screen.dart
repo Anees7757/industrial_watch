@@ -1,11 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
+import 'package:industrial_watch/views/screens/admin/production/batch/createBatch_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../../widgets/custom_Button.dart';
 import '../../../../widgets/custom_appbar.dart';
 
 class BatchScreen extends StatefulWidget {
-  const BatchScreen({super.key});
+  Map<String, dynamic> product;
+
+  BatchScreen({super.key, required this.product});
 
   @override
   State<BatchScreen> createState() => _BatchScreenState();
@@ -17,12 +22,12 @@ class _BatchScreenState extends State<BatchScreen> {
   @override
   void initState() {
     _batchViewModel = Provider.of<BatchViewModel>(context, listen: false);
-    _batchViewModel!.getBatches(context);
+    _batchViewModel!.getBatches(context, widget.product['product_number']);
     super.initState();
   }
 
   Future<void> _refreshRawMaterials(BuildContext context) async {
-    _batchViewModel!.getBatches(context);
+    _batchViewModel!.getBatches(context, widget.product['product_number']);
   }
 
   @override
@@ -31,7 +36,10 @@ class _BatchScreenState extends State<BatchScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text('Batch'),
+        title: Text('${widget.product['name']}'.capitalize()),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () => _refreshRawMaterials(context),
@@ -41,57 +49,88 @@ class _BatchScreenState extends State<BatchScreen> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : Container(
-                    margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                    child: Column(
-                      children: [
-                        // CustomTextField(
-                        //   controller: dataProvider.searchController,
-                        //   hintText: 'Search',
-                        //   action: TextInputAction.search,
-                        //   textInputType: TextInputType.number,
-                        //   isFocus: false,
-                        // ),
-                        // const SizedBox(height: 10),
-                        dataProvider.batches.isEmpty
-                            ? const Center(
-                                child: Text('No Batch'),
-                              )
-                            : Expanded(
-                                child: ListView.builder(
-                                  itemCount: dataProvider.batches.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Column(
-                                      children: [
-                                        ListTile(
-                                          title: Text(
-                                              dataProvider.batches[index]
-                                                  ['batch_number'],
-                                              overflow: TextOverflow.visible,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                              )),
-                                          trailing: const Icon(
-                                              Icons.arrow_forward_ios_rounded),
-                                          onTap: () {},
-                                        ),
-                                        (index !=
-                                                dataProvider.batches.length - 1)
-                                            ? const Divider(
-                                                height: 5,
-                                                thickness: 1,
-                                                color: Color(0xFFBFBFBF),
-                                              )
-                                            : const SizedBox(),
-                                      ],
-                                    );
-                                  },
+                : Provider.of<BatchViewModel>(context, listen: true)
+                        .batches
+                        .isEmpty
+                    ? const Center(
+                        child: Text('No Batch Found'),
+                      )
+                    : Column(
+                        children: [
+                          // CustomTextField(
+                          //   controller: dataProvider.searchController,
+                          //   hintText: 'Search',
+                          //   action: TextInputAction.search,
+                          //   textInputType: TextInputType.number,
+                          //   isFocus: false,
+                          // ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 10, 15, 0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: ElevatedButton.icon(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.cloud_download_rounded,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  'Defected Batches',
+                                  style: TextStyle(
+                                    color: Colors.white, // Dark gray color
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.grey[800],
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
                                 ),
                               ),
-                      ],
-                    ),
-                  );
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: dataProvider.batches.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  children: [
+                                    ListTile(
+                                      title: Text(
+                                          dataProvider.batches[index]
+                                              ['batch_number'],
+                                          overflow: TextOverflow.visible,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                          )),
+                                      trailing: const Icon(
+                                          Icons.arrow_forward_ios_rounded),
+                                      onTap: () {},
+                                      tileColor: dataProvider.batches[index]
+                                                  ['status'] !=
+                                              0
+                                          ? Colors.red.withOpacity(0.2)
+                                          : Colors.transparent,
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: const Divider(
+                                        height: 0,
+                                        thickness: 1,
+                                        color: Color(0xFFBFBFBF),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
           },
         ),
       ),
@@ -101,12 +140,15 @@ class _BatchScreenState extends State<BatchScreen> {
         child: Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/createBatch')
-                  .whenComplete(() => setState(() {}));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      CreateBatchScreen(product: widget.product),
+                ),
+              ).whenComplete(() => _refreshRawMaterials);
             },
-            child:
-                customButton(context, 'Create Batch', 56.79, double.infinity),
+            child: customButton(context, 'Create Batch', 52, double.infinity),
           ),
         ),
       ),

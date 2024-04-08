@@ -34,6 +34,9 @@ class _RawMaterialScreenState extends State<RawMaterialScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Raw Materials'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () => _refreshRawMaterials(context),
@@ -64,57 +67,57 @@ class _RawMaterialScreenState extends State<RawMaterialScreen> {
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                   )),
-                              trailing: IconButton(
-                                splashRadius: 20,
-                                onPressed: () {
-                                  _rawMaterialsViewModel!
-                                          .materialController.text =
-                                      _rawMaterialsViewModel!
-                                          .rawMaterials[index]['name'];
-                                  customDialogBox(
-                                    context,
-                                    Column(children: [
-                                      const Row(
-                                        children: [
-                                          Text('Edit Raw Material',
-                                              overflow: TextOverflow.visible,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                              )),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 20),
-                                      CustomTextField(
-                                        controller: _rawMaterialsViewModel!
-                                            .materialController,
-                                        hintText: 'Raw Material',
-                                        action: TextInputAction.done,
-                                        textInputType: TextInputType.text,
-                                        isFocus: true,
-                                      ),
-                                      const SizedBox(height: 25),
-                                    ]),
-                                    () => _rawMaterialsViewModel!
-                                        .navigate(context),
-                                    () {
-                                      _rawMaterialsViewModel!.editRule(
-                                          context,
-                                          _rawMaterialsViewModel!
-                                              .rawMaterials[index]['id']);
-                                      //     .then((_) {
-                                      //   _refreshRawMaterials(context);
-                                      // });
-                                    },
-                                    'Edit',
-                                  );
-                                  // _rawMaterialsViewModel!
-                                  //     .delete(context, index);
-                                },
-                                icon: const Icon(Icons.edit,
-                                    color: Color(0xFF49454F)),
-                              ),
+                              // trailing: IconButton(
+                              //   splashRadius: 20,
+                              //   onPressed: () {
+                              //     _rawMaterialsViewModel!
+                              //             .materialController.text =
+                              //         _rawMaterialsViewModel!
+                              //             .rawMaterials[index]['name'];
+                              //     customDialogBox(
+                              //       context,
+                              //       Column(children: [
+                              //         const Row(
+                              //           children: [
+                              //             Text('Edit Raw Material',
+                              //                 overflow: TextOverflow.visible,
+                              //                 textAlign: TextAlign.left,
+                              //                 style: TextStyle(
+                              //                   fontSize: 18,
+                              //                   fontWeight: FontWeight.w600,
+                              //                 )),
+                              //           ],
+                              //         ),
+                              //         const SizedBox(height: 20),
+                              //         CustomTextField(
+                              //           controller: _rawMaterialsViewModel!
+                              //               .materialController,
+                              //           hintText: 'e.g iron',
+                              //           action: TextInputAction.done,
+                              //           textInputType: TextInputType.text,
+                              //           isFocus: true,
+                              //         ),
+                              //         const SizedBox(height: 25),
+                              //       ]),
+                              //       () => _rawMaterialsViewModel!
+                              //           .navigate(context),
+                              //       () {
+                              //         _rawMaterialsViewModel!.editRule(
+                              //             context,
+                              //             _rawMaterialsViewModel!
+                              //                 .rawMaterials[index]['id']);
+                              //         //     .then((_) {
+                              //         //   _refreshRawMaterials(context);
+                              //         // });
+                              //       },
+                              //       'Edit',
+                              //     );
+                              //     // _rawMaterialsViewModel!
+                              //     //     .delete(context, index);
+                              //   },
+                              //   icon: const Icon(Icons.edit,
+                              //       color: Color(0xFF49454F)),
+                              // ),
                             ),
                           );
                         },
@@ -143,7 +146,7 @@ class _RawMaterialScreenState extends State<RawMaterialScreen> {
                   const SizedBox(height: 20),
                   CustomTextField(
                     controller: _rawMaterialsViewModel!.materialController,
-                    hintText: 'Raw Material',
+                    hintText: 'e.g Iron',
                     action: TextInputAction.done,
                     textInputType: TextInputType.text,
                     isFocus: true,

@@ -7,9 +7,8 @@ import '../../../views/widgets/custom_textfield.dart';
 
 class AddProductViewModel extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
-  TextEditingController toleranceController = TextEditingController();
 
-  int selectedMaterialId = -1;
+  int? selectedMaterialId;
   TextEditingController quantityController = TextEditingController();
 
   List<String> angles = [
@@ -53,11 +52,9 @@ class AddProductViewModel extends ChangeNotifier {
 
     if (selectedMaterials.isNotEmpty ||
         nameController.text.isNotEmpty ||
-        selectedAngles.isNotEmpty ||
-        toleranceController.text.isNotEmpty) {
+        selectedAngles.isNotEmpty && selectedMaterialId != -1) {
       newProduct = {
         "name": nameController.text,
-        "rejection_tolerance": double.parse(toleranceController.text),
         "inspection_angles": selectedAngles.join(','),
         "materials": selectedMaterials.map((e) {
           return {
@@ -83,7 +80,6 @@ class AddProductViewModel extends ChangeNotifier {
           print(data);
           customSnackBar(context, data['message']);
           nameController.clear();
-          toleranceController.clear();
           selectedMaterials.clear();
           selectedAngles.clear();
           Navigator.pop(context);
@@ -163,6 +159,9 @@ class AddProductViewModel extends ChangeNotifier {
               // height: 56.79,
               color: const Color(0xFFDDDDDD).withOpacity(0.5),
               child: DropdownButton(
+                hint: const Text('-- Choose --'),
+                isExpanded: true,
+                underline: const SizedBox(),
                 value: selectedMaterialId,
                 items: rawMaterials.map<DropdownMenuItem<int>>((map) {
                   return DropdownMenuItem<int>(

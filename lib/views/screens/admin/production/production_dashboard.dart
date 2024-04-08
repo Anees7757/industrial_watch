@@ -16,21 +16,21 @@ class _ProductionScreenState extends State<ProductionScreen> {
     'Raw Materials',
     'Add Product',
     'Inventory',
-    'Batch'
+    'Products'
   ];
 
   final List<String> icons = [
     'assets/icons/raw_materials.png',
     'assets/icons/add_product.png',
     'assets/icons/inventory.png',
-    'assets/icons/batch.png'
+    'assets/icons/products.png'
   ];
 
   final List<String> navigationVal = [
     'raw_materials',
     'add_product',
     'inventory',
-    'batch'
+    'products'
   ];
 
   @override

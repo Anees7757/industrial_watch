@@ -40,6 +40,9 @@ class _InventoryDetailScreenState extends State<InventoryDetailScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: Text(widget.material['raw_material_name']),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () => _refreshRawMaterials(context),
@@ -58,7 +61,7 @@ class _InventoryDetailScreenState extends State<InventoryDetailScreen> {
                         scrollDirection: Axis.vertical,
                         child: FittedBox(
                           child: DataTable(
-                            dataRowHeight: 60,
+                            dataRowHeight: 80,
                             columns: const [
                               DataColumn(
                                 label: Text(
@@ -103,13 +106,13 @@ class _InventoryDetailScreenState extends State<InventoryDetailScreen> {
                                   ),
                                   DataCell(
                                     Text(
-                                      '${inventoryItem['price_per_unit'].split('.')[0]}',
+                                      '${inventoryItem['quantity']} KG',
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                   ),
                                   DataCell(
                                     Text(
-                                      '${inventoryItem['quantity']} KG',
+                                      '${inventoryItem['price_per_kg'].round()}',
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                   ),

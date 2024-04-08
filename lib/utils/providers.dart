@@ -17,7 +17,11 @@ import 'package:industrial_watch/view-models/supervisor/supervisor_viewmodel.dar
 
 import '../view-models/admin/employee_productivity/addEmployee_viewmodel.dart';
 import '../view-models/admin/employee_productivity/employee_details/summary_viewmodel.dart';
+import '../view-models/admin/production/chooseStock_viewmodel.dart';
+import '../view-models/admin/production/createBatch_viewmodel.dart';
 import '../view-models/admin/production/inventoryDetail_viewmodel.dart';
+import '../view-models/admin/production/linkProduct_viewmodel.dart';
+import '../view-models/admin/production/products_viewmodel.dart';
 import '../view-models/admin/section/editSection_viewmodel.dart';
 import '../view-models/admin/section/sectionDetails_viewmodel.dart';
 import '../view-models/employee/editProfile_viewmodel.dart';
@@ -89,5 +93,17 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => BatchViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => ProductViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => LinkProductViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => CreateBatchViewmodel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => ChooseStockViewmodel(),
   ),
 ];
