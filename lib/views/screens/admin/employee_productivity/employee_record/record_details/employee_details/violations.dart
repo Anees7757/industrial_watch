@@ -51,7 +51,7 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Expanded(
                     child: ListView.builder(
                       itemCount: violation!.length,

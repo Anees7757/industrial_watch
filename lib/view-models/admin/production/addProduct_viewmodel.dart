@@ -16,8 +16,8 @@ class AddProductViewModel extends ChangeNotifier {
     'Right',
     'Top',
     'Bottom',
-    'Front Flip',
-    'Back Flip',
+    'Front',
+    'Flip',
   ];
   List<String> selectedAngles = [];
   List<dynamic> rawMaterials = [];

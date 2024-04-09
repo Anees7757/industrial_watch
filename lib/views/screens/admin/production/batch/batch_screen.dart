@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
 import 'package:industrial_watch/views/screens/admin/production/batch/createBatch_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_appbar.dart';
 
 class BatchScreen extends StatefulWidget {
   Map<String, dynamic> product;
@@ -113,7 +111,7 @@ class _BatchScreenState extends State<BatchScreen> {
                                           ? Colors.red.withOpacity(0.2)
                                           : Colors.transparent,
                                       contentPadding:
-                                          EdgeInsets.symmetric(horizontal: 15),
+                                          const EdgeInsets.symmetric(horizontal: 15),
                                     ),
                                     Container(
                                       margin: const EdgeInsets.symmetric(

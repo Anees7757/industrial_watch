@@ -18,7 +18,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
   @override
   void initState() {
     String? userDataString = DataSharedPrefrences.getUser();
-    if (userDataString != null && userDataString.isNotEmpty) {
+    if (userDataString.isNotEmpty) {
       userData = jsonDecode(userDataString);
     }
     super.initState();

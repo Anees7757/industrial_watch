@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';
+import 'chooseStock_viewmodel.dart';
 
 class CreateBatchViewmodel extends ChangeNotifier {
   TextEditingController batchPerDayController = TextEditingController();
 
   bool _loading = true;
+
   get loading => _loading;
 
   setLoading(bool value) {
@@ -42,5 +45,23 @@ class CreateBatchViewmodel extends ChangeNotifier {
         notifyListeners();
       },
     );
+  }
+
+  void getQuantity(BuildContext context) {
+    ChooseStockViewmodel chooseStockViewmodel =
+        Provider.of<ChooseStockViewmodel>(context, listen: false);
+
+    if (chooseStockViewmodel.selectedStocks.isNotEmpty) {
+      for (int i = 0; i < chooseStockViewmodel.selectedStocks.length; i++) {
+        var selectedStock = chooseStockViewmodel.selectedStocks[i];
+        int totalQuantity = 0;
+        totalQuantity += selectedStock['quantity'] as int;
+        rawMaterials
+            .where((element) =>
+                element['raw_material_id'] == selectedStock['raw_material_id'])
+            .first['quantity'] = '$totalQuantity KG';
+      }
+    }
+    notifyListeners();
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../view-models/admin/production/inventoryDetail_viewmodel.dart';
-import '../../../../../view-models/admin/production/inventory_viewmodel.dart';
-import '../../../../widgets/custom_Button.dart';
 
 class InventoryDetailScreen extends StatefulWidget {
   Map<String, dynamic> material;
@@ -15,14 +13,11 @@ class InventoryDetailScreen extends StatefulWidget {
 
 class _InventoryDetailScreenState extends State<InventoryDetailScreen> {
   InventoryDetailViewModel? _inventoryDetailViewmodel;
-  InventoryViewModel? _inventoryViewmodel;
 
   @override
   void initState() {
     _inventoryDetailViewmodel =
         Provider.of<InventoryDetailViewModel>(context, listen: false);
-    _inventoryViewmodel =
-        Provider.of<InventoryViewModel>(context, listen: false);
     _inventoryDetailViewmodel?.getInventoryDetails(
         context, widget.material['raw_material_id']);
     super.initState();
@@ -61,7 +56,7 @@ class _InventoryDetailScreenState extends State<InventoryDetailScreen> {
                         scrollDirection: Axis.vertical,
                         child: FittedBox(
                           child: DataTable(
-                            dataRowHeight: 80,
+                            dataRowMaxHeight: 80,
                             columns: const [
                               DataColumn(
                                 label: Text(

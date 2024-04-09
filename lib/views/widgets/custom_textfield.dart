@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../view-models/admin/production/production_viewmodel.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;

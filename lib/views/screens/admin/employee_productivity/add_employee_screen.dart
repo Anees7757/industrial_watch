@@ -4,7 +4,6 @@ import 'package:industrial_watch/views/widgets/custom_Button.dart';
 import 'package:industrial_watch/views/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../models/employee_model.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});

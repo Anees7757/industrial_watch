@@ -40,7 +40,7 @@ class _SupervisorDashboardState extends State<SupervisorDashboard> {
   @override
   void initState() {
     String? userDataString = DataSharedPrefrences.getUser();
-    if (userDataString != null && userDataString.isNotEmpty) {
+    if (userDataString.isNotEmpty) {
       userData = jsonDecode(userDataString);
     }
     super.initState();

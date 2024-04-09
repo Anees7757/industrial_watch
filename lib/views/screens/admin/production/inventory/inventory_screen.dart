@@ -56,7 +56,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                         scrollDirection: Axis.vertical,
                         child: FittedBox(
                           child: DataTable(
-                            dataRowHeight: 80,
+                            dataRowMaxHeight: 80,
                             columns: const [
                               DataColumn(
                                 label: Text(

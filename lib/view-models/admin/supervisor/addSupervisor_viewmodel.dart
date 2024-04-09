@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:industrial_watch/view-models/admin/supervisor/supervisorsView_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';

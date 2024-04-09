@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../view-models/admin/supervisor/supervisorsView_viewmodel.dart';

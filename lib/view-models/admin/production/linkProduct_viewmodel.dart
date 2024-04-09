@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
-import '../../../views/widgets/custom_dialogbox.dart';
 import '../../../views/widgets/custom_snackbar.dart';
-import '../../../views/widgets/custom_textfield.dart';
 
 class LinkProductViewModel extends ChangeNotifier {
   TextEditingController packsController = TextEditingController();

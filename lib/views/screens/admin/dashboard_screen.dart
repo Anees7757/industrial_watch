@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:industrial_watch/global/global.dart';
 import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
 import 'package:industrial_watch/utils/word_capitalize.dart';
-import 'package:industrial_watch/views/widgets/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

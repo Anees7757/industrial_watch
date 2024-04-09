@@ -5,7 +5,6 @@ import 'package:industrial_watch/repositories/api_repo.dart';
 import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
 
 import '../../global/global.dart';
-import '../../utils/error_screen.dart';
 import '../../utils/request_methods.dart';
 import '../../views/widgets/custom_dialogbox.dart';
 import '../../views/widgets/custom_snackbar.dart';

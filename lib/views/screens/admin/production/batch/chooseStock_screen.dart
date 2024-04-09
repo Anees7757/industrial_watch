@@ -32,123 +32,137 @@ class _ChooseStockState extends State<ChooseStock> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: Text('Choose stock for ${widget.material['name']}'),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+    return PopScope(
+      onPopInvoked: (pop) {},
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          title: Text('Choose stock for ${widget.material['name']}'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshRawMaterials(context),
-        child: Consumer<ChooseStockViewmodel>(
-          builder: (context, dataProvider, child) {
-            return Provider.of<ChooseStockViewmodel>(context, listen: true)
-                    .loading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(
-                    margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Column(
-                      children: <Widget>[
-                        SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: FittedBox(
-                            child: DataTable(
-                              dataRowHeight: 80,
-                              columnSpacing: 20,
-                              columns: const [
-                                DataColumn(
-                                  label: Text(
-                                    'Stock#',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Quantity',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Price/kg',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Date',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                                DataColumn(label: Text('')),
-                              ],
-                              rows: _chooseStockViewmodel!.stock
-                                  .asMap()
-                                  .entries
-                                  .map<DataRow>((entry) {
-                                final int index = entry.key;
-                                final Map<String, dynamic> item = entry.value;
-                                return DataRow(
-                                  cells: [
-                                    DataCell(
-                                      Text(
-                                        item['stock_number'],
-                                      ),
+        body: RefreshIndicator(
+          onRefresh: () => _refreshRawMaterials(context),
+          child: Consumer<ChooseStockViewmodel>(
+            builder: (context, dataProvider, child) {
+              return Provider.of<ChooseStockViewmodel>(context, listen: true)
+                      .loading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Container(
+                      margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Column(
+                        children: <Widget>[
+                          SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: FittedBox(
+                              child: DataTable(
+                                dataRowMaxHeight: 80,
+                                columnSpacing: 20,
+                                columns: const [
+                                  DataColumn(
+                                    label: Text(
+                                      'Stock#',
+                                      style: TextStyle(fontSize: 18),
                                     ),
-                                    DataCell(
-                                      Text(
-                                        '${item['quantity']}',
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Qty',
+                                      style: TextStyle(fontSize: 18),
                                     ),
-                                    DataCell(
-                                      Text(
-                                        '${item['price_per_kg']}',
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Price/kg',
+                                      style: TextStyle(fontSize: 18),
                                     ),
-                                    DataCell(
-                                      Text(
-                                        item['purchased_date'],
-                                      ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Date',
+                                      style: TextStyle(fontSize: 18),
                                     ),
-                                    DataCell(
-                                      Transform.scale(
-                                        scale: 1.3,
-                                        child: Checkbox(
-                                          value: dataProvider
-                                              .stockSelections[index],
-                                          onChanged: (bool? value) {
-                                            dataProvider.checkBoxOnChanged(
-                                                value!, index);
-                                          },
+                                  ),
+                                  DataColumn(label: Text('')),
+                                ],
+                                rows: _chooseStockViewmodel!.stock
+                                    .asMap()
+                                    .entries
+                                    .map<DataRow>((entry) {
+                                  final int index = entry.key;
+                                  final Map<String, dynamic> item = entry.value;
+                                  return DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Text(
+                                          item['stock_number'],
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                );
-                              }).toList(),
+                                      DataCell(
+                                        Text(
+                                          '${item['quantity']}',
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          '${item['price_per_kg']}',
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          item['purchased_date'],
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Transform.scale(
+                                          scale: 1.3,
+                                          child: Checkbox(
+                                            value: dataProvider
+                                                    .stockSelections.isEmpty
+                                                ? false
+                                                : dataProvider.stockSelections
+                                                    .where((element) =>
+                                                        element[
+                                                            'raw_material_id'] ==
+                                                        widget.material[
+                                                            'raw_material_id'])
+                                                    .first['stock_checks'][index],
+                                            onChanged: (bool? value) {
+                                              dataProvider.checkBoxOnChanged(
+                                                  value!,
+                                                  index,
+                                                  widget.material[
+                                                      'raw_material_id']);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-          },
-        ),
-      ),
-      bottomNavigationBar: Container(
-        height: 80,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Center(
-          child: GestureDetector(
-            onTap: () {
-              _chooseStockViewmodel!
-                  .addBatch(context, widget.material['raw_material_id']);
+                        ],
+                      ),
+                    );
             },
-            child: customButton(context, 'Done', 52, double.infinity),
+          ),
+        ),
+        bottomNavigationBar: Container(
+          height: 80,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: GestureDetector(
+              onTap: () {
+                _chooseStockViewmodel!
+                    .addStock(context, widget.material['raw_material_id']);
+              },
+              child: customButton(context, 'Done', 52, double.infinity),
+            ),
           ),
         ),
       ),
