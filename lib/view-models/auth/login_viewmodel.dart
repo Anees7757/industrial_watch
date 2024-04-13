@@ -66,7 +66,7 @@ class LoginViewModel extends ChangeNotifier {
         onError: (error) {
           Navigator.pop(context);
           print(error.toString());
-          customSnackBar(context, error.toString());
+          //customSnackBar(context, error.toString());
         },
       );
     } else {

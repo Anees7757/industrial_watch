@@ -33,6 +33,9 @@ class _SectionsScreenState extends State<SectionsScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Sections'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () => _refresh(context),

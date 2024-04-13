@@ -31,6 +31,9 @@ class _EmployeesDetailScreenState extends State<EmployeesDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(employee!.name),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(20, 20, 20, 30),

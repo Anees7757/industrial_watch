@@ -27,11 +27,11 @@ class SectionsViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
         loading = false;
+        notifyListeners();
       },
     );
-    // notifyListeners();
   }
 
   void edit(BuildContext context, int index) {

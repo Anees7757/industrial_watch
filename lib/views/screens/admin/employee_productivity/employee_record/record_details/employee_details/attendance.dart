@@ -24,6 +24,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Usama Fayyaz'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),

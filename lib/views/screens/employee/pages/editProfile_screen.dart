@@ -44,6 +44,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         appBar: AppBar(
           elevation: 0.0,
           title: const Text('Edit Profile'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         body: Container(
           width: double.infinity,

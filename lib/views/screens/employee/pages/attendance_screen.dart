@@ -43,6 +43,9 @@ class _EmployeeAttendanceScreenState extends State<EmployeeAttendanceScreen> {
             width: 10,
           ),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),

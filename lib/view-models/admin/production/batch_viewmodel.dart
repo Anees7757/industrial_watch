@@ -23,12 +23,13 @@ class BatchViewModel extends ChangeNotifier {
         batches = data;
         batches = batches.toSet().toList();
         loading = false;
+        print(data);
         notifyListeners();
       },
       onError: (error) {
         print(error.toString());
         loading = false;
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
       },
     );
   }

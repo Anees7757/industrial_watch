@@ -44,6 +44,9 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(employeeName!),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(30, 50, 30, 20),

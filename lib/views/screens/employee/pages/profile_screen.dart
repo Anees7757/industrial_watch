@@ -38,6 +38,9 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
             width: 10,
           ),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Column(
         children: [

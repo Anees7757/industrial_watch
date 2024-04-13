@@ -32,6 +32,9 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
             .where((element) => element.id == widget.empId)
             .first
             .name),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(15, 20, 15, 20),

@@ -15,10 +15,16 @@ class InventoryViewModel extends ChangeNotifier {
 
   String selectedUnit = 'G';
 
-  bool loading = true;
+  bool _loading = true;
+
+  get loading => _loading;
+
+  setLoading(bool value) {
+    _loading = value;
+  }
 
   Future<void> getInventory(BuildContext context) async {
-    loading = true;
+    setLoading(true);
     await ApiRepo().apiFetch(
       context: context,
       path: 'Production/GetAllInventory',
@@ -30,13 +36,13 @@ class InventoryViewModel extends ChangeNotifier {
         print('Data Processed');
         inventoryList = data;
         inventoryList = inventoryList.toSet().toList();
-        loading = false;
+        setLoading(false);
         notifyListeners();
       },
       onError: (error) {
         print(error.toString());
-        loading = false;
-        customSnackBar(context, error.toString());
+        setLoading(false);
+        //customSnackBar(context, error.toString());
       },
     );
   }
@@ -61,7 +67,7 @@ class InventoryViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
       },
     );
   }
@@ -99,7 +105,8 @@ class InventoryViewModel extends ChangeNotifier {
           },
           onError: (error) {
             print(error.toString());
-            customSnackBar(context, error.toString());
+            //customSnackBar(context, error.toString());
+            notifyListeners();
           },
         );
         if (!context.mounted) return;
@@ -154,21 +161,28 @@ class InventoryViewModel extends ChangeNotifier {
               width: double.infinity,
               // height: 56.79,
               color: const Color(0xFFDDDDDD).withOpacity(0.5),
-              child: DropdownButton(
-                isExpanded: true,
-                underline: const SizedBox(),
-                value: rawMaterialId,
-                items: rawMaterials.map<DropdownMenuItem<int>>((map) {
-                  return DropdownMenuItem<int>(
-                    value: map['id'],
-                    child: Text(map['name']),
-                  );
-                }).toList(),
-                onChanged: (v) {
-                  rawMaterialId = v!;
-                  setState(() {});
-                  // notifyListeners();
-                },
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  isExpanded: true,
+                  icon: Visibility(
+                      visible: rawMaterials.isEmpty ? false : true,
+                      child: Icon(Icons.arrow_drop_down)),
+                  hint: rawMaterials.isEmpty
+                      ? const Text('No Raw Material Found')
+                      : null,
+                  value: rawMaterialId,
+                  items: rawMaterials.map<DropdownMenuItem<int>>((map) {
+                    return DropdownMenuItem<int>(
+                      value: map['id'],
+                      child: Text(map['name']),
+                    );
+                  }).toList(),
+                  onChanged: (v) {
+                    rawMaterialId = v!;
+                    setState(() {});
+                    // notifyListeners();
+                  },
+                ),
               ),
             ),
           ),

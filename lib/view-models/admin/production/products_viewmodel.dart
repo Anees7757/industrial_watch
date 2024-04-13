@@ -17,6 +17,7 @@ class ProductViewModel extends ChangeNotifier {
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');
+        linkedProducts.clear();
       },
       onSuccess: (data) {
         print('Data Processed');
@@ -28,7 +29,7 @@ class ProductViewModel extends ChangeNotifier {
       onError: (error) {
         print(error.toString());
         loading = false;
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
       },
     );
   }

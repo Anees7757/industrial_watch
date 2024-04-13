@@ -20,13 +20,13 @@ class LinkProductViewModel extends ChangeNotifier {
 
   Future<void> getProducts(BuildContext context) async {
     products.clear();
-    setLoading(true);
     await ApiRepo().apiFetch(
       context: context,
       path: 'Production/GetUnlinkedProducts',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');
+        setLoading(true);
       },
       onSuccess: (data) {
         print('Data Processed');
@@ -37,7 +37,8 @@ class LinkProductViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
+        setLoading(false);
         notifyListeners();
       },
     );
@@ -79,7 +80,7 @@ class LinkProductViewModel extends ChangeNotifier {
         },
         onError: (error) {
           print(error.toString());
-          customSnackBar(context, error.toString());
+          //customSnackBar(context, error.toString());
         },
       );
     } else {

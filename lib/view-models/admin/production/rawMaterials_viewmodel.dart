@@ -27,7 +27,8 @@ class RawMaterialsViewModel extends ChangeNotifier {
       onError: (error) {
         print(error.toString());
         loading = false;
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
+        notifyListeners();
       },
     );
   }
@@ -50,7 +51,8 @@ class RawMaterialsViewModel extends ChangeNotifier {
           },
           onError: (error) {
             print(error.toString());
-            customSnackBar(context, error.toString());
+            //customSnackBar(context, error.toString());
+            notifyListeners();
           },
         );
         if (!context.mounted) return;
@@ -60,7 +62,6 @@ class RawMaterialsViewModel extends ChangeNotifier {
         customSnackBar(context, 'Raw Material Already exists');
       }
     }
-    notifyListeners();
   }
 
   editRule(BuildContext context, int rawMaterialID) async {
@@ -90,7 +91,8 @@ class RawMaterialsViewModel extends ChangeNotifier {
           },
           onError: (error) {
             print(error.toString());
-            customSnackBar(context, error.toString());
+            //customSnackBar(context, error.toString());
+            notifyListeners();
           },
         );
         if (!context.mounted) return;
@@ -125,7 +127,7 @@ class RawMaterialsViewModel extends ChangeNotifier {
 //     },
 //     onError: (error) {
 //       print(error.toString());
-//       customSnackBar(context, error.toString());
+//       //customSnackBar(context, error.toString());
 //       notifyListeners();
 //     },
 //   );

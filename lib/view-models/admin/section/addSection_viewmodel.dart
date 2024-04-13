@@ -58,7 +58,8 @@ class AddSectionViewModel extends ChangeNotifier {
           },
           onError: (error) {
             print(error.toString());
-            customSnackBar(context, error.toString());
+            //customSnackBar(context, error.toString());
+            notifyListeners();
           },
         );
       } else {
@@ -117,7 +118,7 @@ class AddSectionViewModel extends ChangeNotifier {
       onError: (error) {
         print(error.toString());
         loading = false;
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
         notifyListeners();
       },
     );

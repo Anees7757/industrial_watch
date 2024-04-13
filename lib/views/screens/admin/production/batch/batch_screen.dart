@@ -4,6 +4,7 @@ import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.da
 import 'package:industrial_watch/views/screens/admin/production/batch/createBatch_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../../widgets/custom_Button.dart';
+import 'batchDetails_screen.dart';
 
 class BatchScreen extends StatefulWidget {
   Map<String, dynamic> product;
@@ -104,14 +105,27 @@ class _BatchScreenState extends State<BatchScreen> {
                                           )),
                                       trailing: const Icon(
                                           Icons.arrow_forward_ios_rounded),
-                                      onTap: () {},
                                       tileColor: dataProvider.batches[index]
-                                                  ['status'] !=
-                                              0
+                                                  ['status'] ==
+                                              1
                                           ? Colors.red.withOpacity(0.2)
                                           : Colors.transparent,
                                       contentPadding:
-                                          const EdgeInsets.symmetric(horizontal: 15),
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                BatchDetailScreen(
+                                              batchNo:
+                                                  dataProvider.batches[index]
+                                                      ['batch_number'],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                     Container(
                                       margin: const EdgeInsets.symmetric(

@@ -37,6 +37,9 @@ class _AddSectionScreenState extends State<AddSectionScreen> {
         appBar: AppBar(
           title: const Text('Add Section'),
           automaticallyImplyLeading: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         body: provider.loading
             ? const Center(child: CircularProgressIndicator())

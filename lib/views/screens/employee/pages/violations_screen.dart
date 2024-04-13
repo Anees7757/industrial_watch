@@ -45,6 +45,9 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
             width: 10,
           ),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),

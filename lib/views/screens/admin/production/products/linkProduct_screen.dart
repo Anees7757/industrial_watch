@@ -45,55 +45,46 @@ class _LinkProductScreenState extends State<LinkProductScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _showLabel('Product Name'),
-                Provider.of<LinkProductViewModel>(context, listen: true).loading
-                    ? CustomTextField(
-                        controller: TextEditingController(text: 'Loading...'),
-                        hintText: '',
-                        action: TextInputAction.next,
-                        textInputType: TextInputType.number,
-                        isFocus: false,
-                        readOnly: true,
-                      )
-                    : dataProvider.products.isEmpty
-                        ? CustomTextField(
-                            controller:
-                                TextEditingController(text: 'No Product Found'),
-                            hintText: '',
-                            action: TextInputAction.next,
-                            textInputType: TextInputType.number,
-                            isFocus: false,
-                            readOnly: true,
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 5, bottom: 5),
-                              width: double.infinity,
-                              color: const Color(0xFFDDDDDD).withOpacity(0.5),
-                              child: DropdownButton<Map<String, dynamic>>(
-                                isExpanded: true,
-                                underline: const SizedBox(),
-                                hint: const Text('-- Select Product --'),
-                                value: dataProvider.selectedProduct.isNotEmpty
-                                    ? dataProvider.selectedProduct
-                                    : null,
-                                items: dataProvider.products.map<
-                                        DropdownMenuItem<Map<String, dynamic>>>(
-                                    (map) {
-                                  return DropdownMenuItem<Map<String, dynamic>>(
-                                    value: map,
-                                    child: Text(map['name']),
-                                  );
-                                }).toList(),
-                                onChanged: (Map<String, dynamic>? selectedMap) {
-                                  if (selectedMap != null) {
-                                    dataProvider.dropDownOnChanged(selectedMap);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        left: 15, right: 15, top: 5, bottom: 5),
+                    width: double.infinity,
+                    color: const Color(0xFFDDDDDD).withOpacity(0.5),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<Map<String, dynamic>>(
+                        isExpanded: true,
+                        icon: Visibility(
+                            visible:
+                                dataProvider.products.isEmpty ? false : true,
+                            child: Icon(Icons.arrow_drop_down)),
+                        hint: Provider.of<LinkProductViewModel>(context,
+                                    listen: true)
+                                .loading
+                            ? const Text('Loading...')
+                            : dataProvider.products.isEmpty
+                                ? const Text('No Product Found')
+                                : const Text('-- Select Product --'),
+                        value: dataProvider.selectedProduct.isNotEmpty
+                            ? dataProvider.selectedProduct
+                            : null,
+                        items: dataProvider.products
+                            .map<DropdownMenuItem<Map<String, dynamic>>>((map) {
+                          return DropdownMenuItem<Map<String, dynamic>>(
+                            value: map,
+                            child: Text(map['name']),
+                          );
+                        }).toList(),
+                        onChanged: (Map<String, dynamic>? selectedMap) {
+                          if (selectedMap != null) {
+                            dataProvider.dropDownOnChanged(selectedMap);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

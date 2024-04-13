@@ -4,7 +4,6 @@ import 'package:industrial_watch/views/widgets/custom_Button.dart';
 import 'package:industrial_watch/views/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
-
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
 
@@ -69,6 +68,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         title: const Text('Add Employee'),
         automaticallyImplyLeading: true,
         elevation: 0.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Consumer<AddEmployeeViewModel>(builder: (context, provider, child) {
         return SingleChildScrollView(

@@ -30,6 +30,9 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Supervisors'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Provider.of<SupervisorsViewModel>(context, listen: true).loading
           ? const Center(

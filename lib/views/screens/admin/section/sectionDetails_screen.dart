@@ -36,6 +36,9 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
       appBar: AppBar(
         title: Text(widget.section['name']),
         automaticallyImplyLeading: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Provider.of<SectionDetailViewModel>(context, listen: true).loading
           ? const Center(

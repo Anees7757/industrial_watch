@@ -34,6 +34,9 @@ class _ProductivityRulesScreenState extends State<ProductivityRulesScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Productivity Rules'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () => _refreshRules(context),

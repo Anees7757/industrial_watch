@@ -49,7 +49,7 @@ class ChooseStockViewmodel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
         notifyListeners();
       },
     );

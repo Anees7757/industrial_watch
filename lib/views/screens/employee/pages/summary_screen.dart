@@ -37,6 +37,9 @@ class _EmployeeSummaryScreenState extends State<EmployeeSummaryScreen> {
               width: 10,
             ),
           ],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         body: Container(
           margin: const EdgeInsets.fromLTRB(20, 15, 20, 40),

@@ -52,6 +52,9 @@ class _ProductionScreenState extends State<ProductionScreen> {
         title: const Text('Production'),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Stack(
         children: [

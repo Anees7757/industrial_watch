@@ -32,6 +32,9 @@ class _AddSupervisorScreenState extends State<AddSupervisorScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Add Supervisor'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(15, 50, 15, 0),

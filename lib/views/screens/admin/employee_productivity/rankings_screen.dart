@@ -66,6 +66,9 @@ class _EmployeesRankingScreenState extends State<EmployeesRankingScreen> {
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.sort)),
         ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),

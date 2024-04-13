@@ -15,21 +15,21 @@ class EmployeeProductivityScreen extends StatefulWidget {
 class _EmployeeProductivityScreenState
     extends State<EmployeeProductivityScreen> {
   final List<String> titles = [
-    'Productivity Rules',
+    //'Productivity Rules',
     'Add Employee',
     'Employees Record',
     'Employees Ranking'
   ];
 
   final List<String> icons = [
-    'assets/icons/rules.png',
+    //'assets/icons/rules.png',
     'assets/icons/add_employee.png',
     'assets/icons/employee_record.png',
     'assets/icons/employee_rankings.png'
   ];
 
   final List<String> navigationVal = [
-    'rules',
+    //'rules',
     'add_employee',
     'employee_record',
     'employee_ranking'
@@ -58,6 +58,9 @@ class _EmployeeProductivityScreenState
         title: const Text('Employee Productivity'),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Stack(
         children: [

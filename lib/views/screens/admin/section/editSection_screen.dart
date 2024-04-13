@@ -39,6 +39,9 @@ class _EditSectionScreenState extends State<EditSectionScreen> {
       appBar: AppBar(
         title: const Text('Edit Section'),
         automaticallyImplyLeading: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       body: Provider.of<EditSectionViewModel>(context, listen: true).loading
           ? const Center(child: CircularProgressIndicator())

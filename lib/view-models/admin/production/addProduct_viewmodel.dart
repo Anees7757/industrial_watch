@@ -42,7 +42,7 @@ class AddProductViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
       },
     );
   }
@@ -86,7 +86,7 @@ class AddProductViewModel extends ChangeNotifier {
         },
         onError: (error) {
           print(error.toString());
-          customSnackBar(context, error.toString());
+          //customSnackBar(context, error.toString());
         },
       );
     } else {
@@ -158,22 +158,28 @@ class AddProductViewModel extends ChangeNotifier {
               width: double.infinity,
               // height: 56.79,
               color: const Color(0xFFDDDDDD).withOpacity(0.5),
-              child: DropdownButton(
-                hint: const Text('-- Choose --'),
-                isExpanded: true,
-                underline: const SizedBox(),
-                value: selectedMaterialId,
-                items: rawMaterials.map<DropdownMenuItem<int>>((map) {
-                  return DropdownMenuItem<int>(
-                    value: map['id'],
-                    child: Text(map['name']),
-                  );
-                }).toList(),
-                onChanged: (v) {
-                  selectedMaterialId = v!;
-                  setState(() {});
-                  // notifyListeners();
-                },
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  icon: Visibility(
+                      visible: rawMaterials.isEmpty ? false : true,
+                      child: Icon(Icons.arrow_drop_down)),
+                  hint: rawMaterials.isEmpty
+                      ? const Text('No Raw Material Found')
+                      : const Text('-- Choose --'),
+                  value: selectedMaterialId,
+                  isExpanded: true,
+                  items: rawMaterials.map<DropdownMenuItem<int>>((map) {
+                    return DropdownMenuItem<int>(
+                      value: map['id'],
+                      child: Text(map['name']),
+                    );
+                  }).toList(),
+                  onChanged: (v) {
+                    selectedMaterialId = v!;
+                    setState(() {});
+                    // notifyListeners();
+                  },
+                ),
               ),
             ),
           ),

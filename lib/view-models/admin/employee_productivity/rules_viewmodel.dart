@@ -27,7 +27,7 @@ class RulesViewModel extends ChangeNotifier {
       onError: (error) {
         print(error.toString());
         loading = false;
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
       },
     );
   }
@@ -52,7 +52,8 @@ class RulesViewModel extends ChangeNotifier {
           },
           onError: (error) {
             print(error.toString());
-            customSnackBar(context, error.toString());
+            //customSnackBar(context, error.toString());
+            notifyListeners();
           },
         );
         if (!context.mounted) return;
@@ -87,7 +88,7 @@ class RulesViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        customSnackBar(context, error.toString());
+        //customSnackBar(context, error.toString());
         notifyListeners();
       },
     );
