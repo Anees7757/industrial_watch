@@ -7,6 +7,7 @@ import 'global/global.dart';
 import 'utils/providers.dart';
 import 'utils/routes.dart';
 import 'utils/shared_prefs/shared_prefs.dart';
+import 'views/widgets/ipDialog.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
             pageTransitionsTheme: const PageTransitionsTheme(builders: {
               TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             }),
+            scaffoldBackgroundColor: Color(0xFFF7F7F7),
           ),
           initialRoute: userData.isEmpty
               ? '/login'

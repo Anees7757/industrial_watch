@@ -85,6 +85,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                               builder: (context) => BatchScreen(
                                                 product: dataProvider
                                                     .linkedProducts[index],
+                                                index: index,
                                               ),
                                             ),
                                           );

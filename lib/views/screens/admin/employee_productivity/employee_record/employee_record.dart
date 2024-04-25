@@ -70,9 +70,6 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
             onPressed: () {},
           ),
         ],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
       ),
       body: Column(
         children: [

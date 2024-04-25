@@ -12,6 +12,7 @@ void customSnackBar(BuildContext context, String msg) {
     elevation: 0.0,
     duration: const Duration(seconds: 3),
     behavior: SnackBarBehavior.floating,
+    dismissDirection: DismissDirection.down,
   );
 
   ScaffoldMessenger.of(context).showSnackBar(snackBar);

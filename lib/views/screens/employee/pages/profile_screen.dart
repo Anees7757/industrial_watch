@@ -3,8 +3,8 @@ import 'package:industrial_watch/global/global.dart';
 import 'package:industrial_watch/views/screens/employee/pages/editProfile_screen.dart';
 import 'package:industrial_watch/views/widgets/logout_dialog.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../view-models/admin/admin_viewmodel.dart';
+import '../../../widgets/semi_circle.dart';
 
 class EmployeeProfileScreen extends StatefulWidget {
   const EmployeeProfileScreen({super.key});
@@ -38,9 +38,6 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
             width: 10,
           ),
         ],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
       ),
       body: Column(
         children: [
@@ -50,14 +47,10 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
               alignment: Alignment.topCenter,
               children: [
                 Container(
-                  height: 120,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(500),
-                      bottomRight: Radius.circular(500),
-                    ),
+                  height: 0,
+                  child: CustomPaint(
+                    painter: SemicirclePainter(),
+                    child: SizedBox.expand(),
                   ),
                 ),
                 Positioned(

@@ -139,8 +139,7 @@ class _CreateBatchScreenState extends State<CreateBatchScreen> {
                                                 builder: (context) =>
                                                     ChooseStock(material: item),
                                               ),
-                                            ).whenComplete(() => dataProvider
-                                                .getQuantity(context));
+                                            );
                                           },
                                           child: const Text(
                                             'Choose Stock',
@@ -170,7 +169,10 @@ class _CreateBatchScreenState extends State<CreateBatchScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Center(
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              _createBatchViewmodel!
+                  .createBatch(context, widget.product['product_number']);
+            },
             child: customButton(context, 'Add Batch', 52, double.infinity),
           ),
         ),

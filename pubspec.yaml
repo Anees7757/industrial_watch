@@ -23,6 +23,11 @@ dependencies:
   flutter_custom_month_picker: ^0.1.3
   dio:
   flutter_multi_formatter: ^2.12.4
+  path_provider: ^2.0.2
+  http:
+  permission_handler:
+  flutter_local_notifications:
+  flutter_foreground_service: ^0.4.1
 
 dev_dependencies:
   flutter_test:

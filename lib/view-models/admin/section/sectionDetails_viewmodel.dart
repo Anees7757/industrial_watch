@@ -12,7 +12,7 @@ class SectionDetailViewModel extends ChangeNotifier {
     loading = true;
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Section/GetSectionRules?id=$id',
+      path: 'Section/GetSectionDetail?section_id=$id',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         loading = true;

@@ -46,7 +46,7 @@ class _ProductionScreenState extends State<ProductionScreen> {
           statusBarIconBrightness: Brightness.light),
     );
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      //backgroundColor: const Color(0xFFF7F7F7),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Production'),

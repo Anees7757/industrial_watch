@@ -1,4 +1,6 @@
+import 'package:industrial_watch/view-models/admin/section/archive_viewmodel.dart';
 import 'package:industrial_watch/views/screens/admin/production/addProduct_screen.dart';
+import 'package:industrial_watch/views/screens/admin/section/archives_screen.dart';
 import '../views/screens/admin/employee_productivity/employee_record/employee_record.dart';
 import '../views/screens/admin/employee_productivity/rankings_screen.dart';
 import '../views/screens/admin/production/inventory/inventory_screen.dart';
@@ -41,4 +43,5 @@ dynamic routes = {
   '/inventory': (context) => const InventoryScreen(),
   '/products': (context) => const ProductScreen(),
   '/linkProduct': (context) => const LinkProductScreen(),
+  '/archives': (context) => const ArchivesScreen(),
 };

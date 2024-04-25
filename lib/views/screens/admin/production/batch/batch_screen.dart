@@ -4,12 +4,14 @@ import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.da
 import 'package:industrial_watch/views/screens/admin/production/batch/createBatch_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../../widgets/custom_Button.dart';
+import '../../../../widgets/custom_dialogbox.dart';
 import 'batchDetails_screen.dart';
 
 class BatchScreen extends StatefulWidget {
   Map<String, dynamic> product;
+  int index;
 
-  BatchScreen({super.key, required this.product});
+  BatchScreen({super.key, required this.product, required this.index});
 
   @override
   State<BatchScreen> createState() => _BatchScreenState();
@@ -68,7 +70,12 @@ class _BatchScreenState extends State<BatchScreen> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: ElevatedButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  dataProvider.downloadImages(
+                                      context,
+                                      widget.product['product_number'],
+                                      widget.index);
+                                },
                                 icon: const Icon(
                                   Icons.cloud_download_rounded,
                                   color: Colors.white,
@@ -109,7 +116,11 @@ class _BatchScreenState extends State<BatchScreen> {
                                                   ['status'] ==
                                               1
                                           ? Colors.red.withOpacity(0.2)
-                                          : Colors.transparent,
+                                          : dataProvider.batches[index]
+                                                      ['status'] ==
+                                                  0
+                                              ? Colors.green.withOpacity(0.2)
+                                              : Colors.transparent,
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               horizontal: 15),
@@ -122,6 +133,9 @@ class _BatchScreenState extends State<BatchScreen> {
                                               batchNo:
                                                   dataProvider.batches[index]
                                                       ['batch_number'],
+                                              product_number: widget
+                                                  .product['product_number'],
+                                              index: index,
                                             ),
                                           ),
                                         );

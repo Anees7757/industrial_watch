@@ -2,6 +2,7 @@ import 'package:industrial_watch/view-models/admin/employee_productivity/ranking
 import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/inventory_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/rawMaterials_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/section/archive_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:industrial_watch/view-models/admin/admin_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/rules_viewmodel.dart';
@@ -109,5 +110,8 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => BatchDetailsViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => ArchivesViewModel(),
   ),
 ];

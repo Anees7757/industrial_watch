@@ -33,7 +33,7 @@ class AddSectionViewModel extends ChangeNotifier {
         }
 
         Map<String, dynamic> newSection = {
-          'name': sectionController.text,
+          'name': sectionController.text.trim(),
           'rules': selectedRules,
         };
 
@@ -84,7 +84,7 @@ class AddSectionViewModel extends ChangeNotifier {
     loading = true;
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Rule/get_all_rules',
+      path: 'Section/GetAllRule',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         loading = true;

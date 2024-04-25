@@ -47,8 +47,8 @@ class ApiClient {
       } else if (onSuccess != null && value.statusCode == 201) {
         print('Data Added Successfully');
       } else {
-        onError!(value);
-        showErrorScreen(context, value.statusCode!, value.statusMessage!);
+        onError!(value.data);
+        //showErrorScreen(context, value.statusCode!, value.statusMessage!);
       }
     }).onError((error, stackTrace) {
       onError!(error);

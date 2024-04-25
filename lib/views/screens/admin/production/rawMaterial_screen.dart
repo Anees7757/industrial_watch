@@ -48,7 +48,7 @@ class _RawMaterialScreenState extends State<RawMaterialScreen> {
                 margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
                 child: _rawMaterialsViewModel!.rawMaterials.isEmpty
                     ? const Center(
-                        child: Text('No Rule'),
+                        child: Text('No Raw Material'),
                       )
                     : ListView.builder(
                         itemCount: _rawMaterialsViewModel!.rawMaterials.length,

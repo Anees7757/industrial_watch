@@ -4,9 +4,15 @@ import 'package:provider/provider.dart';
 import '../../../../../view-models/admin/production/batchDetails_viewmodel.dart';
 
 class BatchDetailScreen extends StatefulWidget {
-  String? batchNo;
+  String batchNo;
+  String product_number;
+  int index;
 
-  BatchDetailScreen({super.key, required this.batchNo});
+  BatchDetailScreen(
+      {super.key,
+      required this.batchNo,
+      required this.product_number,
+      required this.index});
 
   @override
   State<BatchDetailScreen> createState() => _BatchDetailScreenState();
@@ -19,7 +25,7 @@ class _BatchDetailScreenState extends State<BatchDetailScreen> {
   void initState() {
     _batchDetailViewModel =
         Provider.of<BatchDetailsViewModel>(context, listen: false);
-    _batchDetailViewModel!.getBatchDetails(context, widget.batchNo!);
+    _batchDetailViewModel!.getBatchDetails(context, widget.batchNo);
     super.initState();
   }
 
@@ -79,12 +85,22 @@ class _BatchDetailScreenState extends State<BatchDetailScreen> {
                     );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        backgroundColor: Colors.grey[800],
-        label: Text('Download Images'),
-        icon: Icon(Icons.cloud_download_rounded),
-      ),
+      floatingActionButton:
+          !Provider.of<BatchDetailsViewModel>(context, listen: true).loading
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    _batchDetailViewModel!.downloadImages(
+                      context,
+                      widget.product_number,
+                      widget.batchNo,
+                      widget.index,
+                    );
+                  },
+                  backgroundColor: Colors.grey[800],
+                  label: Text('Download Images'),
+                  icon: Icon(Icons.cloud_download_rounded),
+                )
+              : SizedBox(),
     );
   }
 }
@@ -103,7 +119,9 @@ customProductCom(String title, dynamic value) {
       ),
       title.toLowerCase() != 'status'
           ? Text(
-              (value.isNotEmpty) ? '$value' : '--',
+              (value.isEmpty || value == 'null' || value == '-1.0%')
+                  ? '--'
+                  : '$value',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -114,11 +132,19 @@ customProductCom(String title, dynamic value) {
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
-                color: value == 1 ? Colors.red.shade800 : Colors.green.shade800,
+                color: value == 1
+                    ? Colors.red.shade800
+                    : value == 0
+                        ? Colors.green.shade800
+                        : Colors.blue,
               ),
               child: Center(
                 child: Text(
-                  value == 1 ? 'Rejected' : 'Accepted',
+                  value == 1
+                      ? 'Rejected'
+                      : value == 1
+                          ? 'Accepted'
+                          : 'Pending',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

@@ -6,22 +6,24 @@ Widget customButton(
     height: height,
     width: width,
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).primaryColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 3,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
-        ]),
+      borderRadius: BorderRadius.circular(height / 2.7),
+      color: Theme.of(context).primaryColor,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 3,
+          offset: const Offset(0, 2),
+        ),
+      ],
+    ),
     child: Center(
       child: Text(
         btnTitle,
+        textAlign: TextAlign.center,
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 16,
+          fontSize: 14.5,
           fontWeight: FontWeight.w500,
         ),
       ),

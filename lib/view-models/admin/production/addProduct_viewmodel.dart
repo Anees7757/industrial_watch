@@ -60,7 +60,7 @@ class AddProductViewModel extends ChangeNotifier {
           return {
             "raw_material_id": e['raw_material_id'],
             "quantity": int.parse(e['quantity']),
-            "unit": e['unit']
+            "unit": e['unit'].toString().toLowerCase()
           };
         }).toList()
       };

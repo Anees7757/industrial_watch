@@ -36,6 +36,42 @@ class _SectionsScreenState extends State<SectionsScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
+        actions: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: 7,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade800,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  color: Colors.black45,
+                ),
+              ],
+            ),
+            child: TextButton.icon(
+              label: Text(
+                'Achieves',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/archives');
+              },
+              icon: Icon(
+                Icons.archive_outlined,
+                color: Colors.white,
+                size: 22,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () => _refresh(context),
@@ -71,20 +107,31 @@ class _SectionsScreenState extends State<SectionsScreen> {
                                   IconButton(
                                     splashRadius: 20,
                                     onPressed: () {
-                                      _sectionsViewModel!.edit(context, index);
+                                      _sectionsViewModel!.archive(
+                                          context,
+                                          _sectionsViewModel!.sections[index]
+                                              ['id']);
                                     },
-                                    icon: const Icon(Icons.edit,
+                                    icon: const Icon(Icons.archive_rounded,
                                         color: Color(0xFF49454F)),
                                   ),
-                                  IconButton(
-                                    splashRadius: 20,
-                                    onPressed: () {
-                                      _sectionsViewModel!
-                                          .delete(context, index);
-                                    },
-                                    icon: const Icon(Icons.delete,
-                                        color: Color(0xFF49454F)),
-                                  ),
+                                  // IconButton(
+                                  //   splashRadius: 20,
+                                  //   onPressed: () {
+                                  //     _sectionsViewModel!.edit(context, index);
+                                  //   },
+                                  //   icon: const Icon(Icons.edit,
+                                  //       color: Color(0xFF49454F)),
+                                  // ),
+                                  // IconButton(
+                                  //   splashRadius: 20,
+                                  //   onPressed: () {
+                                  //     _sectionsViewModel!
+                                  //         .delete(context, index);
+                                  //   },
+                                  //   icon: const Icon(Icons.delete,
+                                  //       color: Color(0xFF49454F)),
+                                  // ),
                                 ],
                               ),
                               onTap: () {

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
-import '../../../views/screens/admin/section/editSection_screen.dart';
 import '../../../views/widgets/custom_snackbar.dart';
 
-class SectionsViewModel extends ChangeNotifier {
+class ArchivesViewModel extends ChangeNotifier {
   List<dynamic> sections = [];
   bool loading = true;
 
@@ -14,7 +13,7 @@ class SectionsViewModel extends ChangeNotifier {
     sections.clear();
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Section/GetAllSections?status=1',
+      path: 'Section/GetAllSections?status=0',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');
@@ -48,6 +47,7 @@ class SectionsViewModel extends ChangeNotifier {
         print(data);
         customSnackBar(context, data['message']);
         getSections(context);
+        // notifyListeners();
       },
       onError: (error) {
         print(error.toString());
@@ -55,21 +55,5 @@ class SectionsViewModel extends ChangeNotifier {
         notifyListeners();
       },
     );
-  }
-
-  void edit(BuildContext context, int index) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => EditSectionScreen(section: sections[index]),
-      ),
-    );
-    notifyListeners();
-  }
-
-  void delete(BuildContext context, int index) {
-    // if (index >= 0 && index < sections.length) {
-    //   sections.removeAt(index);
-    //   notifyListeners();
-    // }
   }
 }

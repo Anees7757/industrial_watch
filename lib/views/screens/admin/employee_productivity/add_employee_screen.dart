@@ -4,6 +4,8 @@ import 'package:industrial_watch/views/widgets/custom_Button.dart';
 import 'package:industrial_watch/views/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/semi_circle.dart';
+
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
 
@@ -68,9 +70,6 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         title: const Text('Add Employee'),
         automaticallyImplyLeading: true,
         elevation: 0.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
       ),
       body: Consumer<AddEmployeeViewModel>(builder: (context, provider, child) {
         return SingleChildScrollView(
@@ -84,21 +83,17 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     alignment: Alignment.topCenter,
                     children: [
                       Container(
-                        height: 120,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(500),
-                            bottomRight: Radius.circular(500),
-                          ),
+                        height: 0,
+                        child: CustomPaint(
+                          painter: SemicirclePainter(),
+                          child: SizedBox.expand(),
                         ),
                       ),
                       Positioned(
                         top: 50,
                         child: GestureDetector(
                           onTap: () {
-                            provider.showBottomSheet(context);
+                            provider.selectImages(context);
                           },
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
@@ -107,10 +102,21 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                               backgroundColor:
                                   const Color(0xFF2E81FE).withOpacity(0.7),
                               radius: 60,
-                              foregroundImage: provider.image == null
-                                  ? null
-                                  : FileImage(provider.image!),
-                              child: provider.image == null
+                              foregroundImage:
+                                  Provider.of<AddEmployeeViewModel>(context,
+                                                  listen: true)
+                                              .image ==
+                                          null
+                                      ? null
+                                      : FileImage(
+                                          Provider.of<AddEmployeeViewModel>(
+                                                  context,
+                                                  listen: true)
+                                              .image!),
+                              child: Provider.of<AddEmployeeViewModel>(context,
+                                              listen: true)
+                                          .image ==
+                                      null
                                   ? const Icon(
                                       Icons.add_a_photo_outlined,
                                       size: 30,
@@ -280,7 +286,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       }),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
-          height: 100,
+          height: 80,
           child: Center(
             child: GestureDetector(
               onTap: () => provider!.addEmployee(context),
