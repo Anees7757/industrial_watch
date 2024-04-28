@@ -1,4 +1,3 @@
-import 'package:industrial_watch/view-models/admin/section/archive_viewmodel.dart';
 import 'package:industrial_watch/views/screens/admin/production/addProduct_screen.dart';
 import 'package:industrial_watch/views/screens/admin/section/archives_screen.dart';
 import '../views/screens/admin/employee_productivity/employee_record/employee_record.dart';
@@ -15,7 +14,6 @@ import 'package:industrial_watch/views/screens/admin/employee_productivity/add_e
 import 'package:industrial_watch/views/screens/admin/employee_productivity/productivityRules_screen.dart';
 import 'package:industrial_watch/views/screens/admin/section/addSection_screen.dart';
 import 'package:industrial_watch/views/screens/admin/section/sections_screen.dart';
-import 'package:industrial_watch/views/screens/admin/supervisor/addSupervisor_screen.dart';
 import 'package:industrial_watch/views/screens/admin/supervisor/supervisors_screen.dart';
 import 'package:industrial_watch/views/screens/employee/dashboard_screen.dart';
 import 'package:industrial_watch/views/screens/supervisor/dashboard_screen.dart';
@@ -30,7 +28,6 @@ dynamic routes = {
   '/sections': (context) => const SectionsScreen(),
   '/addSection': (context) => const AddSectionScreen(),
   '/supervisorsView': (context) => const SupervisorScreen(),
-  '/addSupervisor': (context) => const AddSupervisorScreen(),
   '/production': (context) => const ProductionScreen(),
   '/employeeProductivity': (context) => const EmployeeProductivityScreen(),
   '/rules': (context) => const ProductivityRulesScreen(),

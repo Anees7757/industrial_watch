@@ -1,17 +1,12 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_foreground_service/flutter_foreground_service.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import '../../../contants/api_constants.dart';
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
-import '../../../views/widgets/custom_dialogbox.dart';
 import '../../../views/widgets/custom_snackbar.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:typed_data';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import 'package:flutter_foreground_service/foreground_service.dart';
@@ -120,7 +115,7 @@ class BatchViewModel extends ChangeNotifier {
         if (!await directory.exists())
           directory = await getExternalStorageDirectory();
       }
-    } catch (err, stack) {
+    } catch (err) {
       print("Cannot get download folder path");
     }
     return directory?.path;

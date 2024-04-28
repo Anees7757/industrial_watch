@@ -23,6 +23,7 @@ class SectionsViewModel extends ChangeNotifier {
         print('Data Processed');
         sections = data;
         sections = sections.toSet().toList();
+        print(sections);
         loading = false;
         notifyListeners();
       },

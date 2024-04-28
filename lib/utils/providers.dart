@@ -10,13 +10,14 @@ import 'package:industrial_watch/view-models/admin/production/addProduct_viewmod
 import 'package:industrial_watch/view-models/admin/production/production_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/section/addSection_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/section/sections_viewmodel.dart';
-import 'package:industrial_watch/view-models/admin/supervisor/addSupervisor_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/supervisor/editSupervisor_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/supervisor/supervisorsView_viewmodel.dart';
 import 'package:industrial_watch/view-models/auth/login_viewmodel.dart';
 import 'package:industrial_watch/view-models/employee/employee_viewmodel.dart';
 import 'package:industrial_watch/view-models/supervisor/supervisor_viewmodel.dart';
 
 import '../view-models/admin/employee_productivity/addEmployee_viewmodel.dart';
+import '../view-models/admin/employee_productivity/employeeRecord_viewmodel.dart';
 import '../view-models/admin/employee_productivity/employee_details/summary_viewmodel.dart';
 import '../view-models/admin/production/batchDetails_viewmodel.dart';
 import '../view-models/admin/production/chooseStock_viewmodel.dart';
@@ -52,7 +53,7 @@ dynamic providers = [
     create: (context) => SupervisorsViewModel(),
   ),
   ChangeNotifierProvider(
-    create: (context) => AddSupervisorViewModel(),
+    create: (context) => EditSupervisorViewModel(),
   ),
   ChangeNotifierProvider(
     create: (context) => ProductionViewModel(),
@@ -113,5 +114,8 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => ArchivesViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => EmployeeRecordViewModel(),
   ),
 ];

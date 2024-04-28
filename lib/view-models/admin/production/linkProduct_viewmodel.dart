@@ -47,9 +47,9 @@ class LinkProductViewModel extends ChangeNotifier {
   addProduct(context) async {
     Map<String, dynamic> newProduct = {};
 
-    if (selectedProduct.isNotEmpty ||
-        pieceController.text.isNotEmpty ||
-        packsController.text.isNotEmpty ||
+    if (selectedProduct.isNotEmpty &&
+        pieceController.text.isNotEmpty &&
+        packsController.text.isNotEmpty &&
         toleranceController.text.isNotEmpty) {
       newProduct = {
         "product_number": selectedProduct['product_number'],

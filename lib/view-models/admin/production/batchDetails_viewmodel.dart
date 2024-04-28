@@ -51,7 +51,7 @@ class BatchDetailsViewModel extends ChangeNotifier {
         if (!await directory.exists())
           directory = await getExternalStorageDirectory();
       }
-    } catch (err, stack) {
+    } catch (err) {
       print("Cannot get download folder path");
     }
     return directory?.path;

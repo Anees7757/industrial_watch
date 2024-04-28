@@ -7,7 +7,6 @@ import 'global/global.dart';
 import 'utils/providers.dart';
 import 'utils/routes.dart';
 import 'utils/shared_prefs/shared_prefs.dart';
-import 'views/widgets/ipDialog.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: userData.isEmpty
               ? '/login'
-              : '/${userData['role'].toString().toLowerCase()}',
+              : '/${userData['user_role'].toString().toLowerCase()}',
           routes: routes,
         ),
       ),

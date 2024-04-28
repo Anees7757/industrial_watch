@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +10,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../view-models/admin/admin_viewmodel.dart';
 import '../../widgets/custom_gridview.dart';
-import '../../widgets/ipDialog.dart';
 import '../../widgets/logout_dialog.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -49,7 +47,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     if (userDataString.isNotEmpty) {
       userData = jsonDecode(userDataString);
     }
-    Future.delayed(Duration.zero, () => showIPDialog(context));
+    // Future.delayed(Duration.zero, () => showIPDialog(context));
     super.initState();
   }
 

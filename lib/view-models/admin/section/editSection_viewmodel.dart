@@ -8,6 +8,7 @@ class EditSectionViewModel extends ChangeNotifier {
   List<TextEditingController> fineController = [];
 
   List<dynamic> rules = [];
+  List<dynamic> sectionRules = [];
   List<Map<String, dynamic>> selectedRules = [];
   List<TextEditingController> selectedTime = [];
 
@@ -15,15 +16,96 @@ class EditSectionViewModel extends ChangeNotifier {
 
   Map<String, bool> checkboxValues = {};
 
-  Future<void> addSection(context, Map<String, dynamic> section) async {
-    if (sectionController.text.isNotEmpty) {
+  Future<void> getRules(BuildContext context) async {
+    selectedRules.clear();
+    selectedTime.clear();
+    loading = true;
+    await ApiRepo().apiFetch(
+      context: context,
+      path: 'Section/GetAllRule',
+      requestMethod: RequestMethod.GET,
+      beforeSend: () {
+        print('Processing Data');
+      },
+      onSuccess: (data) async {
+        print('Data Processed');
+        // sections.add(data);
+        // sections = sections.toSet().toList();
+        // print(sections);
+        rules = await data;
+        rules = rules.toSet().toList();
+        print(rules);
+        for (int i = 0; i < rules.length; i++) {
+          fineController.add(TextEditingController());
+        }
+
+        for (var rule in rules.map((e) => e['name']).toList()) {
+          checkboxValues[rule] = false;
+          selectedTime.add(TextEditingController());
+        }
+
+        print(selectedTime);
+        notifyListeners();
+      },
+      onError: (error) {
+        print(error.toString());
+        //customSnackBar(context, error.toString());
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> getSectionRules(BuildContext context, int id) async {
+    loading = true;
+    await ApiRepo().apiFetch(
+      context: context,
+      path: 'Section/GetSectionDetail?section_id=$id',
+      requestMethod: RequestMethod.GET,
+      beforeSend: () {
+        print('Processing Data');
+      },
+      onSuccess: (data) async {
+        print('Data Processed');
+        sectionRules = await data['rules'];
+        sectionRules = sectionRules.toSet().toList();
+        print(sectionRules);
+        for (var sectionRule in sectionRules) {
+          var existingRule = rules.firstWhere(
+            (rule) => rule['name'] == sectionRule['rule_name'],
+            orElse: () => null,
+          );
+
+          if (existingRule != null) {
+            // Find the index of the existing rule
+            int index = rules.indexOf(existingRule);
+            fineController[index].text = sectionRule['fine'].toString();
+            checkboxValues[sectionRule['rule_name']] = true;
+            selectedTime[index].text = sectionRule['allowed_time'].toString();
+          }
+        }
+
+        print(selectedTime);
+        loading = false;
+        notifyListeners();
+      },
+      onError: (error) {
+        print(error.toString());
+        //customSnackBar(context, error.toString());
+        loading = false;
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> addSection(context, dynamic section) async {
+    if (sectionController.text.isNotEmpty && selectedRules.isNotEmpty) {
       if (checkboxValues.containsValue(true)) {
         int index = 0;
         for (var i in checkboxValues.entries) {
           if (i.value == true) {
             selectedRules.add({
               'rule_id': rules
-                  .where((element) => element['rule_name'] == i.key)
+                  .where((element) => element['name'] == i.key)
                   .first['id'],
               'fine': fineController[index].text,
               'allowed_time': selectedTime[index].text
@@ -33,35 +115,36 @@ class EditSectionViewModel extends ChangeNotifier {
         }
 
         Map<String, dynamic> newSection = {
-          'id': section['id'],
-          'name': sectionController.text,
+          'name': sectionController.text.trim(),
+          "id": section['id'],
           'rules': selectedRules,
         };
 
         print(newSection);
-        //
-        // await ApiRepo().apiFetch(
-        //   context: context,
-        //   path: 'Section/insert_section',
-        //   body: newSection,
-        //   requestMethod: RequestMethod.POST,
-        //   beforeSend: () {
-        //     print('Processing Data');
-        //   },
-        //   onSuccess: (data) {
-        //     print('Data Processed');
-        //     print(data);
-        //     customSnackBar(context, data['message']);
-        //     sectionController.clear();
-        //     selectedRules.clear();
-        //     fineController.clear();
-        //     Navigator.pop(context);
-        //   },
-        //   onError: (error) {
-        //     print(error.toString());
-        //     //customSnackBar(context, error.toString());
-        //   },
-        // );
+
+        await ApiRepo().apiFetch(
+          context: context,
+          path: 'Section/UpdateSection',
+          body: newSection,
+          requestMethod: RequestMethod.PUT,
+          beforeSend: () {
+            print('Processing Data');
+          },
+          onSuccess: (data) {
+            print('Data Processed');
+            print(data);
+            customSnackBar(context, data['message']);
+            sectionController.clear();
+            selectedRules.clear();
+            fineController.clear();
+            Navigator.pop(context);
+          },
+          onError: (error) {
+            print(error.toString());
+            //customSnackBar(context, error.toString());
+            notifyListeners();
+          },
+        );
       } else {
         customSnackBar(context, "Choose at least one rule");
       }
@@ -78,50 +161,5 @@ class EditSectionViewModel extends ChangeNotifier {
       selectedTime[index].clear();
     }
     notifyListeners();
-  }
-
-  Future<void> getRules(BuildContext context, int id) async {
-    loading = true;
-    await ApiRepo().apiFetch(
-      context: context,
-      path: 'Section/get_section_rules?id=$id',
-      requestMethod: RequestMethod.GET,
-      beforeSend: () {
-        loading = true;
-        print('Processing Data');
-      },
-      onSuccess: (data) async {
-        try {
-          print('Data Processed');
-          print(data);
-          rules = await data['rules'];
-          rules = rules.toSet().toList();
-          for (var i in rules) {
-            fineController.add(TextEditingController());
-            checkboxValues[i['rule_name']] = true;
-            selectedTime.add(TextEditingController());
-          }
-          for (var i = 0; i < rules.length; i++) {
-            fineController[i].text = rules[i]['fine'].toStringAsFixed(2);
-            selectedTime[i].text = rules[i]['allowed_time'].toString();
-          }
-
-          print(checkboxValues);
-
-          loading = false;
-          notifyListeners();
-        } catch (e) {
-          // if (!context.mounted) return;
-          print(e);
-          // customSnackBar(context, e.toString());
-        }
-      },
-      onError: (error) {
-        print(error.toString());
-        loading = false;
-        //customSnackBar(context, error.toString());
-        notifyListeners();
-      },
-    );
   }
 }

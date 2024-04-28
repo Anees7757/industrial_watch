@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
-import '../../../views/widgets/custom_snackbar.dart';
 
 class ProductViewModel extends ChangeNotifier {
   List<dynamic> linkedProducts = [];

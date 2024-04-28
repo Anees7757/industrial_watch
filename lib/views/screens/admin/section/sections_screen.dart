@@ -55,7 +55,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
             ),
             child: TextButton.icon(
               label: Text(
-                'Achieves',
+                'Archives',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
@@ -107,6 +107,14 @@ class _SectionsScreenState extends State<SectionsScreen> {
                                   IconButton(
                                     splashRadius: 20,
                                     onPressed: () {
+                                      _sectionsViewModel!.edit(context, index);
+                                    },
+                                    icon: const Icon(Icons.edit,
+                                        color: Color(0xFF49454F)),
+                                  ),
+                                  IconButton(
+                                    splashRadius: 20,
+                                    onPressed: () {
                                       _sectionsViewModel!.archive(
                                           context,
                                           _sectionsViewModel!.sections[index]
@@ -115,23 +123,6 @@ class _SectionsScreenState extends State<SectionsScreen> {
                                     icon: const Icon(Icons.archive_rounded,
                                         color: Color(0xFF49454F)),
                                   ),
-                                  // IconButton(
-                                  //   splashRadius: 20,
-                                  //   onPressed: () {
-                                  //     _sectionsViewModel!.edit(context, index);
-                                  //   },
-                                  //   icon: const Icon(Icons.edit,
-                                  //       color: Color(0xFF49454F)),
-                                  // ),
-                                  // IconButton(
-                                  //   splashRadius: 20,
-                                  //   onPressed: () {
-                                  //     _sectionsViewModel!
-                                  //         .delete(context, index);
-                                  //   },
-                                  //   icon: const Icon(Icons.delete,
-                                  //       color: Color(0xFF49454F)),
-                                  // ),
                                 ],
                               ),
                               onTap: () {
@@ -145,7 +136,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
                                         ),
                                       ),
                                     )
-                                    .then((value) => setState(() {}));
+                                    .whenComplete(() => _refresh);
                               },
                             ),
                           );
@@ -158,9 +149,9 @@ class _SectionsScreenState extends State<SectionsScreen> {
         child: Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .pushNamed('/addSection')
-                  .whenComplete(() => _refresh);
+              Navigator.of(context).pushNamed('/addSection').then(
+                    (value) => _refresh(context),
+                  );
             },
             child: customButton(context, 'Add Section', 50, 211),
           ),

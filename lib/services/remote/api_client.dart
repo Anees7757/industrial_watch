@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:industrial_watch/utils/error_screen.dart';
 
 import '../../utils/request_methods.dart';
 

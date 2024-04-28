@@ -4,7 +4,6 @@ import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.da
 import 'package:industrial_watch/views/screens/admin/production/batch/createBatch_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../../widgets/custom_Button.dart';
-import '../../../../widgets/custom_dialogbox.dart';
 import 'batchDetails_screen.dart';
 
 class BatchScreen extends StatefulWidget {

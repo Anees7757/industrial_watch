@@ -20,7 +20,8 @@ showIPDialog(BuildContext context) async {
       Column(children: [
         Row(
           children: [
-            Text('Current IP Address\n${ipUrl.split('//')[1].split(':').first}',
+            Text(
+                'Device\'s current  IP Address\n${ipUrl.split('//')[1].split(':').first}',
                 overflow: TextOverflow.visible,
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -41,7 +42,8 @@ showIPDialog(BuildContext context) async {
       ]),
       () => Navigator.pop(context),
       () {
-        ApiConstants.instance.baseurl = ' http://${ipController.text}:5000';
+        ipUrl = 'http://${ipController.text}:5000';
+        Navigator.pop(context);
       },
       'Change',
     );

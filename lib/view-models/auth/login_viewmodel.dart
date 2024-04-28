@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:industrial_watch/repositories/api_repo.dart';
@@ -22,7 +21,7 @@ class LoginViewModel extends ChangeNotifier {
 
       await ApiRepo().apiFetch(
         context: context,
-        path: 'User/Login?username=$username&password=$password',
+        path: 'Employee/Login?username=$username&password=$password',
         requestMethod: RequestMethod.GET,
         beforeSend: () {
           customDialogBox(
@@ -48,20 +47,21 @@ class LoginViewModel extends ChangeNotifier {
         onSuccess: (data) async {
           print('Data Processed');
           Navigator.pop(context);
-          if (data['role'] == null) {
+          if (data == null) {
             customSnackBar(context, data['message']);
             throw ();
-          }
-          userData = data;
-          debugPrint("role: ${data['role'].toString().toLowerCase()}");
-          await DataSharedPrefrences.setUser(jsonEncode(userData));
-          if (!context.mounted) return;
-          Navigator.of(context).pushReplacementNamed(
-              '/${userData['role'].toString().toLowerCase()}');
-          customSnackBar(context, 'Login Successful');
+          } else {
+            userData = data;
+            debugPrint("role: ${data['user_role'].toString().toLowerCase()}");
+            await DataSharedPrefrences.setUser(jsonEncode(userData));
+            if (!context.mounted) return;
+            Navigator.of(context).pushReplacementNamed(
+                '/${userData['user_role'].toString().toLowerCase()}');
+            customSnackBar(context, 'Login Successful');
 
-          usernameController.clear();
-          passwordController.clear();
+            usernameController.clear();
+            passwordController.clear();
+          }
           // switch (userData['role'].toString().toLowerCase()) {
           //   case 'admin':
           //     if (!context.mounted) return;

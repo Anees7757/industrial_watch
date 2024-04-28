@@ -136,13 +136,13 @@ customProductCom(String title, dynamic value) {
                     ? Colors.red.shade800
                     : value == 0
                         ? Colors.green.shade800
-                        : Colors.blue,
+                        : Colors.grey.shade500,
               ),
               child: Center(
                 child: Text(
                   value == 1
                       ? 'Rejected'
-                      : value == 1
+                      : value == 0
                           ? 'Accepted'
                           : 'Pending',
                   style: TextStyle(

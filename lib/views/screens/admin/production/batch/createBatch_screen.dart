@@ -71,7 +71,7 @@ class _CreateBatchScreenState extends State<CreateBatchScreen> {
                           CustomTextField(
                             controller: dataProvider.batchPerDayController,
                             hintText: 'e.g 200',
-                            action: TextInputAction.search,
+                            action: TextInputAction.done,
                             textInputType: TextInputType.number,
                             isFocus: false,
                           ),

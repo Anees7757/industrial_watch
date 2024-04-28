@@ -50,9 +50,9 @@ class AddProductViewModel extends ChangeNotifier {
   addProduct(context) async {
     Map<String, dynamic> newProduct = {};
 
-    if (selectedMaterials.isNotEmpty ||
-        nameController.text.isNotEmpty ||
-        selectedAngles.isNotEmpty && selectedMaterialId != -1) {
+    if (selectedMaterials.isNotEmpty &&
+        nameController.text.isNotEmpty &&
+        selectedAngles.isNotEmpty) {
       newProduct = {
         "name": nameController.text,
         "inspection_angles": selectedAngles.join(','),
