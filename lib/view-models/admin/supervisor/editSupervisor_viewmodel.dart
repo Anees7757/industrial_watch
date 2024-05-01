@@ -38,14 +38,13 @@ class EditSupervisorViewModel extends ChangeNotifier {
           () {},
           () {},
           "");
-      List<Map<String, dynamic>> selectedSectionsList = [];
+      List<int> selectedSectionsList = [];
 
       for (var element in sections) {
         if (selectedSections.contains(element['name'])) {
-          selectedSectionsList.add({
-            'id': element['id'],
-            // 'name': element['name'],
-          });
+          selectedSectionsList.add(
+            element['id'],
+          );
         }
       }
 

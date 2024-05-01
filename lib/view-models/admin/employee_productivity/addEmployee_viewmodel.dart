@@ -33,6 +33,7 @@ class AddEmployeeViewModel extends ChangeNotifier {
   bool loadingRoles = true;
 
   Future<void> getSections(BuildContext context) async {
+    isFirstTime = true;
     loadingSections = true;
     sections.clear();
     selectedSection = {};
@@ -117,20 +118,41 @@ class AddEmployeeViewModel extends ChangeNotifier {
     );
   }
 
+  bool isFirstTime = true;
+
   void selectImages(BuildContext context) async {
     // image = null;
     // imageFileList!.clear();
-    final List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
-    if (selectedImages!.isNotEmpty) {
-      imageFileList!.addAll(selectedImages);
+    if (isFirstTime) {
+      final List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
+      if (selectedImages!.isNotEmpty) {
+        if (selectedImages.length >= 5) {
+          imageFileList!.addAll(selectedImages);
+          if (image == null) {
+            final imageTemp = File(selectedImages.first.path);
+            this.image = imageTemp;
+            showBottomSheet(context);
+          }
+          print("Image List Length:" + imageFileList!.length.toString());
+          isFirstTime = false;
+          notifyListeners();
+        } else {
+          customSnackBar(context, 'Select at least 5 images');
+        }
+      }
+    } else {
+      final List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
+      if (selectedImages!.isNotEmpty) {
+        imageFileList!.addAll(selectedImages);
+        if (image == null) {
+          final imageTemp = File(selectedImages.first.path);
+          this.image = imageTemp;
+          // showBottomSheet(context);
+        }
+        print("Image List Length:" + imageFileList!.length.toString());
+        notifyListeners();
+      }
     }
-    if (image == null) {
-      final imageTemp = File(selectedImages.first.path);
-      this.image = imageTemp;
-      showBottomSheet(context);
-    }
-    print("Image List Length:" + imageFileList!.length.toString());
-    notifyListeners();
   }
 
   Future pickImage(ImageSource source) async {
@@ -157,7 +179,7 @@ class AddEmployeeViewModel extends ChangeNotifier {
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Container(
                 //   margin: const EdgeInsets.only(top: 15),
@@ -243,85 +265,95 @@ class AddEmployeeViewModel extends ChangeNotifier {
                 Expanded(
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            selectImages(context);
-                          },
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.grey),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.add_a_photo,
-                                color: Colors.grey,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 18),
+                      child: Wrap(
+                        alignment: WrapAlignment.start,
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              selectImages(context);
+                            },
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add_a_photo,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        ...List.generate(
-                          Provider.of<AddEmployeeViewModel>(context,
-                                  listen: true)
-                              .imageFileList!
-                              .length,
-                          (index) {
-                            return Stack(
-                              alignment: Alignment.topRight,
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: Colors.grey),
-                                    image: DecorationImage(
-                                      image: FileImage(File(
-                                          Provider.of<AddEmployeeViewModel>(
-                                                  context,
-                                                  listen: true)
-                                              .imageFileList![index]
-                                              .path)),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 4, top: 4),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.white.withOpacity(1),
-                                        spreadRadius: 1.5,
-                                        blurRadius: 15,
-                                        offset: Offset(0, 0),
+                          ...List.generate(
+                            Provider.of<AddEmployeeViewModel>(context,
+                                    listen: true)
+                                .imageFileList!
+                                .length,
+                            (index) {
+                              return Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: Colors.grey),
+                                      image: DecorationImage(
+                                        image: FileImage(File(
+                                            Provider.of<AddEmployeeViewModel>(
+                                                    context,
+                                                    listen: true)
+                                                .imageFileList![index]
+                                                .path)),
+                                        fit: BoxFit.cover,
                                       ),
-                                    ],
-                                  ),
-                                  child: GestureDetector(
-                                    child: Icon(
-                                      Icons.close,
-                                      color: Colors.black,
-                                      size: 21,
                                     ),
-                                    onTap: () {
-                                      imageFileList!.removeAt(index);
-                                      image = File(imageFileList!.first.path);
-                                      notifyListeners();
-                                    },
                                   ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ],
+                                  Container(
+                                    margin: EdgeInsets.only(right: 4, top: 4),
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.white.withOpacity(1),
+                                          spreadRadius: 1.5,
+                                          blurRadius: 15,
+                                          offset: Offset(0, 0),
+                                        ),
+                                      ],
+                                    ),
+                                    child: GestureDetector(
+                                      child: Icon(
+                                        Icons.close,
+                                        color: Colors.black,
+                                        size: 21,
+                                      ),
+                                      onTap: () {
+                                        imageFileList!.removeAt(index);
+                                        if (imageFileList!.isNotEmpty) {
+                                          image =
+                                              File(imageFileList!.first.path);
+                                        } else {
+                                          image = null;
+                                        }
+                                        notifyListeners();
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          if (imageFileList!.isEmpty) SizedBox(height: 100),
+                        ],
+                      ),
                     ),
                   ),
                 ),

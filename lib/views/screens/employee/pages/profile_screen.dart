@@ -69,14 +69,14 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
             ),
           ),
           Text(
-            employees[2].name,
+            userData['name'],
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22,
             ),
           ),
           Text(
-            employees[2].role,
+            'usama123',
             style: const TextStyle(
               fontSize: 15,
             ),
@@ -87,17 +87,18 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
               children: [
                 customContainer(
                   context: context,
-                  icon: Icons.email_rounded,
-                  title: employees[2].email,
+                  icon: Icons.person,
+                  imagePath: 'assets/icons/role.png',
+                  title: employees[2].role,
                 ),
                 customContainer(
                   context: context,
-                  icon: Icons.factory_rounded,
+                  icon: Icons.factory_outlined,
                   title: employees[2].section,
                 ),
                 customContainer(
                   context: context,
-                  icon: Icons.work_history_rounded,
+                  icon: Icons.work_history_outlined,
                   title: employees[2].jobType,
                 ),
                 const SizedBox(
@@ -133,6 +134,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
 Widget customContainer(
     {required BuildContext context,
     required IconData icon,
+    String? imagePath,
     required String title}) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -152,11 +154,18 @@ Widget customContainer(
           : MainAxisAlignment.start,
       mainAxisSize: title == 'Logout' ? MainAxisSize.min : MainAxisSize.max,
       children: [
-        Icon(
-          icon,
-          color:
-              title == 'Logout' ? Colors.red : Theme.of(context).primaryColor,
-        ),
+        imagePath == null
+            ? Icon(
+                icon,
+                color: title == 'Logout'
+                    ? Colors.red
+                    : Theme.of(context).primaryColor,
+              )
+            : Image.asset(
+                imagePath,
+                height: 26,
+                width: 26,
+              ),
         const SizedBox(
           width: 9,
         ),

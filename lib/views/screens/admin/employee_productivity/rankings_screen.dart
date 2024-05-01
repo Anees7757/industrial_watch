@@ -12,50 +12,22 @@ class EmployeesRankingScreen extends StatefulWidget {
 
 class _EmployeesRankingScreenState extends State<EmployeesRankingScreen> {
   EmployeesRankingViewModel? provider;
-  List<String> sections = ['All Sections'];
+  bool isFirstTime = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    provider = Provider.of<EmployeesRankingViewModel>(context);
-    sections.addAll(employees.map((e) => e.section).toList().toSet().toList());
-    provider!.selectedSection = sections.first;
+    if (isFirstTime) {
+      provider = Provider.of<EmployeesRankingViewModel>(context);
+      isFirstTime = false;
+      fetchData();
+    }
   }
 
-  customDropDown() {
-    return Container(
-      height: 56.79,
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: const Color(0xFFDDDDDD).withOpacity(0.5),
-      ),
-      child: Center(
-        child: DropdownButton(
-          isExpanded: true,
-          underline: const SizedBox(),
-          value: provider!.selectedSection,
-          items: sections
-              .map(
-                (e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(
-                    e,
-                    style: TextStyle(
-                      color: Colors.grey.shade700,
-                    ),
-                  ),
-                ),
-              )
-              .toList(),
-          onChanged: (item) {
-            provider!.selectedSection = item!;
-            setState(() {});
-          },
-        ),
-      ),
-    );
+  fetchData() async {
+    await Future.wait([
+      provider!.getSections(context),
+    ]);
   }
 
   @override
@@ -70,57 +42,121 @@ class _EmployeesRankingScreenState extends State<EmployeesRankingScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-        child: Consumer<EmployeesRankingViewModel>(
-          builder: (context, provider, child) {
-            return Column(
-              children: [
-                customDropDown(),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: employees.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          horizontalTitleGap: 5,
-                          leading: Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 68,
-                                padding: const EdgeInsets.all(2),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Theme.of(context).primaryColor),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: CircleAvatar(
-                                  radius: 23,
-                                  foregroundImage: AssetImage(
-                                    employees[index].imageUrl,
-                                  ),
-                                ),
-                              ),
-                              (index < 3)
-                                  ? Image.asset(
-                                      'assets/icons/rank/${index + 1}.png',
-                                      height: 30,
-                                    )
-                                  : const SizedBox(),
-                            ],
+      body: Provider.of<EmployeesRankingViewModel>(context, listen: true)
+              .loadingSections
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Container(
+              margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+              child: Consumer<EmployeesRankingViewModel>(
+                builder: (context, provider, child) {
+                  return Column(
+                    children: [
+                      Container(
+                        height: 56.79,
+                        margin: const EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFFDDDDDD).withOpacity(0.5),
+                        ),
+                        child: Center(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              isExpanded: true,
+                              icon: Visibility(
+                                  visible:
+                                      provider.sections.isEmpty ? false : true,
+                                  child: Icon(Icons.arrow_drop_down)),
+                              value: provider.selectedSection.isNotEmpty
+                                  ? provider.selectedSection
+                                  : null,
+                              hint: Provider.of<EmployeesRankingViewModel>(
+                                          context,
+                                          listen: true)
+                                      .loadingSections
+                                  ? const Text('loading...')
+                                  : provider.sections.isEmpty
+                                      ? const Text('No section found')
+                                      : const Text('-- Select Section --'),
+                              items: provider.sections
+                                  .map<DropdownMenuItem<Map<String, dynamic>>>(
+                                    (e) =>
+                                        DropdownMenuItem<Map<String, dynamic>>(
+                                      value: e,
+                                      child: Text(
+                                        e['name'],
+                                        style: TextStyle(
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (Map<String, dynamic>? item) {
+                                if (item != null) {
+                                  provider.sectionDropDownOnChanged(item);
+                                }
+                              },
+                            ),
                           ),
-                          title: Text(employees[index].name),
-                          trailing: Text('${employees[index].productivity}%'),
-                        );
-                      }),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            itemCount: employees.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    horizontalTitleGap: 5,
+                                    leading: Stack(
+                                      alignment: Alignment.topRight,
+                                      children: [
+                                        Container(
+                                          height: 50,
+                                          width: 68,
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: CircleAvatar(
+                                            radius: 23,
+                                            foregroundImage: AssetImage(
+                                              employees[index].imageUrl,
+                                            ),
+                                          ),
+                                        ),
+                                        (index < 3)
+                                            ? Image.asset(
+                                                'assets/icons/rank/${index + 1}.png',
+                                                height: 30,
+                                              )
+                                            : const SizedBox(),
+                                      ],
+                                    ),
+                                    title: Text(employees[index].name),
+                                    trailing: Text(
+                                        '${employees[index].productivity}%'),
+                                  ),
+                                  Divider(
+                                    height: 5,
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
     );
   }
 }

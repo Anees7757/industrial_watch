@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:industrial_watch/views/screens/employee/pages/home_screen.dart';
 import 'package:industrial_watch/views/screens/employee/pages/profile_screen.dart';
@@ -36,6 +37,11 @@ class _EmployeeDashboardState extends State<EmployeeDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light),
+    );
     return Scaffold(
       // appBar: AppBar(
       //   automaticallyImplyLeading: false,

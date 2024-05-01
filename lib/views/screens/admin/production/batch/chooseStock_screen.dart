@@ -37,7 +37,8 @@ class _ChooseStockState extends State<ChooseStock> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
-          title: Text('Choose stock for ${widget.material['name']}'),
+          titleSpacing: 0,
+          title: Text('Stock of ${widget.material['name']}'),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
