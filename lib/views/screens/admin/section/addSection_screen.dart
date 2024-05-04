@@ -154,7 +154,7 @@ class _AddSectionScreenState extends State<AddSectionScreen> {
                                                 inputFormatters: [
                                                   MaskedInputFormatter('##:##'),
                                                   LengthLimitingTextInputFormatter(
-                                                      8),
+                                                      5),
                                                 ],
                                                 onTap: () async {
                                                   if (_addSectionViewModel!

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employeeRecord_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../global/global.dart';
+import '../../../../widgets/custom_nodata.dart';
 import '../../../../widgets/custom_textfield.dart';
 import 'record_details/employee_details.dart';
 
@@ -39,6 +41,12 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          Provider.of<EmployeeRecordViewModel>(context, listen: true)
+                  .sections
+                  .isNotEmpty
+              ? Color(0xFFF7F7F7)
+              : Colors.white,
       appBar: AppBar(
         //title: const Text('Employees Record'),
         automaticallyImplyLeading: true,
@@ -181,101 +189,194 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                 ),
               ],
             ),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                child: GridView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: employees.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 1,
-                    ),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EmployeesDetailScreen(
-                                      empId: employees[index].id!)));
-                        },
+            Provider.of<EmployeeRecordViewModel>(context, listen: true)
+                    .loadingSections
+                ? buildShimmer()
+                : provider.sections.isEmpty
+                    ? customNoDataWidget()
+                    : Expanded(
                         child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade300,
-                                offset: Offset(0, 0),
-                                spreadRadius: 0.7,
-                                blurRadius: 5,
+                          margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                          child: GridView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: employees.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 1,
                               ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: Image.asset(
-                                      employees[index].imageUrl,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                EmployeesDetailScreen(
+                                                    empId:
+                                                        employees[index].id!)));
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.shade300,
+                                          offset: Offset(0, 0),
+                                          spreadRadius: 0.7,
+                                          blurRadius: 5,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              child: Image.asset(
+                                                employees[index].imageUrl,
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                              ),
+                                            ),
+                                            Container(
+                                              alignment: Alignment.topRight,
+                                              margin: const EdgeInsets.all(5),
+                                              child: Text(
+                                                '${employees[index].productivity}%',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 12,
+                                                  color: Colors.amber.shade700,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            employees[index].name,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            employees[index].section,
+                                            style: TextStyle(
+                                              color: Colors.grey.shade500,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Container(
-                                    alignment: Alignment.topRight,
-                                    margin: const EdgeInsets.all(5),
-                                    child: Text(
-                                      '${employees[index].productivity}%',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12,
-                                        color: Colors.amber.shade700,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  employees[index].name,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  employees[index].section,
-                                  style: TextStyle(
-                                    color: Colors.grey.shade500,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                );
+                              }),
                         ),
-                      );
-                    }),
-              ),
-            ),
+                      ),
           ],
         );
       }),
     );
   }
+}
+
+buildShimmer() {
+  return Expanded(
+    child: Container(
+      margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: 6,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            childAspectRatio: 1,
+          ),
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    offset: Offset(0, 0),
+                    spreadRadius: 0.7,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Shimmer.fromColors(
+                      baseColor: const Color(0xFFDDDDDD),
+                      highlightColor: Colors.grey.shade400,
+                      child: Container(
+                        height: 100,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDDDDDD),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 13),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Shimmer.fromColors(
+                      baseColor: const Color(0xFFDDDDDD),
+                      highlightColor: Colors.grey.shade400,
+                      child: Container(
+                        height: 10,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDDDDDD),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Shimmer.fromColors(
+                      baseColor: const Color(0xFFDDDDDD),
+                      highlightColor: Colors.grey.shade400,
+                      child: Container(
+                        height: 8,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFDDDDDD),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+    ),
+  );
 }

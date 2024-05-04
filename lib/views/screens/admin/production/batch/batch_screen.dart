@@ -171,7 +171,7 @@ class _BatchScreenState extends State<BatchScreen> {
                   builder: (context) =>
                       CreateBatchScreen(product: widget.product),
                 ),
-              ).whenComplete(() => _refreshRawMaterials);
+              ).then((value) => _refreshRawMaterials);
             },
             child: customButton(context, 'Create Batch', 52, double.infinity),
           ),

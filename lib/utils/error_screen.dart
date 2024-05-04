@@ -63,13 +63,13 @@ class CustomError extends StatelessWidget {
   String _getImagePath(int statusCode) {
     switch (statusCode) {
       case 404:
-        return 'assets/images/404.jpg';
+        return 'assets/errors/images/404.jpg';
       case 500:
-        return 'assets/images/500.jpg';
+        return 'assets/errors/images/500.jpg';
       case 503:
-        return 'assets/images/503.jpg';
+        return 'assets/errors/images/503.jpg';
       case 504:
-        return 'assets/images/404.jpg';
+        return 'assets/errors/images/404.jpg';
       default:
         return 'assets/images/default_error.jpg';
     }

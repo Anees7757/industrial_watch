@@ -22,6 +22,11 @@ class EmployeesRankingViewModel extends ChangeNotifier {
       },
       onSuccess: (data) {
         print('Data Processed');
+        sections.add({
+          'id': -1,
+          'name': "All Sections",
+        });
+        selectedSection = sections.first;
         for (var i in data) {
           sections.add(i);
         }

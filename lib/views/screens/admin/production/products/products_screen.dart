@@ -118,8 +118,8 @@ class _ProductScreenState extends State<ProductScreen> {
         child: Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed('/linkProduct').whenComplete(
-                    () => _productsViewModel!.getProducts(context),
+              Navigator.of(context).pushNamed('/linkProduct').then(
+                    (value) => _productsViewModel!.getProducts(context),
                   );
             },
             child: customButton(context, 'Link Product', 52, double.infinity),

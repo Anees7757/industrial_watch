@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../utils/error_screen.dart';
 import '../../utils/request_methods.dart';
 
 class ApiClient {
@@ -38,16 +39,17 @@ class ApiClient {
       headers: headers,
       queryParameters: queryParameters,
       method: getHttpMethod(requestMethod!),
+      // sendTimeout: Duration(seconds: 1),
     );
 
     Dio().fetch(options).then((value) {
       if (onSuccess != null && value.statusCode == 200) {
         onSuccess(value.data);
       } else if (onSuccess != null && value.statusCode == 201) {
-        print('Data Added Successfully');
+        print(value.data['message']);
       } else {
         onError!(value.data);
-        //showErrorScreen(context, value.statusCode!, value.statusMessage!);
+        // showErrorScreen(context, value.statusCode!, value.statusMessage!);
       }
     }).onError((error, stackTrace) {
       onError!(error);

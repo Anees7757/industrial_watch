@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:industrial_watch/global/global.dart';
@@ -7,9 +7,9 @@ import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
 import 'package:industrial_watch/utils/word_capitalize.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../view-models/admin/admin_viewmodel.dart';
 import '../../widgets/custom_gridview.dart';
+import '../../widgets/ipDialog.dart';
 import '../../widgets/logout_dialog.dart';
 
 class AdminDashboard extends StatefulWidget {
@@ -47,7 +47,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
     if (userDataString.isNotEmpty) {
       userData = jsonDecode(userDataString);
     }
-    // Future.delayed(Duration.zero, () => showIPDialog(context));
     super.initState();
   }
 
@@ -67,60 +66,87 @@ class _AdminDashboardState extends State<AdminDashboard> {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light),
     );
-    return Scaffold(
-      //backgroundColor: const Color(0xFFF7F7F7),
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Admin Dashboard'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              logoutDialogBox(
-                  context,
-                  () => Provider.of<AdminViewModel>(context, listen: false)
-                      .logout(context));
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: Column(
-        children: [
-          Stack(
-            alignment: Alignment.centerLeft,
-            textDirection: TextDirection.ltr,
-            children: [
-              svg,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 40),
-                    const Text('Welcome,',
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
-                    const SizedBox(height: 5),
-                    Text(userData['name'].toString().capitalize(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Colors.white)),
-                  ],
+    return FloatingDraggableWidget(
+      mainScreenWidget: Scaffold(
+        //backgroundColor: const Color(0xFFF7F7F7),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text('Admin Dashboard'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                logoutDialogBox(
+                    context,
+                    () => Provider.of<AdminViewModel>(context, listen: false)
+                        .logout(context));
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+        ),
+        body: Column(
+          children: [
+            Stack(
+              alignment: Alignment.centerLeft,
+              textDirection: TextDirection.ltr,
+              children: [
+                svg,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 40),
+                      const Text('Welcome,',
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                      const SizedBox(height: 5),
+                      Text(userData['name'].toString().capitalize(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                              color: Colors.white)),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          CustomGridView(
-            titles: titles,
-            navigationVal: navigationVal,
-            icons: icons,
-            dashboard: 'admin',
-          ),
-        ],
+              ],
+            ),
+            CustomGridView(
+              titles: titles,
+              navigationVal: navigationVal,
+              icons: icons,
+              dashboard: 'admin',
+            ),
+          ],
+        ),
       ),
+      floatingWidget: Opacity(
+        opacity: 0.3,
+        child: FloatingActionButton(
+          onPressed: () {
+            showIPDialog(context);
+          },
+          child: const Icon(
+            Icons.change_circle_outlined,
+            size: 35,
+          ),
+        ),
+      ),
+      speed: 9.0,
+      autoAlign: true,
+      isDraggable: true,
+      deleteWidget: cancel,
+      dy: MediaQuery.of(context).size.height / 2,
+      dx: -10,
+      floatingWidgetHeight: 45,
+      floatingWidgetWidth: 45,
     );
   }
 }
+
+final Widget cancel = SvgPicture.asset(
+  'assets/icons/cancel.svg',
+  color: Colors.grey.shade400,
+);

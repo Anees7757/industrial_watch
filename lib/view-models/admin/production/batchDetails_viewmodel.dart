@@ -96,11 +96,11 @@ class BatchDetailsViewModel extends ChangeNotifier {
 
   void downloadImages(BuildContext context, String product_number,
       String batch_number, int index) async {
-    await startForegroundService;
-    customSnackBar(context, 'Downloading will start soon');
     final permission = await Permission.storage.request();
 
     if (permission.isGranted) {
+      // await startForegroundService;
+      // customSnackBar(context, 'Downloading will start soon');
       createDirectory();
       NotificationService notificationService = NotificationService();
 
@@ -109,36 +109,61 @@ class BatchDetailsViewModel extends ChangeNotifier {
       final fileName = 'defected_items_${product_number}_$batch_number.zip';
 
       final dio = Dio();
-
       try {
-        String? dir = await getDownloadPath();
-        dio.download(downloadUrl, "${dir!}/Industrial Watch/$fileName",
-            onReceiveProgress: ((count, total) async {
-          await Future.delayed(const Duration(seconds: 1), () async {
-            // _progressList[0] = (count / total);
-            if (count < total) {
-              notificationService.createNotification(
-                  100,
-                  ((count / total) * 100).toInt(),
-                  index,
-                  'Downloading...',
-                  product_number,
-                  batch_number);
+        await dio.get(downloadUrl).then((value) async {
+          if (value.statusCode == 200 &&
+              !(value.data.toString().contains('message'))) {
+            customSnackBar(context, 'Downloading will start soon');
+            await startForegroundService;
+            String? dir = await getDownloadPath();
+            dio.download(
+              downloadUrl,
+              "${dir!}/Industrial Watch/$fileName",
+              onReceiveProgress: ((count, total) async {
+                if (total != 0) {
+                  await Future.delayed(const Duration(seconds: 1), () async {
+                    //_progressList[0] = (count / total);
+                    if (count < total) {
+                      notificationService.createNotification(
+                          100,
+                          ((count / total) * 100).toInt(),
+                          index,
+                          'Downloading...',
+                          product_number,
+                          batch_number);
+                    }
+                    if (count == total) {
+                      // Navigator.pop(context);
+                      await FlutterLocalNotificationsPlugin().cancel(index);
+                      notificationService.createNotification(
+                          100,
+                          ((count / total) * 100).toInt(),
+                          index,
+                          'Downloading Completed',
+                          product_number,
+                          batch_number);
+                      await ForegroundService().stop;
+                      // customSnackBar(context, 'Successfully Downloaded');
+                    }
+                    notifyListeners();
+                  });
+                } else {
+                  throw ();
+                }
+              }),
+            ).onError((error, stackTrace) async {
+              throw ();
+            });
+          } else {
+            if (value.statusCode == 200) {
+              await ForegroundService().stop;
+              customSnackBar(context, value.data['message']);
+            } else {
+              await ForegroundService().stop;
+              throw (value.toString());
             }
-            if (count == total) {
-              // Navigator.pop(context);
-              notificationService.createNotification(
-                  100,
-                  ((count / total) * 100).toInt(),
-                  index,
-                  'Downloading Completed',
-                  product_number,
-                  batch_number);
-              // await ForegroundService().stop;
-            }
-            notifyListeners();
-          });
-        }));
+          }
+        });
       } catch (e) {
         customSnackBar(context, 'Downloading failed, try again');
         print("error downloading file $e");
@@ -151,7 +176,6 @@ class BatchDetailsViewModel extends ChangeNotifier {
 }
 
 class NotificationService {
-  //Hanle displaying of notifications.
   static final NotificationService _notificationService =
       NotificationService._internal();
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =

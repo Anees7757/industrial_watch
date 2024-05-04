@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../view-models/admin/section/sections_viewmodel.dart';
 import '../../../widgets/custom_Button.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SectionsScreen extends StatefulWidget {
   const SectionsScreen({super.key});
@@ -59,7 +60,9 @@ class _SectionsScreenState extends State<SectionsScreen> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/archives');
+                Navigator.pushNamed(context, '/archives').then(
+                  (value) => _refresh(context),
+                );
               },
               icon: Icon(
                 Icons.archive_outlined,
@@ -76,7 +79,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
       body: RefreshIndicator(
         onRefresh: () => _refresh(context),
         child: Provider.of<SectionsViewModel>(context, listen: true).loading
-            ? const Center(
+            ? Center(
                 child: CircularProgressIndicator(),
               )
             : Container(
@@ -136,7 +139,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
                                         ),
                                       ),
                                     )
-                                    .whenComplete(() => _refresh);
+                                    .then((value) => _refresh);
                               },
                             ),
                           );
@@ -144,19 +147,22 @@ class _SectionsScreenState extends State<SectionsScreen> {
                       ),
               ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 80,
-        child: Center(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/addSection').then(
-                    (value) => _refresh(context),
-                  );
-            },
-            child: customButton(context, 'Add Section', 50, 211),
-          ),
-        ),
-      ),
+      bottomNavigationBar:
+          (!Provider.of<SectionsViewModel>(context, listen: true).loading)
+              ? SizedBox(
+                  height: 80,
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/addSection').then(
+                              (value) => _refresh(context),
+                            );
+                      },
+                      child: customButton(context, 'Add Section', 50, 211),
+                    ),
+                  ),
+                )
+              : null,
     );
   }
 }

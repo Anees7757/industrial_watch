@@ -28,6 +28,8 @@ dependencies:
   permission_handler:
   flutter_local_notifications:
   flutter_foreground_service: ^0.4.1
+  shimmer: ^3.0.0
+  floating_draggable_widget: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +41,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/images/
     - assets/icons/
     - assets/icons/navbar_icons/

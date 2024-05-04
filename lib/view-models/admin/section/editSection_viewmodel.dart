@@ -76,11 +76,12 @@ class EditSectionViewModel extends ChangeNotifier {
           );
 
           if (existingRule != null) {
-            // Find the index of the existing rule
             int index = rules.indexOf(existingRule);
-            fineController[index].text = sectionRule['fine'].toString();
+            fineController[index].text =
+                sectionRule['fine'].toString().split('.')[0];
             checkboxValues[sectionRule['rule_name']] = true;
-            selectedTime[index].text = sectionRule['allowed_time'].toString();
+            selectedTime[index].text =
+                '${sectionRule['allowed_time'].toString().split(":")[0]}:${sectionRule['allowed_time'].toString().split(":")[1]}';
           }
         }
 
@@ -98,7 +99,7 @@ class EditSectionViewModel extends ChangeNotifier {
   }
 
   Future<void> addSection(context, dynamic section) async {
-    if (sectionController.text.isNotEmpty && selectedRules.isNotEmpty) {
+    if (sectionController.text.isNotEmpty) {
       if (checkboxValues.containsValue(true)) {
         int index = 0;
         for (var i in checkboxValues.entries) {

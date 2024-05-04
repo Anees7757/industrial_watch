@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_foreground_service/flutter_foreground_service.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../../contants/api_constants.dart';
 import '../../../repositories/api_repo.dart';
+import '../../../utils/error_screen.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -162,53 +164,74 @@ class BatchViewModel extends ChangeNotifier {
 
   void downloadImages(
       BuildContext context, String product_number, int index) async {
-    await startForegroundService;
-    createDirectory();
-    customSnackBar(context, 'Downloading will start soon');
     final permission = await Permission.storage.request();
 
     if (permission.isGranted) {
+      createDirectory();
       NotificationService notificationService = NotificationService();
 
       final downloadUrl =
-          '${ApiConstants.instance.baseurl}Production/GetAllDefectedImages?product_number=$product_number';
+          '${ApiConstants.instance.baseurl}Production/GetAllDefectedImages?product_number=${Uri.encodeComponent(product_number)}';
       final fileName = 'defected_items_$product_number.zip';
 
       final dio = Dio();
-
       try {
-        String? dir = await getDownloadPath();
-        dio.download(downloadUrl, "${dir!}/Industrial Watch/$fileName",
-            onReceiveProgress: ((count, total) async {
-          await Future.delayed(const Duration(seconds: 1), () async {
-            //_progressList[0] = (count / total);
-            if (count < total) {
-              notificationService.createNotification(
-                  100,
-                  ((count / total) * 100).toInt(),
-                  index,
-                  'Downloading...',
-                  product_number);
+        await dio.get(downloadUrl).then((value) async {
+          if (value.statusCode == 200 &&
+              !(value.data.toString().contains('message'))) {
+            customSnackBar(context, 'Downloading will start soon');
+            await startForegroundService;
+            String? dir = await getDownloadPath();
+            dio.download(
+              downloadUrl,
+              "${dir!}/Industrial Watch/$fileName",
+              onReceiveProgress: ((count, total) async {
+                if (total != 0) {
+                  await Future.delayed(const Duration(seconds: 1), () async {
+                    //_progressList[0] = (count / total);
+                    if (count < total) {
+                      notificationService.createNotification(
+                          100,
+                          ((count / total) * 100).toInt(),
+                          index,
+                          'Downloading...',
+                          product_number);
+                    }
+                    if (count == total) {
+                      // Navigator.pop(context);
+                      await FlutterLocalNotificationsPlugin().cancel(index);
+                      notificationService.createNotification(
+                          100,
+                          ((count / total) * 100).toInt(),
+                          index,
+                          'Downloading Completed',
+                          product_number);
+                      // await ForegroundService().stop();
+                      // customSnackBar(context, 'Successfully Downloaded');
+                    }
+                    notifyListeners();
+                  });
+                } else {
+                  throw ();
+                }
+              }),
+            ).onError((error, stackTrace) async {
+              throw ();
+            });
+          } else {
+            if (value.statusCode == 200) {
+              await ForegroundService().stop;
+              customSnackBar(context, value.data['message']);
+            } else {
+              await ForegroundService().stop;
+              throw (value.toString());
             }
-            if (count == total) {
-              // Navigator.pop(context);
-              await FlutterLocalNotificationsPlugin().cancel(index);
-              notificationService.createNotification(
-                  100,
-                  ((count / total) * 100).toInt(),
-                  index,
-                  'Downloading Completed',
-                  product_number);
-              // await ForegroundService().stop();
-              // customSnackBar(context, 'Successfully Downloaded');
-            }
-            notifyListeners();
-          });
-        }));
+          }
+        });
       } catch (e) {
         customSnackBar(context, 'Downloading failed, try again');
         print("error downloading file $e");
-        // await ForegroundService().stop();
+        await ForegroundService().stop;
       }
     } else {
       customSnackBar(context, 'Permission Denied');
@@ -217,7 +240,6 @@ class BatchViewModel extends ChangeNotifier {
 }
 
 class NotificationService {
-  //Hanle displaying of notifications.
   static final NotificationService _notificationService =
       NotificationService._internal();
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -252,13 +274,13 @@ class NotificationService {
       importance: Importance.max,
       priority: Priority.high,
       onlyAlertOnce: true,
-      showProgress: title == 'Downloading Completed' ? false : true,
+      showProgress: (title == 'Downloading Completed') ? false : true,
       maxProgress: count,
       colorized: true,
       // color: Colors.blue,
       progress: i,
       styleInformation: BigTextStyleInformation(
-        summaryText: title == 'Downloading Completed' ? null : '$i%',
+        summaryText: (title == 'Downloading Completed') ? null : '$i%',
         contentTitle: title,
         'defected_images_$product_number.zip',
       ),

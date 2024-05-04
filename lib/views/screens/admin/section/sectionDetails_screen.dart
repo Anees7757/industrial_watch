@@ -77,10 +77,10 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                                 ),
                               ),
                               subtitle: Text(
-                                "Allowed Time: ${rule['allowed_time']}",
+                                "Allowed Time: ${rule['allowed_time'].toString().split(":")[0]}:${rule['allowed_time'].toString().split(":")[1]}",
                               ),
                               trailing: Text(
-                                'Rs. ${rule['fine']}',
+                                'Rs. ${rule['fine'].toString().split('.')[0]}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -109,12 +109,17 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
         child: Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
+              Navigator.of(context)
+                  .push(
                 MaterialPageRoute(
                   builder: (context) =>
                       EditSectionScreen(section: widget.section),
                 ),
-              );
+              )
+                  .then((value) {
+                fetchData();
+                setState(() {});
+              });
             },
             child: customButton(context, 'Edit Section', 50, 211),
           ),

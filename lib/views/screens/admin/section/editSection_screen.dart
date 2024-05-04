@@ -153,7 +153,7 @@ class _EditSectionScreenState extends State<EditSectionScreen> {
                                               inputFormatters: [
                                                 MaskedInputFormatter('##:##'),
                                                 LengthLimitingTextInputFormatter(
-                                                    8),
+                                                    5),
                                               ],
                                               onTap: () async {
                                                 if (_editSectionViewModel!
