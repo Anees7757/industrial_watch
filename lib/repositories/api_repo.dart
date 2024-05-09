@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../contants/api_constants.dart';
+import '../constants/api_constants.dart';
 import '../services/remote/api_client.dart';
 import '../utils/request_methods.dart';
 

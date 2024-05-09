@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 customNoDataWidget() {
-  return SizedBox(
-    width: double.infinity,
-    height: double.infinity,
+  return Expanded(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

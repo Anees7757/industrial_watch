@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employeeRecord_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -90,11 +92,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   : null,
             ),
             onChanged: (query) {
-              // if (widget.hintText == 'Search') {
-              //   Provider.of<ProductionViewModel>(context, listen: false)
-              //       .search(context, query);
-              //   setState(() {});
-              // }
+              if (widget.hintText == 'Search Employee') {
+                Provider.of<EmployeeRecordViewModel>(context, listen: false)
+                    .search(context, query);
+                setState(() {});
+              }
             },
           ),
         ),

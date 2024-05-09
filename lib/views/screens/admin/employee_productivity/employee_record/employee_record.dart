@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employeeRecord_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../../global/global.dart';
 import '../../../../widgets/custom_nodata.dart';
 import '../../../../widgets/custom_textfield.dart';
@@ -21,7 +23,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
   fetchData() async {
     await Future.wait([
       _employeeRecordViewModel!.getSections(context),
-      // _employeeRecordViewModel!.getEmployees(context),
+      _employeeRecordViewModel!.getEmployees(context, -1),
     ]);
   }
 
@@ -43,7 +45,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
     return Scaffold(
       backgroundColor:
           Provider.of<EmployeeRecordViewModel>(context, listen: true)
-                  .sections
+                  .employees
                   .isNotEmpty
               ? Color(0xFFF7F7F7)
               : Colors.white,
@@ -171,6 +173,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                             onChanged: (Map<String, dynamic>? item) {
                               if (item != null) {
                                 provider.dropDownOnChanged(item);
+                                provider.getEmployees(context, item['id']);
                               }
                             },
                           ),
@@ -190,16 +193,16 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
               ],
             ),
             Provider.of<EmployeeRecordViewModel>(context, listen: true)
-                    .loadingSections
+                    .loadingEmployees
                 ? buildShimmer()
-                : provider.sections.isEmpty
+                : provider.employees.isEmpty
                     ? customNoDataWidget()
                     : Expanded(
                         child: Container(
                           margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                           child: GridView.builder(
                               physics: const BouncingScrollPhysics(),
-                              itemCount: employees.length,
+                              itemCount: provider.employees.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -215,8 +218,8 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 EmployeesDetailScreen(
-                                                    empId:
-                                                        employees[index].id!)));
+                                                    employee: provider
+                                                        .employees[index])));
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(5),
@@ -239,21 +242,35 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                             ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(5),
-                                              child: Image.asset(
-                                                employees[index].imageUrl,
-                                                fit: BoxFit.cover,
+                                              child: Container(
+                                                height: 100,
                                                 width: double.infinity,
+                                                color: Colors.grey.shade200,
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      "${ApiConstants.instance.baseurl}EmployeeImage/${Uri.encodeComponent(provider.employees[index]['image'])}",
+                                                  fit: BoxFit.cover,
+                                                  width: double.infinity,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CupertinoActivityIndicator(),
+                                                  ),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          new Icon(Icons.error),
+                                                ),
                                               ),
                                             ),
                                             Container(
                                               alignment: Alignment.topRight,
                                               margin: const EdgeInsets.all(5),
                                               child: Text(
-                                                '${employees[index].productivity}%',
+                                                '${(provider.employees[index]['productivity']).toInt()}%',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 12,
-                                                  color: Colors.amber.shade700,
+                                                  color: Colors.amber.shade900,
                                                 ),
                                               ),
                                             ),
@@ -263,7 +280,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            employees[index].name,
+                                            provider.employees[index]['name'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 12,
@@ -274,7 +291,8 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            employees[index].section,
+                                            provider.employees[index]
+                                                ['section_name'],
                                             style: TextStyle(
                                               color: Colors.grey.shade500,
                                               fontWeight: FontWeight.w500,

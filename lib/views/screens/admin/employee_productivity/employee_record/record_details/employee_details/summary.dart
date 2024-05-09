@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:industrial_watch/global/global.dart';
-import 'package:industrial_watch/view-models/admin/employee_productivity/employee_details/summary_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/summary_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 

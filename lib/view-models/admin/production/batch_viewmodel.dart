@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_foreground_service/flutter_foreground_service.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../../contants/api_constants.dart';
+import '../../../constants/api_constants.dart';
 import '../../../repositories/api_repo.dart';
 import '../../../utils/error_screen.dart';
 import '../../../utils/request_methods.dart';

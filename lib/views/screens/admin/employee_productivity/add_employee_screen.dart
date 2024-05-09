@@ -43,6 +43,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
         provider!.clearControllers();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Add Employee'),
           automaticallyImplyLeading: true,

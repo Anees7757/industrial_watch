@@ -1,4 +1,4 @@
-String ipUrl = 'http://192.168.43.61:5000';
+String ipUrl = 'http://192.168.0.102:5000';
 
 class ApiConstants {
   ApiConstants._cons();

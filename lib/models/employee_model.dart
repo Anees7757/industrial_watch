@@ -22,4 +22,34 @@ class Employee {
     required this.role,
     this.productivity,
   });
+
+  factory Employee.fromJson(Map<String, dynamic> json) {
+    return Employee(
+      id: json['id'],
+      name: json['name'],
+      section: json['section'],
+      productivity: json['productivity'],
+      imageUrl: json['imageUrl'],
+      email: json['email'],
+      password: json['password'],
+      role: json['role'],
+      gender: json['gender'],
+      jobType: json['jobType'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'section': section,
+      'productivity': productivity,
+      'imageUrl': imageUrl,
+      'email': email,
+      'password': password,
+      'role': role,
+      'gender': gender,
+      'jobType': jobType,
+    };
+  }
 }

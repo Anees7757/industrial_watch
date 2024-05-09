@@ -7,7 +7,7 @@ import 'package:flutter_foreground_service/flutter_foreground_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../contants/api_constants.dart';
+import '../../../constants/api_constants.dart';
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';

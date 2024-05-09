@@ -49,7 +49,7 @@ class LoginViewModel extends ChangeNotifier {
           Navigator.pop(context);
           if (data == null) {
             customSnackBar(context, data['message']);
-            throw ();
+            throw (data['message']);
           } else {
             userData = data;
             debugPrint("role: ${data['user_role'].toString().toLowerCase()}");
@@ -62,34 +62,6 @@ class LoginViewModel extends ChangeNotifier {
             usernameController.clear();
             passwordController.clear();
           }
-          // switch (userData['role'].toString().toLowerCase()) {
-          //   case 'admin':
-          //     if (!context.mounted) return;
-          //     Navigator.of(context).pushReplacementNamed('/admin');
-          //     customSnackBar(context, 'Login Successful');
-          //
-          //     usernameController.clear();
-          //     passwordController.clear();
-          //     break;
-          //   case 'supervisor':
-          //     if (!context.mounted) return;
-          //     Navigator.of(context).pushReplacementNamed('/supervisor');
-          //     customSnackBar(context, 'Login Successful');
-          //
-          //     usernameController.clear();
-          //     passwordController.clear();
-          //     break;
-          //   case 'employee':
-          //     if (!context.mounted) return;
-          //     customSnackBar(context, 'Login Successful');
-          //     Navigator.of(context).pushReplacementNamed('/employee');
-          //
-          //     usernameController.clear();
-          //     passwordController.clear();
-          //     break;
-          //   default:
-          //     customSnackBar(context, 'Wrong Credentials');
-          //}
         },
         onError: (error) {
           Navigator.pop(context);

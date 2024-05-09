@@ -1,14 +1,18 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:industrial_watch/contants/api_constants.dart';
+import 'package:get/get.dart';
+import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
-
+import 'package:industrial_watch/views/widgets/toast.dart';
+import 'package:light_toast/light_toast.dart';
+import 'package:provider/provider.dart';
 import 'custom_dialogbox.dart';
 import 'custom_snackbar.dart';
 import 'custom_textfield.dart';
 
-showIPDialog(BuildContext context) async {
+showIPDialog() async {
   // String deviceIp = await getIp();
   // String savedIp = await DataSharedPrefrences.getIp();
   // if (deviceIp == savedIp) {
@@ -16,9 +20,9 @@ showIPDialog(BuildContext context) async {
   //   return;
   // } else {
   //   DataSharedPrefrences.setIp(deviceIp);
+
   TextEditingController ipController = TextEditingController();
-  return customDialogBox(
-    context,
+  return _customDialogBox(
     Column(children: [
       Row(
         children: [
@@ -41,10 +45,18 @@ showIPDialog(BuildContext context) async {
       ),
       const SizedBox(height: 25),
     ]),
-    () => Navigator.pop(context),
+    () => Get.back(),
     () {
-      ipUrl = 'http://${ipController.text}:5000';
-      Navigator.pop(context);
+      if (ipController.text.isNotEmpty) {
+        ipUrl = 'http://${ipController.text}:5000';
+        Get.back();
+        Toast.show(
+          'IP changed Successfully',
+          showLeading: true,
+          borderRadius: 30,
+          icon: CupertinoIcons.info_circle,
+        );
+      }
     },
     'Change',
   );
@@ -56,10 +68,55 @@ Future getIp() async {
   var interface = await NetworkInterface.list();
   // for (var interface in await NetworkInterface.list()) {
   // print('== Interface: ${interface.name} ==');
-  // for (var addr in interface.addresses) {
+  // for (var addr in interface.) {
   print('${interface[0].addresses[0].address}');
   ip = interface[0].addresses[0].address;
   // }
   // }
   return ip;
+}
+
+Future _customDialogBox(Widget contents, void Function() secondaryBtn,
+    void Function() primaryBtn, String primaryText) {
+  return Get.dialog(
+    Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 25, 16, 25),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            contents,
+            primaryText.isEmpty
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => secondaryBtn(),
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(width: 5),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                        onPressed: () => primaryBtn(),
+                        child: Text(primaryText),
+                      ),
+                    ],
+                  ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

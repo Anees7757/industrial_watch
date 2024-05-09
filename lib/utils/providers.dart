@@ -1,3 +1,5 @@
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/attendance_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/summary_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/ranking_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/inventory_viewmodel.dart';
@@ -15,10 +17,9 @@ import 'package:industrial_watch/view-models/admin/supervisor/supervisorsView_vi
 import 'package:industrial_watch/view-models/auth/login_viewmodel.dart';
 import 'package:industrial_watch/view-models/employee/employee_viewmodel.dart';
 import 'package:industrial_watch/view-models/supervisor/supervisor_viewmodel.dart';
-
 import '../view-models/admin/employee_productivity/addEmployee_viewmodel.dart';
 import '../view-models/admin/employee_productivity/employeeRecord_viewmodel.dart';
-import '../view-models/admin/employee_productivity/employee_details/summary_viewmodel.dart';
+import '../view-models/admin/employee_productivity/employee_record/empolyeeDetail_viewmodel.dart';
 import '../view-models/admin/production/batchDetails_viewmodel.dart';
 import '../view-models/admin/production/chooseStock_viewmodel.dart';
 import '../view-models/admin/production/createBatch_viewmodel.dart';
@@ -117,5 +118,11 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => EmployeeRecordViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => EmployeeDetailViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => AttendanceViewmodel(),
   ),
 ];
