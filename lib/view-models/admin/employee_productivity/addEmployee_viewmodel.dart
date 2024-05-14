@@ -104,18 +104,33 @@ class AddEmployeeViewModel extends ChangeNotifier {
   }
 
   addEmployee(context) {
-    addEmployeeWithImages(
-      context: context,
-      name: nameController.text,
-      password: passwordController.text,
-      username: usernameController.text,
-      salary: salaryController.text,
-      gender: selectedGender,
-      jobType: selectedJobType,
-      jobRoleId: selectedRole['id'].toString(),
-      sectionId: selectedSection['id'].toString(),
-      images: imageFileList!,
-    );
+    if (nameController.text.isNotEmpty &&
+        usernameController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        salaryController.text.isNotEmpty &&
+        selectedGender != 'gender' &&
+        selectedJobType != 'jobType' &&
+        selectedRole.isNotEmpty &&
+        selectedSection.isNotEmpty) {
+      if (imageFileList!.length >= 5) {
+        addEmployeeWithImages(
+          context: context,
+          name: nameController.text,
+          password: passwordController.text,
+          username: usernameController.text,
+          salary: salaryController.text,
+          gender: selectedGender,
+          jobType: selectedJobType,
+          jobRoleId: selectedRole['id'].toString(),
+          sectionId: selectedSection['id'].toString(),
+          images: imageFileList!,
+        );
+      } else {
+        customSnackBar(context, 'Select at least 5 images');
+      }
+    } else {
+      customSnackBar(context, 'Please fill out all fields');
+    }
   }
 
   bool isFirstTime = true;

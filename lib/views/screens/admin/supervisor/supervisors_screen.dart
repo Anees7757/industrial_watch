@@ -67,7 +67,7 @@ class _SupervisorScreenState extends State<SupervisorScreen> {
                                         .withOpacity(0.5),
                                   ),
                                   child: ListTile(
-                                    isThreeLine: true,
+                                    // isThreeLine: true,
                                     title: Text(
                                         _supervisorViewModel!.supervisors
                                             .elementAt(index)['employee_name'],

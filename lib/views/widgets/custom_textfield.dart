@@ -70,34 +70,28 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         });
                       },
                     )
-                  // : ((widget.hintText == 'Search' &&
-                  //             Provider.of<ProductionViewModel>(context,
-                  //                     listen: false)
-                  //                 .searchController
-                  //                 .text
-                  //                 .isNotEmpty) ||
-                  //         widget.hintText == 'Search ')
-                  //     ? IconButton(
-                  //         splashRadius: 20,
-                  //         icon: const Icon(
-                  //           Icons.close,
-                  //           color: Color(0xFF575757),
-                  //         ),
-                  //         onPressed: () {
-                  //           Provider.of<ProductionViewModel>(context,
-                  //                   listen: false)
-                  //               .clear();
-                  //         },
-                  //       )
-                  : null,
+                  : ((widget.hintText == 'Search Employee' &&
+                              Provider.of<EmployeeRecordViewModel>(context,
+                                      listen: false)
+                                  .searchController
+                                  .text
+                                  .isNotEmpty) ||
+                          widget.hintText == 'Search')
+                      ? IconButton(
+                          splashRadius: 20,
+                          icon: const Icon(
+                            Icons.close,
+                            color: Color(0xFF575757),
+                          ),
+                          onPressed: () {
+                            Provider.of<EmployeeRecordViewModel>(context,
+                                    listen: false)
+                                .searchController
+                                .clear();
+                          },
+                        )
+                      : null,
             ),
-            onChanged: (query) {
-              if (widget.hintText == 'Search Employee') {
-                Provider.of<EmployeeRecordViewModel>(context, listen: false)
-                    .search(context, query);
-                setState(() {});
-              }
-            },
           ),
         ),
       ),

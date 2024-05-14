@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../view-models/admin/section/sections_viewmodel.dart';
 import '../../../widgets/custom_Button.dart';
-import 'package:shimmer/shimmer.dart';
 
 class SectionsScreen extends StatefulWidget {
   const SectionsScreen({super.key});

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:industrial_watch/global/global.dart';
@@ -9,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../view-models/admin/admin_viewmodel.dart';
 import '../../widgets/custom_gridview.dart';
-import '../../widgets/ipDialog.dart';
 import '../../widgets/logout_dialog.dart';
 
 class AdminDashboard extends StatefulWidget {

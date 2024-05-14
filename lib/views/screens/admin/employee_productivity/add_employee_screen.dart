@@ -1,11 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/addEmployee_viewmodel.dart';
 import 'package:industrial_watch/views/widgets/custom_Button.dart';
 import 'package:industrial_watch/views/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
-
-import '../../../widgets/semi_circle.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
@@ -55,7 +53,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             behavior: const ScrollBehavior().copyWith(overscroll: false),
             child: SingleChildScrollView(
               child: Container(
-                margin: const EdgeInsets.only(bottom: 40),
+                // margin: const EdgeInsets.only(bottom: 40),
                 child: Column(
                   children: [
                     SizedBox(
@@ -395,23 +393,27 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    BottomAppBar(
+                      child: SizedBox(
+                        height: 80,
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () => provider.addEmployee(context),
+                            child: customButton(context, 'Add', 50, 150),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           );
         }),
-        bottomNavigationBar: BottomAppBar(
-          child: SizedBox(
-            height: 80,
-            child: Center(
-              child: GestureDetector(
-                onTap: () => provider!.addEmployee(context),
-                child: customButton(context, 'Add', 50, 150),
-              ),
-            ),
-          ),
-        ),
+        // bottomNavigationBar:
       ),
     );
   }

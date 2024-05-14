@@ -5,11 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
-import 'package:industrial_watch/views/widgets/toast.dart';
 import 'package:light_toast/light_toast.dart';
-import 'package:provider/provider.dart';
-import 'custom_dialogbox.dart';
-import 'custom_snackbar.dart';
 import 'custom_textfield.dart';
 
 showIPDialog() async {
@@ -46,9 +42,10 @@ showIPDialog() async {
       const SizedBox(height: 25),
     ]),
     () => Get.back(),
-    () {
+    () async {
       if (ipController.text.isNotEmpty) {
         ipUrl = 'http://${ipController.text}:5000';
+        await DataSharedPrefrences.setIp(ipUrl);
         Get.back();
         Toast.show(
           'IP changed Successfully',

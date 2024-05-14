@@ -38,7 +38,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Usama Fayyaz'),
+        title: Text(widget.employee['name']),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -50,7 +50,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               )
             : provider.attendanceList.isEmpty
                 ? Center(
-                    child: Text('Something went wrong'),
+                    child: Text('No attendance found'),
                   )
                 : Container(
                     margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),

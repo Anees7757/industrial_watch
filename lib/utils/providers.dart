@@ -1,5 +1,6 @@
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/attendance_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/summary_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violations_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/ranking_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/inventory_viewmodel.dart';
@@ -124,5 +125,8 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => AttendanceViewmodel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => ViolationsViewModel(),
   ),
 ];

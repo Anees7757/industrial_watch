@@ -5,8 +5,6 @@ import 'package:industrial_watch/views/widgets/custom_Button.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../../../../../../global/global.dart';
-import '../../../../../../models/employee_model.dart';
 import 'employee_details/summary.dart';
 import 'employee_details/violations.dart';
 
@@ -144,7 +142,7 @@ class _EmployeesDetailScreenState extends State<EmployeesDetailScreen> {
                                 style: TextStyle(),
                               ),
                               Text(
-                                '${provider.employee['total_fine']}',
+                                '${provider.employee['total_fine'].toInt()}',
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -176,8 +174,8 @@ class _EmployeesDetailScreenState extends State<EmployeesDetailScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ViolationsScreen(
-                                          empId:
-                                              widget.employee['employee_id']),
+                                        employee: widget.employee,
+                                      ),
                                     ),
                                   );
                                 },

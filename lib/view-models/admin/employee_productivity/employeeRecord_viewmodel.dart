@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:industrial_watch/models/employee_model.dart';
-
 import '../../../repositories/api_repo.dart';
 import '../../../utils/request_methods.dart';
 
@@ -14,6 +11,10 @@ class EmployeeRecordViewModel extends ChangeNotifier {
 
   bool loadingSections = true;
   bool loadingEmployees = true;
+
+  EmployeeRecordViewModel() {
+    searchController.addListener(_filterEmployees);
+  }
 
   Future<void> getSections(BuildContext context) async {
     loadingSections = true;
@@ -43,14 +44,13 @@ class EmployeeRecordViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        //customSnackBar(context, error.toString());
         loadingSections = false;
         notifyListeners();
       },
     );
   }
 
-  dropDownOnChanged(Map<String, dynamic> item) {
+  void dropDownOnChanged(Map<String, dynamic> item) {
     selectedSection = item;
     print(selectedSection);
     notifyListeners();
@@ -61,7 +61,8 @@ class EmployeeRecordViewModel extends ChangeNotifier {
     employees.clear();
     await ApiRepo().apiFetch(
       context: context,
-      path: 'Employee/GetAllEmployees?section_id=$section_id',
+      path:
+          'Employee/GetAllEmployees?section_id=$section_id&ranking_required=0',
       requestMethod: RequestMethod.GET,
       beforeSend: () {
         print('Processing Data');
@@ -77,18 +78,22 @@ class EmployeeRecordViewModel extends ChangeNotifier {
       },
       onError: (error) {
         print(error.toString());
-        //customSnackBar(context, error.toString());
         loadingEmployees = false;
         notifyListeners();
       },
     );
   }
 
-  search(context, query) {
-    if (query != "") {
-      filteredEmployees.clear();
-      filteredEmployees
-          .addAll(employees.where((element) => element['name'] == query));
+  void _filterEmployees() {
+    String query = searchController.text.toLowerCase();
+    if (query.isEmpty) {
+      filteredEmployees = employees;
+    } else {
+      filteredEmployees = employees.where((employee) {
+        return employee['name'].toLowerCase().contains(query) ||
+            employee['section_name'].toLowerCase().contains(query);
+      }).toList();
     }
+    notifyListeners();
   }
 }

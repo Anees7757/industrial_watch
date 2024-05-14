@@ -69,7 +69,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(left: 0),
                       ),
-                      selected_values_style: const TextStyle(
+                      selectedValuesStyle: const TextStyle(
                           fontSize: 16, color: Color(0xFF616161)),
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF616161)),

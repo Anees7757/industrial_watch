@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'package:floating_draggable_widget/floating_draggable_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/views/widgets/ipDialog.dart';
 import 'package:provider/provider.dart';
 import 'global/global.dart';
 import 'utils/providers.dart';
 import 'utils/routes.dart';
 import 'utils/shared_prefs/shared_prefs.dart';
-import 'views/widgets/toast.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,12 @@ void main() async {
   if (userDataString.isNotEmpty) {
     userData = jsonDecode(userDataString);
   }
+  String ip = DataSharedPrefrences.getIp();
+  if (ip.isNotEmpty) {
+    ipUrl = ip;
+  }
   debugPrint(userDataString);
+  debugPrint(ip);
   runApp(MyApp());
 }
 

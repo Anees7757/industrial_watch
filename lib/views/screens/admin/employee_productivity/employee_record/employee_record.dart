@@ -5,7 +5,6 @@ import 'package:industrial_watch/view-models/admin/employee_productivity/employe
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../../../global/global.dart';
 import '../../../../widgets/custom_nodata.dart';
 import '../../../../widgets/custom_textfield.dart';
 import 'record_details/employee_details.dart';
@@ -45,7 +44,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
     return Scaffold(
       backgroundColor:
           Provider.of<EmployeeRecordViewModel>(context, listen: true)
-                  .employees
+                  .filteredEmployees
                   .isNotEmpty
               ? Color(0xFFF7F7F7)
               : Colors.white,
@@ -164,7 +163,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                     child: Text(
                                       e['name'],
                                       style: TextStyle(
-                                        color: Colors.grey.shade700,
+                                        color: Colors.grey.shade500,
                                       ),
                                     ),
                                   ),
@@ -195,14 +194,14 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
             Provider.of<EmployeeRecordViewModel>(context, listen: true)
                     .loadingEmployees
                 ? buildShimmer()
-                : provider.employees.isEmpty
+                : provider.filteredEmployees.isEmpty
                     ? customNoDataWidget()
                     : Expanded(
                         child: Container(
                           margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                           child: GridView.builder(
                               physics: const BouncingScrollPhysics(),
-                              itemCount: provider.employees.length,
+                              itemCount: provider.filteredEmployees.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -219,7 +218,8 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                             builder: (context) =>
                                                 EmployeesDetailScreen(
                                                     employee: provider
-                                                        .employees[index])));
+                                                            .filteredEmployees[
+                                                        index])));
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(5),
@@ -248,7 +248,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                                 color: Colors.grey.shade200,
                                                 child: CachedNetworkImage(
                                                   imageUrl:
-                                                      "${ApiConstants.instance.baseurl}EmployeeImage/${Uri.encodeComponent(provider.employees[index]['image'])}",
+                                                      "${ApiConstants.instance.baseurl}EmployeeImage/${Uri.encodeComponent(provider.filteredEmployees[index]['image'])}",
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
                                                   placeholder: (context, url) =>
@@ -266,7 +266,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                               alignment: Alignment.topRight,
                                               margin: const EdgeInsets.all(5),
                                               child: Text(
-                                                '${(provider.employees[index]['productivity']).toInt()}%',
+                                                '${(provider.filteredEmployees[index]['productivity']).toInt()}%',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 12,
@@ -280,7 +280,8 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            provider.employees[index]['name'],
+                                            provider.filteredEmployees[index]
+                                                ['name'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 12,
@@ -291,7 +292,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            provider.employees[index]
+                                            provider.filteredEmployees[index]
                                                 ['section_name'],
                                             style: TextStyle(
                                               color: Colors.grey.shade500,
