@@ -1,41 +1,82 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:industrial_watch/global/global.dart';
-
-import '../../models/employee_model.dart';
+import 'package:industrial_watch/views/widgets/custom_dialogbox.dart';
+import '../../constants/api_constants.dart';
+import '../../repositories/api_repo.dart';
+import '../../utils/request_methods.dart';
+import '../../utils/shared_prefs/shared_prefs.dart';
 import '../../views/widgets/custom_snackbar.dart';
 
 class EditProfileViewModel extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  addEmployee(context, int id) {
-    Employee emp = Employee(
-      id: id,
-      name: nameController.text,
-      section: employees[2].section,
-      imageUrl: 'image!.path',
-      email: emailController.text,
-      password: passwordController.text,
-      gender: employees[2].gender,
-      jobType: employees[2].jobType,
-      role: employees[2].role,
-    );
+  updateEmployee(context) async {
+    try {
+      if (nameController.text.isNotEmpty &&
+          usernameController.text.isNotEmpty &&
+          passwordController.text.isNotEmpty) {
+        int employeeId = jsonDecode(DataSharedPrefrences.getUser())['id'];
+        print(employeeId);
+        Map<String, dynamic> employeeMap = {
+          'id': employeeId,
+          'name': nameController.text,
+          'username': usernameController.text,
+          'password': passwordController.text,
+        };
+        customDialogBox(
+            context,
+            Container(
+              margin: EdgeInsets.only(left: 18),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  const Text('Please wait...'),
+                ],
+              ),
+            ),
+            () {},
+            () {},
+            "");
 
-    // employees.removeWhere((element) => element.id == id);
-    employees.insert(2, emp);
-
-    customSnackBar(context, '${emp.name}\'s data inserted');
-    nameController.clear();
-    emailController.clear();
-    passwordController.clear();
-    image = null;
-    print(emp);
-
-    Navigator.pop(context);
+        await ApiRepo().apiFetch(
+          context: context,
+          path: 'Employee/UpdateEmployeeProfile',
+          body: employeeMap,
+          requestMethod: RequestMethod.PUT,
+          beforeSend: () {
+            print('Processing Data');
+          },
+          onSuccess: (data) {
+            print('Data Processed');
+            print(data);
+            customSnackBar(context, data['message']);
+            clearControllers();
+            Navigator.pop(context);
+            Navigator.pop(context, true);
+          },
+          onError: (error) {
+            print(error.toString());
+            Navigator.pop(context);
+            customSnackBar(context, error.toString());
+          },
+        );
+      } else {
+        customSnackBar(context, 'All fields are required');
+      }
+    } catch (e) {
+      print(e.toString());
+      Navigator.pop(context);
+      customSnackBar(context, e.toString());
+    }
   }
 
   File? image;
@@ -122,5 +163,12 @@ class EditProfileViewModel extends ChangeNotifier {
         );
       },
     );
+  }
+
+  clearControllers() {
+    nameController.clear();
+    usernameController.clear();
+    passwordController.clear();
+    // image = null;
   }
 }

@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:industrial_watch/utils/word_capitalize.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/empolyeeDetail_viewmodel.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../../global/global.dart';
@@ -15,13 +17,27 @@ class EmployeeHomeScreen extends StatefulWidget {
 }
 
 class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
+  EmployeeDetailViewModel? _employeeDetailViewModel;
+  int? employeeId;
+
+  fetchData(int employeeId) async {
+    await Future.wait([
+      _employeeDetailViewModel!.getEmployee(context, employeeId),
+    ]);
+  }
+
+  bool isFirstTime = true;
+
   @override
-  void initState() {
-    String? userDataString = DataSharedPrefrences.getUser();
-    if (userDataString.isNotEmpty) {
-      userData = jsonDecode(userDataString);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (isFirstTime) {
+      _employeeDetailViewModel = Provider.of<EmployeeDetailViewModel>(context);
+      employeeId = jsonDecode(DataSharedPrefrences.getUser())['id'];
+      isFirstTime = false;
+      fetchData(employeeId!);
     }
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -51,70 +67,90 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.fromLTRB(20, 30, 20, 80),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              height: 200,
-              width: 300,
-              child: SfRadialGauge(
-                axes: <RadialAxis>[
-                  RadialAxis(
-                    minimum: 0,
-                    maximum: 100,
-                    showLabels: false,
-                    showTicks: false,
-                    startAngle: 270,
-                    endAngle: 270,
-                    axisLineStyle: const AxisLineStyle(
-                      thickness: 0.2,
-                      color: Color.fromARGB(30, 0, 169, 181),
-                      thicknessUnit: GaugeSizeUnit.factor,
-                    ),
-                    annotations: <GaugeAnnotation>[
-                      GaugeAnnotation(
-                        widget: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${employees[2].productivity}%',
-                              style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                              ),
+      body: Consumer<EmployeeDetailViewModel>(
+        builder: (context, provider, child) {
+          return Provider.of<EmployeeDetailViewModel>(context, listen: true)
+                  .loading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : provider.employee.isEmpty
+                  ? Center(child: Text('Something went wrong'))
+                  : Container(
+                      margin: const EdgeInsets.fromLTRB(20, 30, 20, 80),
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            height: 200,
+                            width: 300,
+                            child: SfRadialGauge(
+                              axes: <RadialAxis>[
+                                RadialAxis(
+                                  minimum: 0,
+                                  maximum: 100,
+                                  showLabels: false,
+                                  showTicks: false,
+                                  startAngle: 270,
+                                  endAngle: 270,
+                                  axisLineStyle: const AxisLineStyle(
+                                    thickness: 0.2,
+                                    color: Color.fromARGB(30, 0, 169, 181),
+                                    thicknessUnit: GaugeSizeUnit.factor,
+                                  ),
+                                  annotations: <GaugeAnnotation>[
+                                    GaugeAnnotation(
+                                      widget: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '${(provider.employee['productivity']).toInt()}%',
+                                            style: const TextStyle(
+                                              fontSize: 28,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const Text('Productivity'),
+                                        ],
+                                      ),
+                                      angle: 90,
+                                      positionFactor: 0.1,
+                                    ),
+                                  ],
+                                  pointers: <GaugePointer>[
+                                    RangePointer(
+                                      value: provider.employee['productivity'],
+                                      width: 0.2,
+                                      color: const Color(0xff05F517),
+                                      // pointerOffset: 0.1,
+                                      cornerStyle:
+                                          (provider.employee['productivity'] ==
+                                                  100.0)
+                                              ? CornerStyle.bothFlat
+                                              : CornerStyle.bothCurve,
+                                      sizeUnit: GaugeSizeUnit.factor,
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
-                            const Text('Productivity'),
-                          ],
-                        ),
-                        angle: 90,
-                        positionFactor: 0.1,
+                          ),
+                          const SizedBox(height: 30),
+                          customContainer(
+                            title: 'Total Fine',
+                            value: '${provider.employee['total_fine'].toInt()}',
+                          ),
+                          customContainer(
+                            title: 'Total Attendance',
+                            value: '${provider.employee['total_attendance']}',
+                          ),
+                        ],
                       ),
-                    ],
-                    pointers: <GaugePointer>[
-                      RangePointer(
-                        value: employees[2].productivity!.toDouble(),
-                        width: 0.2,
-                        color: const Color(0xff05F517),
-                        // pointerOffset: 0.1,
-                        cornerStyle: (employees[2].productivity == 100)
-                            ? CornerStyle.bothFlat
-                            : CornerStyle.bothCurve,
-                        sizeUnit: GaugeSizeUnit.factor,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            customContainer(title: 'Total Fine', value: '2500'),
-            customContainer(title: 'Total Attendance', value: '25/30'),
-          ],
-        ),
+                    );
+        },
       ),
     );
   }

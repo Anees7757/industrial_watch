@@ -188,7 +188,7 @@ class _EmployeesDetailScreenState extends State<EmployeesDetailScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => SummaryScreen(
-                                        empId: widget.employee['employee_id'],
+                                        employee: widget.employee,
                                       ),
                                     ),
                                   );

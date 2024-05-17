@@ -3,7 +3,6 @@ import 'package:industrial_watch/view-models/admin/section/archive_viewmodel.dar
 import 'package:industrial_watch/views/screens/admin/section/sectionDetails_screen.dart';
 import 'package:provider/provider.dart';
 
-
 class ArchivesScreen extends StatefulWidget {
   const ArchivesScreen({super.key});
 
@@ -48,7 +47,7 @@ class _ArchivesScreenState extends State<ArchivesScreen> {
                         .sections
                         .isEmpty
                     ? const Center(
-                        child: Text('No section'),
+                        child: Text('No section archived'),
                       )
                     : ListView.builder(
                         itemCount: _archivesViewModel!.sections.length,

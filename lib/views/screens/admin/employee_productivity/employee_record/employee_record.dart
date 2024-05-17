@@ -213,13 +213,14 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                 return InkWell(
                                   onTap: () {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EmployeesDetailScreen(
-                                                    employee: provider
-                                                            .filteredEmployees[
-                                                        index])));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EmployeesDetailScreen(
+                                                employee: provider
+                                                    .filteredEmployees[index]),
+                                      ),
+                                    );
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(5),
@@ -258,7 +259,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                                   ),
                                                   errorWidget:
                                                       (context, url, error) =>
-                                                          new Icon(Icons.error),
+                                                          Icon(Icons.error),
                                                 ),
                                               ),
                                             ),
@@ -293,7 +294,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             provider.filteredEmployees[index]
-                                                ['section_name'],
+                                                ['job_role'],
                                             style: TextStyle(
                                               color: Colors.grey.shade500,
                                               fontWeight: FontWeight.w500,

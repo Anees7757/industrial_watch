@@ -64,15 +64,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           dataProvider.dropDownOnChanged(x),
                       options: Provider.of<AddProductViewModel>(context).angles,
                       selectedValues: dataProvider.selectedAngles,
-                      whenEmpty: '--- Select ---',
+                      whenEmpty: '--- Select angles ---',
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.only(left: 0),
                       ),
-                      selectedValuesStyle: const TextStyle(
-                          fontSize: 16, color: Color(0xFF616161)),
+                      // selectedValuesStyle: const TextStyle(
+                      //     fontSize: 16, color: Color(0xFF616161)),
                       hintStyle: const TextStyle(
-                          fontSize: 14, color: Color(0xFF616161)),
+                          fontSize: 16, color: Color(0xFF616161)),
                     ),
                   ),
                 ),

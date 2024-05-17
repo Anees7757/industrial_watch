@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:industrial_watch/global/global.dart';
-import 'package:industrial_watch/models/violation_model.dart';
-import 'package:industrial_watch/utils/providers.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violations_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -88,6 +85,8 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                                             violationId:
                                                 provider.violations[index]
                                                     ['violation_id'],
+                                            employeeName:
+                                                widget.employee['name'],
                                           ),
                                         ),
                                       );
@@ -98,14 +97,20 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
-                                          image: AssetImage(
-                                            // provider.violations[index]
-                                            // ['violation_id'][0],
-                                            provider.getDummyImagePath(
-                                              provider.violations[index]
-                                                  ['rule_name'],
-                                            ),
-                                          ),
+                                          image: provider
+                                                  .violations[index]['images']
+                                                  .isNotEmpty
+                                              ? NetworkImage(
+                                                  provider.violations[index]
+                                                      ['images'][0])
+                                              : AssetImage(
+                                                  // provider.violations[index]
+                                                  // ['violation_id'][0],
+                                                  provider.getDummyImagePath(
+                                                    provider.violations[index]
+                                                        ['rule_name'],
+                                                  ),
+                                                ) as ImageProvider,
                                           fit: BoxFit.cover,
                                         ),
                                       ),

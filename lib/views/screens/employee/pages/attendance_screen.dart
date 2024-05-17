@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/attendance_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../global/global.dart';
+import '../../../../utils/shared_prefs/shared_prefs.dart';
 
 class EmployeeAttendanceScreen extends StatefulWidget {
   const EmployeeAttendanceScreen({super.key});
@@ -11,14 +16,28 @@ class EmployeeAttendanceScreen extends StatefulWidget {
 }
 
 class _EmployeeAttendanceScreenState extends State<EmployeeAttendanceScreen> {
-  List<Map<String, dynamic>> attendanceList = [
-    {'date': '10 May 2023', 'status': 'P'},
-    {'date': '11 May 2023', 'status': 'A'},
-    {'date': '12 May 2023', 'status': 'P'},
-    {'date': '13 May 2023', 'status': 'P'},
-    {'date': '14 May 2023', 'status': 'A'},
-    {'date': '15 May 2023', 'status': 'P'},
-  ];
+  AttendanceViewmodel? _attendanceViewmodel;
+  int? employeeId;
+
+  fetchData() async {
+    await Future.wait([
+      _attendanceViewmodel!.getAttendance(context, employeeId!),
+    ]);
+  }
+
+  bool isFirstTime = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (isFirstTime) {
+      _attendanceViewmodel = Provider.of<AttendanceViewmodel>(context);
+      employeeId = jsonDecode(DataSharedPrefrences.getUser())['id'];
+      isFirstTime = false;
+      fetchData();
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,69 +66,79 @@ class _EmployeeAttendanceScreenState extends State<EmployeeAttendanceScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      body: Container(
-        margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            DataTable(
-              dataRowMinHeight: 40.0,
-              dataRowMaxHeight: 40.0,
-              sortColumnIndex: 0,
-              dividerThickness: 1.5,
-              border: const TableBorder(
-                //   horizontalInside: BorderSide(width: 1),
-                verticalInside: BorderSide(width: 0.5),
-              ),
-              columns: const [
-                DataColumn(
-                  label: Text(
-                    "Date",
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-                DataColumn(
-                  label: Text(
-                    "Status",
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-              rows: attendanceList
-                  .map(
-                    (e) => DataRow(
-                      cells: [
-                        DataCell(
-                          Text(
-                            e['date'],
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                            ),
+      body: Consumer<AttendanceViewmodel>(builder: (context, provider, child) {
+        return Provider.of<AttendanceViewmodel>(context, listen: true).loading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : provider.attendanceList.isEmpty
+                ? Center(
+                    child: Text('No attendance found'),
+                  )
+                : Container(
+                    margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        DataTable(
+                          dataRowMinHeight: 40.0,
+                          dataRowMaxHeight: 40.0,
+                          sortColumnIndex: 0,
+                          dividerThickness: 1.5,
+                          border: const TableBorder(
+                            //   horizontalInside: BorderSide(width: 1),
+                            verticalInside: BorderSide(width: 0.5),
                           ),
-                        ),
-                        DataCell(
-                          Center(
-                            child: Text(
-                              e['status'],
-                              style: TextStyle(
-                                color: Colors.grey.shade600,
+                          columns: const [
+                            DataColumn(
+                              label: Text(
+                                "Date",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
                               ),
                             ),
-                          ),
+                            DataColumn(
+                              label: Text(
+                                "Status",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                          ],
+                          rows: provider.attendanceList.reversed
+                              .map(
+                                (e) => DataRow(
+                                  cells: [
+                                    DataCell(
+                                      Text(
+                                        e['attendance_date'],
+                                        style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    ),
+                                    DataCell(
+                                      Center(
+                                        child: Text(
+                                          e['status'],
+                                          style: TextStyle(
+                                            color: Colors.grey.shade600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                              .toList(),
                         ),
                       ],
                     ),
-                  )
-                  .toList(),
-            ),
-          ],
-        ),
-      ),
+                  );
+      }),
     );
   }
 }

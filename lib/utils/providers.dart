@@ -1,11 +1,13 @@
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/attendance_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/summary_viewmodel.dart';
+import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violationsDetail_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violations_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/ranking_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/batch_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/inventory_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/production/rawMaterials_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/section/archive_viewmodel.dart';
+import 'package:industrial_watch/view-models/employee/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:industrial_watch/view-models/admin/admin_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/rules_viewmodel.dart';
@@ -30,7 +32,6 @@ import '../view-models/admin/production/products_viewmodel.dart';
 import '../view-models/admin/section/editSection_viewmodel.dart';
 import '../view-models/admin/section/sectionDetails_viewmodel.dart';
 import '../view-models/employee/editProfile_viewmodel.dart';
-import '../view-models/employee/summary_viewmodel.dart';
 
 dynamic providers = [
   ChangeNotifierProvider(
@@ -82,9 +83,6 @@ dynamic providers = [
     create: (context) => SummaryViewModel(),
   ),
   ChangeNotifierProvider(
-    create: (context) => EmployeeSummaryViewModel(),
-  ),
-  ChangeNotifierProvider(
     create: (context) => EditProfileViewModel(),
   ),
   ChangeNotifierProvider(
@@ -128,5 +126,11 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => ViolationsViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => ViolationsDetailViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => ProfileViewModel(),
   ),
 ];
