@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/global/global.dart';
 import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violations_viewmodel.dart';
@@ -121,8 +122,8 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
                                                   .violations[index]['images']
                                                   .isNotEmpty
                                               ? NetworkImage(
-                                                  provider.violations[index]
-                                                      ['images'][0])
+                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0])}",
+                                                )
                                               : AssetImage(
                                                   // provider.violations[index]
                                                   // ['violation_id'][0],

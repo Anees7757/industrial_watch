@@ -97,7 +97,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 Text(
                                   provider.fromSelectedDate!.isEmpty
                                       ? 'Select month/year'
-                                      : provider.fromSelectedDate!,
+                                      : '${provider.fromSelectedDate!.split(',')[0]} , ${provider.fromSelectedDate!.split(',')[1]}',
                                 ),
                               ],
                             ),

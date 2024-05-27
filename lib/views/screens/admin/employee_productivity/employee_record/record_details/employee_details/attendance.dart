@@ -55,64 +55,66 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 : Container(
                     margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                     width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        DataTable(
-                          dataRowMinHeight: 40.0,
-                          dataRowMaxHeight: 40.0,
-                          sortColumnIndex: 0,
-                          dividerThickness: 1.5,
-                          border: const TableBorder(
-                            //   horizontalInside: BorderSide(width: 1),
-                            verticalInside: BorderSide(width: 0.5),
-                          ),
-                          columns: const [
-                            DataColumn(
-                              label: Text(
-                                "Date",
-                                style: TextStyle(
-                                  fontSize: 17,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          DataTable(
+                            dataRowMinHeight: 40.0,
+                            dataRowMaxHeight: 40.0,
+                            sortColumnIndex: 0,
+                            dividerThickness: 1.5,
+                            border: const TableBorder(
+                              //   horizontalInside: BorderSide(width: 1),
+                              verticalInside: BorderSide(width: 0.5),
+                            ),
+                            columns: const [
+                              DataColumn(
+                                label: Text(
+                                  "Date",
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
                                 ),
                               ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Status",
-                                style: TextStyle(
-                                  fontSize: 17,
+                              DataColumn(
+                                label: Text(
+                                  "Status",
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                          rows: provider.attendanceList.reversed
-                              .map(
-                                (e) => DataRow(
-                                  cells: [
-                                    DataCell(
-                                      Text(
-                                        e['attendance_date'],
-                                        style: TextStyle(
-                                          color: Colors.grey.shade600,
-                                        ),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      Center(
-                                        child: Text(
-                                          e['status'],
+                            ],
+                            rows: provider.attendanceList.reversed
+                                .map(
+                                  (e) => DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Text(
+                                          e['attendance_date'],
                                           style: TextStyle(
                                             color: Colors.grey.shade600,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
+                                      DataCell(
+                                        Center(
+                                          child: Text(
+                                            e['status'],
+                                            style: TextStyle(
+                                              color: Colors.grey.shade600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ],
+                      ),
                     ),
                   );
       }),

@@ -111,8 +111,8 @@ class _EditSupervisorScreenState extends State<EditSupervisorScreen> {
                                       border: InputBorder.none,
                                       contentPadding: EdgeInsets.only(left: 0),
                                     ),
-                                    selectedValuesStyle: const TextStyle(
-                                        fontSize: 16, color: Color(0xFF616161)),
+                                    // selectedValuesStyle: const TextStyle(
+                                    //     fontSize: 16, color: Color(0xFF616161)),
                                     hintStyle: const TextStyle(
                                         fontSize: 14, color: Color(0xFF616161)),
                                   ),

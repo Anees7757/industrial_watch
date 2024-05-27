@@ -48,7 +48,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   ..repeat();
               },
             ),
-            customButton(context, 'Start Monitoring', 60, double.infinity),
+            InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/defect_monitoring');
+                },
+                child: customButton(
+                    context, 'Start Monitoring', 60, double.infinity)),
           ],
         ),
       ),

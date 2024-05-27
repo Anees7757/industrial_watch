@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violations_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -101,15 +102,11 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                                                   .violations[index]['images']
                                                   .isNotEmpty
                                               ? NetworkImage(
-                                                  provider.violations[index]
-                                                      ['images'][0])
-                                              : AssetImage(
-                                                  // provider.violations[index]
-                                                  // ['violation_id'][0],
-                                                  provider.getDummyImagePath(
-                                                    provider.violations[index]
-                                                        ['rule_name'],
-                                                  ),
+                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0])}",
+                                                )
+                                              : Center(
+                                                  child: Icon(
+                                                      Icons.image_outlined),
                                                 ) as ImageProvider,
                                           fit: BoxFit.cover,
                                         ),

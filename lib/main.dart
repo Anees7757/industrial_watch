@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:camera/camera.dart';
 import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,8 @@ void main() async {
   }
   debugPrint(userDataString);
   debugPrint(ip);
+  cameras = await availableCameras();
+  print(cameras);
   runApp(MyApp());
 }
 

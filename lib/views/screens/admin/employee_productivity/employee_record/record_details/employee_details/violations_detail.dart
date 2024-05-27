@@ -1,6 +1,7 @@
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violationsDetail_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -52,36 +53,43 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
       body: Consumer<ViolationsDetailViewModel>(
           builder: (context, provider, child) {
         List<Widget> images = [];
-        if (provider.violations['images'].isEmpty) {
-          for (int i = 0; i < 3; i++) {
+        // if (provider.violations['images'].isEmpty) {
+        // for (int i = 0; i < 3; i++) {
+        // images.add(
+        //   Container(
+        //     width: double.infinity,
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(15),
+        // image: DecorationImage(
+        //   image: AssetImage(
+        //     provider.getDummyImagePath(
+        //       provider.violations['rule_name']
+        //           .toString()
+        //           .toLowerCase(),
+        //     ),
+        //   ),
+        //   fit: BoxFit.cover,
+        // ),
+        // ),
+        //     child: Center(
+        //       child: Icon(Icons.image_outlined),
+        //     ),
+        //   ),
+        // );
+        // }
+        // } else {
+        if (provider.violations['images'].isNotEmpty) {
+          for (var i in provider.violations['images']) {
             images.add(
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
-                    image: AssetImage(
-                      provider.getDummyImagePath(
-                        provider.violations['rule_name']
-                            .toString()
-                            .toLowerCase(),
-                      ),
-                    ),
+                    image: NetworkImage(
+                        "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(i)}"),
                     fit: BoxFit.cover,
                   ),
-                ),
-              ),
-            );
-          }
-        } else {
-          for (var i in provider.violations['images']) {
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                  image: NetworkImage(i),
-                  fit: BoxFit.cover,
                 ),
               ),
             );
@@ -114,41 +122,53 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
                         //     ),
                         //   ),
                         // ),
-                        CarouselSlider(
-                          items: images,
-                          options: CarouselOptions(
-                            height: 180,
-                            aspectRatio: 16 / 10,
-                            viewportFraction: 0.8,
-                            initialPage: 0,
-                            enableInfiniteScroll: false,
-                            reverse: false,
-                            autoPlay: false,
-                            autoPlayInterval: const Duration(seconds: 3),
-                            autoPlayAnimationDuration:
-                                const Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enlargeCenterPage: true,
-                            enlargeFactor: 0.3,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                currentPage = index;
-                              });
-                            },
-                            scrollDirection: Axis.horizontal,
-                          ),
-                        ),
+                        (Provider.of<ViolationsDetailViewModel>(context,
+                                    listen: true)
+                                .violations['images']
+                                .isNotEmpty)
+                            ? CarouselSlider(
+                                items: images,
+                                options: CarouselOptions(
+                                  height: 180,
+                                  aspectRatio: 16 / 10,
+                                  viewportFraction: 0.8,
+                                  initialPage: 0,
+                                  enableInfiniteScroll: false,
+                                  reverse: false,
+                                  autoPlay: false,
+                                  autoPlayInterval: const Duration(seconds: 3),
+                                  autoPlayAnimationDuration:
+                                      const Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enlargeCenterPage: true,
+                                  enlargeFactor: 0.3,
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      currentPage = index;
+                                    });
+                                  },
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                              )
+                            : Center(
+                                child: Text('No image found'),
+                              ),
                         const SizedBox(height: 10),
-                        CarouselIndicator(
-                          width: 9,
-                          height: 9,
-                          count: images.length,
-                          index: currentPage,
-                          cornerRadius: 50,
-                          activeColor: Colors.black,
-                          color: const Color(0xFFD9D9D9),
-                          space: 6,
-                        ),
+                        (Provider.of<ViolationsDetailViewModel>(context,
+                                    listen: true)
+                                .violations['images']
+                                .isNotEmpty)
+                            ? CarouselIndicator(
+                                width: 9,
+                                height: 9,
+                                count: images.length,
+                                index: currentPage,
+                                cornerRadius: 50,
+                                activeColor: Colors.black,
+                                color: const Color(0xFFD9D9D9),
+                                space: 6,
+                              )
+                            : SizedBox(),
                         const SizedBox(height: 30),
                         Text(provider.violations['date']),
                         Text(provider.violations['time']),

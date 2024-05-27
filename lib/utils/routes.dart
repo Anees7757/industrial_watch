@@ -1,5 +1,7 @@
 import 'package:industrial_watch/views/screens/admin/production/addProduct_screen.dart';
 import 'package:industrial_watch/views/screens/admin/section/archives_screen.dart';
+import 'package:industrial_watch/views/screens/supervisor/defect_monitoring/defect_monitoring.dart';
+import 'package:industrial_watch/views/screens/supervisor/employee_monitoring/employee_monitoring1.dart';
 import '../views/screens/admin/employee_productivity/employee_record/employee_record.dart';
 import '../views/screens/admin/employee_productivity/rankings_screen.dart';
 import '../views/screens/admin/production/inventory/inventory_screen.dart';
@@ -18,7 +20,9 @@ import 'package:industrial_watch/views/screens/admin/supervisor/supervisors_scre
 import 'package:industrial_watch/views/screens/employee/dashboard_screen.dart';
 import 'package:industrial_watch/views/screens/supervisor/dashboard_screen.dart';
 
+import '../views/screens/employee/pages/attendance_screen.dart';
 import '../views/screens/supervisor/defect_monitoring/onboarding_screen.dart';
+import '../views/screens/supervisor/employee_monitoring/employee_monitoring.dart';
 
 dynamic routes = {
   '/login': (context) => const LoginScreen(),
@@ -41,4 +45,7 @@ dynamic routes = {
   '/products': (context) => const ProductScreen(),
   '/linkProduct': (context) => const LinkProductScreen(),
   '/archives': (context) => const ArchivesScreen(),
+  '/employee_monitoring': (context) => const EmployeeMonitoring(),
+  '/defect_monitoring': (context) => const DefectMonitoring(),
+  '/attendance': (context) => const EmployeeAttendanceScreen(),
 };

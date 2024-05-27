@@ -49,7 +49,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
               ? Color(0xFFF7F7F7)
               : Colors.white,
       appBar: AppBar(
-        //title: const Text('Employees Record'),
+        title: const Text('Employees Record'),
         automaticallyImplyLeading: true,
         elevation: 0.0,
         // actions: [
@@ -113,7 +113,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                           child: DropdownButton(
                             isExpanded: true,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 17,
                             ),
                             underline: Divider(
@@ -162,9 +162,9 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                     value: e,
                                     child: Text(
                                       e['name'],
-                                      style: TextStyle(
-                                        color: Colors.grey.shade500,
-                                      ),
+                                      // style: TextStyle(
+                                      //   color: Colors.grey.shade800,
+                                      // ),
                                     ),
                                   ),
                                 )
@@ -249,7 +249,7 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                                 color: Colors.grey.shade200,
                                                 child: CachedNetworkImage(
                                                   imageUrl:
-                                                      "${ApiConstants.instance.baseurl}EmployeeImage/${Uri.encodeComponent(provider.filteredEmployees[index]['image'])}",
+                                                      "${ApiConstants.instance.baseurl}EmployeeImage/${provider.filteredEmployees[index]['employee_id']}/${Uri.encodeComponent(provider.filteredEmployees[index]['image'])}",
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
                                                   placeholder: (context, url) =>
@@ -263,15 +263,31 @@ class _EmployeeRecordScreenState extends State<EmployeeRecordScreen> {
                                                 ),
                                               ),
                                             ),
-                                            Container(
-                                              alignment: Alignment.topRight,
-                                              margin: const EdgeInsets.all(5),
-                                              child: Text(
-                                                '${(provider.filteredEmployees[index]['productivity']).toInt()}%',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 12,
-                                                  color: Colors.amber.shade900,
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black
+                                                          .withOpacity(0.3),
+                                                      blurRadius: 8,
+                                                      spreadRadius: 1,
+                                                      offset: Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: Text(
+                                                  '${(provider.filteredEmployees[index]['productivity']).toInt()}%',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 12,
+                                                    color:
+                                                        Colors.amber.shade900,
+                                                  ),
                                                 ),
                                               ),
                                             ),

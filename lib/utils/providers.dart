@@ -8,6 +8,8 @@ import 'package:industrial_watch/view-models/admin/production/inventory_viewmode
 import 'package:industrial_watch/view-models/admin/production/rawMaterials_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/section/archive_viewmodel.dart';
 import 'package:industrial_watch/view-models/employee/profile_viewmodel.dart';
+import 'package:industrial_watch/view-models/supervisor/defect_monitoring_viewmodel.dart';
+import 'package:industrial_watch/view-models/supervisor/employee_monitoring_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:industrial_watch/view-models/admin/admin_viewmodel.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/rules_viewmodel.dart';
@@ -132,5 +134,11 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => ProfileViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => EmployeeMonitoringViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => DefectMonitoringViewModel(),
   ),
 ];

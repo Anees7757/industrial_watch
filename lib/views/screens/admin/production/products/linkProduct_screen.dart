@@ -125,7 +125,7 @@ class _LinkProductScreenState extends State<LinkProductScreen> {
                   ],
                 ),
                 const SizedBox(height: 8),
-                _showLabel('Rejection Tolerance'),
+                _showLabel('Rejection Tolerance %'),
                 CustomTextField(
                   controller: dataProvider.toleranceController,
                   hintText: 'e.g 0.04',

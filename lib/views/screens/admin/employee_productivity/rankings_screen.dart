@@ -185,7 +185,7 @@ class _EmployeesRankingScreenState extends State<EmployeesRankingScreen> {
                                                             50),
                                                     child: CachedNetworkImage(
                                                       imageUrl:
-                                                          "${ApiConstants.instance.baseurl}EmployeeImage/${Uri.encodeComponent(provider.employees[index]['image'])}",
+                                                          "${ApiConstants.instance.baseurl}EmployeeImage/${provider.employees[index]['employee_id']}/${Uri.encodeComponent(provider.employees[index]['image'])}",
                                                       fit: BoxFit.cover,
                                                       width: 43,
                                                       height: 43,

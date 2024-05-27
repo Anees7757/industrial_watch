@@ -6,14 +6,16 @@ import '../../view-models/admin/production/addProduct_viewmodel.dart';
 
 AppBar customAppBar(BuildContext context, String title) {
   return AppBar(
+    automaticallyImplyLeading: false,
     systemOverlayStyle: const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ),
-    titleSpacing: 0,
+    titleSpacing: 12,
     centerTitle: false,
     leadingWidth: 15,
     title: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         RawMaterialButton(
           onPressed: () {
@@ -30,7 +32,7 @@ AppBar customAppBar(BuildContext context, String title) {
             ),
           ),
         ),
-        const SizedBox(width: 5),
+        const SizedBox(width: 7),
         Text(title, style: const TextStyle(color: Colors.black)),
       ],
     ),
