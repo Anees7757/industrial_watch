@@ -19,6 +19,7 @@ class ViolationsViewModel extends ChangeNotifier {
         print('Data Processed');
         violations = data;
         violations = violations.toSet().toList();
+        print(violations);
         loading = false;
         notifyListeners();
       },

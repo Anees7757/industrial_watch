@@ -8,7 +8,7 @@ Future customDialogBox(
     String primaryText) {
   return showDialog(
     context: context,
-    //barrierDismissible: primaryText.isEmpty ? false : true,
+    barrierDismissible: primaryText.isEmpty ? false : true,
     builder: (context) {
       return Dialog(
         shape: RoundedRectangleBorder(

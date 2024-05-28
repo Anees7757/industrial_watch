@@ -44,7 +44,7 @@ class _EmployeeAttendanceScreenState extends State<EmployeeAttendanceScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading:
-            jsonDecode(DataSharedPrefrences.getUser())['role']
+            jsonDecode(DataSharedPrefrences.getUser())['user_role']
                         .toString()
                         .toLowerCase() ==
                     'employee'
@@ -52,7 +52,7 @@ class _EmployeeAttendanceScreenState extends State<EmployeeAttendanceScreen> {
                 : true,
         title: const Text('Attendance'),
         actions: [
-          jsonDecode(DataSharedPrefrences.getUser())['role']
+          jsonDecode(DataSharedPrefrences.getUser())['user_role']
                       .toString()
                       .toLowerCase() ==
                   'employee'

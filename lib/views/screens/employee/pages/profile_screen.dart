@@ -112,7 +112,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen> {
                                   child: ClipOval(
                                     child: CachedNetworkImage(
                                       imageUrl:
-                                          "${ApiConstants.instance.baseurl}EmployeeImage/${Uri.encodeComponent(provider.employee['image'])}",
+                                          "${ApiConstants.instance.baseurl}EmployeeImage/${userData['id']}/${Uri.encodeComponent(provider.employee['image'])}",
                                       fit: BoxFit.cover,
                                       width: double.infinity,
                                       placeholder: (context, url) => Center(

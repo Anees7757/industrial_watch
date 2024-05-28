@@ -48,7 +48,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         .linkedProducts
                         .isEmpty
                     ? const Center(
-                        child: Text('No Batch Found'),
+                        child: Text('No Product Found'),
                       )
                     : Container(
                         margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),

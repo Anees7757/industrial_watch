@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violationsDetail_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../constants/api_constants.dart';
+
 class ViolationDetailScreen extends StatefulWidget {
   int violationId;
 
@@ -50,41 +52,44 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
       body: Consumer<ViolationsDetailViewModel>(
           builder: (context, provider, child) {
         List<Widget> images = [];
-        if (provider.violations['images'].isEmpty) {
-          for (int i = 0; i < 3; i++) {
-            images.add(
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    image: AssetImage(
-                      provider.getDummyImagePath(
-                        provider.violations['rule_name']
-                            .toString()
-                            .toLowerCase(),
-                      ),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            );
-          }
-        } else {
-          for (var i in provider.violations['images']) {
+        // if (provider.violations['images'].isEmpty) {
+        // for (int i = 0; i < 3; i++) {
+        //   images.add(
+        //     Container(
+        //       width: double.infinity,
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(15),
+        //         image: DecorationImage(
+        //           image: AssetImage(
+        //             provider.getDummyImagePath(
+        //               provider.violations['rule_name']
+        //                   .toString()
+        //                   .toLowerCase(),
+        //             ),
+        //           ),
+        //           fit: BoxFit.cover,
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // }
+        // } else {
+        for (var i in provider.violations['images']) {
+          images.add(
             Container(
               width: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
-                  image: NetworkImage(i),
+                  image: NetworkImage(
+                      "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(i['image_url'])}"),
                   fit: BoxFit.cover,
                 ),
               ),
-            );
-          }
+            ),
+          );
         }
+        // }
 
         return Provider.of<ViolationsDetailViewModel>(context, listen: true)
                 .loading
@@ -149,7 +154,7 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
                         ),
                         const SizedBox(height: 30),
                         Text(provider.violations['date']),
-                        Text(provider.violations['time']),
+                        Text(provider.violations['images'][0]['capture_time']),
                         const SizedBox(height: 50),
                         const Align(
                           alignment: Alignment.centerLeft,

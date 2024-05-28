@@ -102,11 +102,15 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                                                   .violations[index]['images']
                                                   .isNotEmpty
                                               ? NetworkImage(
-                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0])}",
+                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0]['image_url'])}",
                                                 )
-                                              : Center(
-                                                  child: Icon(
-                                                      Icons.image_outlined),
+                                              : AssetImage(
+                                                  // provider.violations[index]
+                                                  // ['violation_id'][0],
+                                                  provider.getDummyImagePath(
+                                                    provider.violations[index]
+                                                        ['rule_name'],
+                                                  ),
                                                 ) as ImageProvider,
                                           fit: BoxFit.cover,
                                         ),
@@ -123,8 +127,8 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const SizedBox(height: 2),
-                                        Text(
-                                            provider.violations[index]['time']),
+                                        Text(provider.violations[index]
+                                            ['images'][0]['capture_time']),
                                         Text(
                                             provider.violations[index]['date']),
                                       ],

@@ -46,7 +46,7 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(userData['name'].toString().capitalize()),
+        title: Text('Violations'),
         actions: [
           CircleAvatar(
             radius: 18,
@@ -81,17 +81,17 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
                     margin: const EdgeInsets.fromLTRB(15, 20, 15, 20),
                     child: Column(
                       children: [
-                        const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Violations',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
+                        // const Align(
+                        //   alignment: Alignment.centerLeft,
+                        //   child: Text(
+                        //     'Violations',
+                        //     style: TextStyle(
+                        //       fontSize: 18,
+                        //       fontWeight: FontWeight.w600,
+                        //     ),
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 10),
                         Expanded(
                           child: ListView.builder(
                             itemCount: provider.violations.length,
@@ -122,7 +122,7 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
                                                   .violations[index]['images']
                                                   .isNotEmpty
                                               ? NetworkImage(
-                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0])}",
+                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0]['image_url'])}",
                                                 )
                                               : AssetImage(
                                                   // provider.violations[index]
@@ -147,8 +147,8 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         const SizedBox(height: 2),
-                                        Text(
-                                            provider.violations[index]['time']),
+                                        Text(provider.violations[index]
+                                            ['images'][0]['capture_time']),
                                         Text(
                                             provider.violations[index]['date']),
                                       ],

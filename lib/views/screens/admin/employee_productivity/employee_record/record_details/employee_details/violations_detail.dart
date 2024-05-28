@@ -55,46 +55,43 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
         List<Widget> images = [];
         // if (provider.violations['images'].isEmpty) {
         // for (int i = 0; i < 3; i++) {
-        // images.add(
-        //   Container(
-        //     width: double.infinity,
-        //     decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.circular(15),
-        // image: DecorationImage(
-        //   image: AssetImage(
-        //     provider.getDummyImagePath(
-        //       provider.violations['rule_name']
-        //           .toString()
-        //           .toLowerCase(),
+        //   images.add(
+        //     Container(
+        //       width: double.infinity,
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(15),
+        //         image: DecorationImage(
+        //           image: AssetImage(
+        //             provider.getDummyImagePath(
+        //               provider.violations['rule_name']
+        //                   .toString()
+        //                   .toLowerCase(),
+        //             ),
+        //           ),
+        //           fit: BoxFit.cover,
+        //         ),
+        //       ),
         //     ),
-        //   ),
-        //   fit: BoxFit.cover,
-        // ),
-        // ),
-        //     child: Center(
-        //       child: Icon(Icons.image_outlined),
-        //     ),
-        //   ),
-        // );
+        //   );
         // }
         // } else {
-        if (provider.violations['images'].isNotEmpty) {
-          for (var i in provider.violations['images']) {
-            images.add(
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(i)}"),
-                    fit: BoxFit.cover,
+        for (var i in provider.violations['images']) {
+          images.add(
+            Container(
+              width: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(i['image_url'])}",
                   ),
+                  fit: BoxFit.cover,
                 ),
               ),
-            );
-          }
+            ),
+          );
         }
+        // }
 
         return Provider.of<ViolationsDetailViewModel>(context, listen: true)
                 .loading
@@ -122,56 +119,44 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
                         //     ),
                         //   ),
                         // ),
-                        (Provider.of<ViolationsDetailViewModel>(context,
-                                    listen: true)
-                                .violations['images']
-                                .isNotEmpty)
-                            ? CarouselSlider(
-                                items: images,
-                                options: CarouselOptions(
-                                  height: 180,
-                                  aspectRatio: 16 / 10,
-                                  viewportFraction: 0.8,
-                                  initialPage: 0,
-                                  enableInfiniteScroll: false,
-                                  reverse: false,
-                                  autoPlay: false,
-                                  autoPlayInterval: const Duration(seconds: 3),
-                                  autoPlayAnimationDuration:
-                                      const Duration(milliseconds: 800),
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  enlargeCenterPage: true,
-                                  enlargeFactor: 0.3,
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      currentPage = index;
-                                    });
-                                  },
-                                  scrollDirection: Axis.horizontal,
-                                ),
-                              )
-                            : Center(
-                                child: Text('No image found'),
-                              ),
+                        CarouselSlider(
+                          items: images,
+                          options: CarouselOptions(
+                            height: 180,
+                            aspectRatio: 16 / 10,
+                            viewportFraction: 0.8,
+                            initialPage: 0,
+                            enableInfiniteScroll: false,
+                            reverse: false,
+                            autoPlay: false,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            enlargeFactor: 0.3,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                currentPage = index;
+                              });
+                            },
+                            scrollDirection: Axis.horizontal,
+                          ),
+                        ),
                         const SizedBox(height: 10),
-                        (Provider.of<ViolationsDetailViewModel>(context,
-                                    listen: true)
-                                .violations['images']
-                                .isNotEmpty)
-                            ? CarouselIndicator(
-                                width: 9,
-                                height: 9,
-                                count: images.length,
-                                index: currentPage,
-                                cornerRadius: 50,
-                                activeColor: Colors.black,
-                                color: const Color(0xFFD9D9D9),
-                                space: 6,
-                              )
-                            : SizedBox(),
+                        CarouselIndicator(
+                          width: 9,
+                          height: 9,
+                          count: images.length,
+                          index: currentPage,
+                          cornerRadius: 50,
+                          activeColor: Colors.black,
+                          color: const Color(0xFFD9D9D9),
+                          space: 6,
+                        ),
                         const SizedBox(height: 30),
                         Text(provider.violations['date']),
-                        Text(provider.violations['time']),
+                        Text(provider.violations['images'][0]['capture_time']),
                         const SizedBox(height: 50),
                         const Align(
                           alignment: Alignment.centerLeft,

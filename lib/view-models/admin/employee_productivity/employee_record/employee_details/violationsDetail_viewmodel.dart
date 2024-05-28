@@ -3,7 +3,7 @@ import 'package:industrial_watch/repositories/api_repo.dart';
 import 'package:industrial_watch/utils/request_methods.dart';
 
 class ViolationsDetailViewModel extends ChangeNotifier {
-  Map<String,dynamic> violations = {};
+  Map<String, dynamic> violations = {};
   bool loading = true;
 
   Future<void> getViolationsDetail(
@@ -19,6 +19,7 @@ class ViolationsDetailViewModel extends ChangeNotifier {
       onSuccess: (data) {
         print('Data Processed');
         violations = data;
+        print(violations);
         loading = false;
         notifyListeners();
       },
