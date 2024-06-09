@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:industrial_watch/views/screens/admin/section/sectionDetails_screen.dart';
 import 'package:provider/provider.dart';
-
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../view-models/admin/section/sections_viewmodel.dart';
 import '../../../widgets/custom_Button.dart';
 
@@ -77,77 +77,116 @@ class _SectionsScreenState extends State<SectionsScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () => _refresh(context),
-        child: Provider.of<SectionsViewModel>(context, listen: true).loading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Container(
-                margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                child: _sectionsViewModel!.sections.isEmpty
-                    ? const Center(
-                        child: Text('No section'),
-                      )
-                    : ListView.builder(
-                        itemCount: _sectionsViewModel!.sections.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: const Color(0xFFDDDDDD).withOpacity(0.5),
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                  _sectionsViewModel!.sections[index]['name'],
-                                  overflow: TextOverflow.visible,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    splashRadius: 20,
-                                    onPressed: () {
-                                      _sectionsViewModel!.edit(context, index);
-                                    },
-                                    icon: const Icon(Icons.edit,
-                                        color: Color(0xFF49454F)),
-                                  ),
-                                  IconButton(
-                                    splashRadius: 20,
-                                    onPressed: () {
-                                      _sectionsViewModel!.archive(
-                                          context,
-                                          _sectionsViewModel!.sections[index]
-                                              ['id']);
-                                    },
-                                    icon: const Icon(Icons.archive_rounded,
-                                        color: Color(0xFF49454F)),
-                                  ),
-                                ],
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+          child: Consumer<SectionsViewModel>(
+            builder: (context, viewModel, child) {
+              if (viewModel.loading) {
+                return Skeletonizer(
+                  enabled: true,
+                  child: ListView.builder(
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFFDDDDDD).withOpacity(0.5),
+                        ),
+                        child: ListTile(
+                          title: Container(
+                            width: double.infinity,
+                            height: 16.0,
+                            color: Colors.white,
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                splashRadius: 20,
+                                onPressed: null,
+                                icon: const Icon(Icons.edit,
+                                    color: Colors.transparent),
                               ),
-                              onTap: () {
-                                Navigator.of(context)
-                                    .push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            SectionDetailsScreen(
-                                          section: _sectionsViewModel!
-                                              .sections[index],
-                                        ),
-                                      ),
-                                    )
-                                    .then((value) => _refresh);
-                              },
-                            ),
-                          );
-                        },
+                              IconButton(
+                                splashRadius: 20,
+                                onPressed: null,
+                                icon: const Icon(Icons.archive_rounded,
+                                    color: Colors.transparent),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+
+              if (viewModel.sections.isEmpty) {
+                return const Center(
+                  child: Text('No section'),
+                );
+              }
+
+              return ListView.builder(
+                itemCount: viewModel.sections.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFFDDDDDD).withOpacity(0.5),
+                    ),
+                    child: ListTile(
+                      title: Text(viewModel.sections[index]['name'],
+                          overflow: TextOverflow.visible,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                          )),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            splashRadius: 20,
+                            onPressed: () {
+                              viewModel.edit(context, index);
+                            },
+                            icon: const Icon(Icons.edit,
+                                color: Color(0xFF49454F)),
+                          ),
+                          IconButton(
+                            splashRadius: 20,
+                            onPressed: () {
+                              viewModel.archive(
+                                  context, viewModel.sections[index]['id']);
+                            },
+                            icon: const Icon(Icons.archive_rounded,
+                                color: Color(0xFF49454F)),
+                          ),
+                        ],
                       ),
-              ),
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(
+                              MaterialPageRoute(
+                                builder: (context) => SectionDetailsScreen(
+                                  section: viewModel.sections[index],
+                                ),
+                              ),
+                            )
+                            .then((value) => _refresh(context));
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
       ),
       bottomNavigationBar:
-          (!Provider.of<SectionsViewModel>(context, listen: true).loading)
+          !Provider.of<SectionsViewModel>(context, listen: true).loading
               ? SizedBox(
                   height: 80,
                   child: Center(

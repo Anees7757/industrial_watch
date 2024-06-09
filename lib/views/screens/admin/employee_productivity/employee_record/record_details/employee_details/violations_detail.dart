@@ -83,7 +83,7 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
                 borderRadius: BorderRadius.circular(15),
                 image: DecorationImage(
                   image: NetworkImage(
-                    "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(i['image_url'])}",
+                    "${ApiConstants.instance.baseurl}ViolationImages/${i['image_url']}",
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -155,7 +155,9 @@ class _ViolationDetailScreenState extends State<ViolationDetailScreen> {
                           space: 6,
                         ),
                         const SizedBox(height: 30),
-                        Text(provider.violations['date']),
+                        Text(provider.violations['date']
+                            .toString()
+                            .split('00')[0]),
                         Text(provider.violations['images'][0]['capture_time']),
                         const SizedBox(height: 50),
                         const Align(

@@ -1,18 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:industrial_watch/constants/api_constants.dart';
 import 'package:light_toast/light_toast.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
-import 'dart:isolate';
-import 'package:path/path.dart' show join;
-import 'dart:io';
 
 import '../../views/widgets/custom_dialogbox.dart';
 

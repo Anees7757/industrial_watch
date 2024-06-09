@@ -1,7 +1,6 @@
 import 'package:industrial_watch/views/screens/admin/production/addProduct_screen.dart';
 import 'package:industrial_watch/views/screens/admin/section/archives_screen.dart';
 import 'package:industrial_watch/views/screens/supervisor/defect_monitoring/defect_monitoring.dart';
-import 'package:industrial_watch/views/screens/supervisor/employee_monitoring/employee_monitoring1.dart';
 import '../views/screens/admin/employee_productivity/employee_record/employee_record.dart';
 import '../views/screens/admin/employee_productivity/rankings_screen.dart';
 import '../views/screens/admin/production/inventory/inventory_screen.dart';

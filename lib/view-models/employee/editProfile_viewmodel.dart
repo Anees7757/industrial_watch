@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:industrial_watch/views/widgets/custom_dialogbox.dart';
-import '../../constants/api_constants.dart';
 import '../../repositories/api_repo.dart';
 import '../../utils/request_methods.dart';
 import '../../utils/shared_prefs/shared_prefs.dart';

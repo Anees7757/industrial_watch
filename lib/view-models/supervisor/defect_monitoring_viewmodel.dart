@@ -1,13 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:light_toast/light_toast.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:dio/dio.dart';
 import '../../constants/api_constants.dart';
 import '../../repositories/api_repo.dart';
@@ -367,8 +363,8 @@ class DefectMonitoringViewModel extends ChangeNotifier {
 
   showAlertDialog(BuildContext context, Map<String, dynamic> data) {
     String dataString = "";
-    dataString += "Total items: ${data['total_discs']}\n";
-    dataString += "Defected items: ${data['total_defected_items']}\n";
+    dataString += "Total pieces: ${data['total_discs']}\n";
+    dataString += "Defected pieces: ${data['total_defected_items']}\n";
     dataString += "\n";
     dataString += "Defects:\n";
     List<dynamic> defects = data['defects'] ?? [];

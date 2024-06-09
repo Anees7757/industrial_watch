@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:industrial_watch/global/global.dart';
 import 'package:industrial_watch/view-models/supervisor/defect_monitoring_viewmodel.dart';
 import 'package:provider/provider.dart';
 

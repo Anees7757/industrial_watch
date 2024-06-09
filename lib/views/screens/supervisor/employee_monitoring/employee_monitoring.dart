@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:industrial_watch/view-models/supervisor/employee_monitoring_viewmodel.dart';
 import 'package:industrial_watch/views/widgets/custom_appbar.dart';
-import 'package:light_toast/light_toast.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/custom_Button.dart';
-import '../../../widgets/custom_dialogbox.dart';
 
 class EmployeeMonitoring extends StatefulWidget {
   const EmployeeMonitoring({Key? key}) : super(key: key);

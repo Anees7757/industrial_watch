@@ -98,20 +98,9 @@ class _ViolationsScreenState extends State<ViolationsScreen> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
-                                          image: provider
-                                                  .violations[index]['images']
-                                                  .isNotEmpty
-                                              ? NetworkImage(
-                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0]['image_url'])}",
-                                                )
-                                              : AssetImage(
-                                                  // provider.violations[index]
-                                                  // ['violation_id'][0],
-                                                  provider.getDummyImagePath(
-                                                    provider.violations[index]
-                                                        ['rule_name'],
-                                                  ),
-                                                ) as ImageProvider,
+                                          image: NetworkImage(
+                                            "${ApiConstants.instance.baseurl}ViolationImages/${provider.violations[index]['images'][0]['image_url']}",
+                                          ),
                                           fit: BoxFit.cover,
                                         ),
                                       ),

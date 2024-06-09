@@ -7,7 +7,6 @@ import 'package:industrial_watch/utils/shared_prefs/shared_prefs.dart';
 import 'package:industrial_watch/view-models/admin/employee_productivity/employee_record/employee_details/violations_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'violations_detail.dart';
-import 'package:industrial_watch/utils/word_capitalize.dart';
 
 class EmployeeViolationsScreen extends StatefulWidget {
   const EmployeeViolationsScreen({super.key});
@@ -118,20 +117,9 @@ class _EmployeeViolationsScreenState extends State<EmployeeViolationsScreen> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
                                         image: DecorationImage(
-                                          image: provider
-                                                  .violations[index]['images']
-                                                  .isNotEmpty
-                                              ? NetworkImage(
-                                                  "${ApiConstants.instance.baseurl}EmployeeViolationImage/${Uri.encodeComponent(provider.violations[index]['images'][0]['image_url'])}",
-                                                )
-                                              : AssetImage(
-                                                  // provider.violations[index]
-                                                  // ['violation_id'][0],
-                                                  provider.getDummyImagePath(
-                                                    provider.violations[index]
-                                                        ['rule_name'],
-                                                  ),
-                                                ) as ImageProvider,
+                                          image: NetworkImage(
+                                            "${ApiConstants.instance.baseurl}ViolationImages/${provider.violations[index]['images'][0]['image_url']}",
+                                          ),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
