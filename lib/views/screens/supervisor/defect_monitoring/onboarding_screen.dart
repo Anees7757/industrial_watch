@@ -31,7 +31,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     return Scaffold(
       appBar: customAppBar(context, 'Defect Monitoring'),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(15, 30, 15, 80),
+        margin: const EdgeInsets.fromLTRB(15, 30, 15, 60),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -48,12 +48,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                   ..repeat();
               },
             ),
+            SizedBox(height: 30),
             InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/defect_monitoring');
-                },
-                child: customButton(
-                    context, 'Start Monitoring', 60, double.infinity)),
+              onTap: () {
+                Navigator.pushNamed(context, '/single_defect_monitoring');
+              },
+              child: customButton(
+                  context, 'Single Disc Monitoring', 60, double.infinity),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/defect_monitoring');
+              },
+              child: customButton(
+                  context, 'Batch Monitoring', 60, double.infinity),
+            ),
           ],
         ),
       ),

@@ -21,6 +21,7 @@ import 'package:industrial_watch/views/screens/supervisor/dashboard_screen.dart'
 
 import '../views/screens/employee/pages/attendance_screen.dart';
 import '../views/screens/supervisor/defect_monitoring/onboarding_screen.dart';
+import '../views/screens/supervisor/defect_monitoring/single_defect_monitoring.dart';
 import '../views/screens/supervisor/employee_monitoring/employee_monitoring.dart';
 
 dynamic routes = {
@@ -46,5 +47,6 @@ dynamic routes = {
   '/archives': (context) => const ArchivesScreen(),
   '/employee_monitoring': (context) => const EmployeeMonitoring(),
   '/defect_monitoring': (context) => const DefectMonitoring(),
+  '/single_defect_monitoring': (context) => const SingleDefectMonitoring(),
   '/attendance': (context) => const EmployeeAttendanceScreen(),
 };

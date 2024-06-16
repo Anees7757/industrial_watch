@@ -198,6 +198,7 @@ class EmployeeMonitoringViewModel extends ChangeNotifier {
           borderRadius: 30,
           duration: Duration(seconds: 3),
         );
+        print(response.data);
         Navigator.pop(context);
         _selectedVideo = null;
         notifyListeners();

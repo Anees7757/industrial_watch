@@ -363,28 +363,18 @@ class DefectMonitoringViewModel extends ChangeNotifier {
 
   showAlertDialog(BuildContext context, Map<String, dynamic> data) {
     String dataString = "";
-    dataString += "Total pieces: ${data['total_discs']}\n";
+    dataString += "Total pieces: ${data['total_items']}\n";
     dataString += "Defected pieces: ${data['total_defected_items']}\n";
     dataString += "\n";
     dataString += "Defects:\n";
+    print(data['defects']);
     List<dynamic> defects = data['defects'] ?? [];
-    Map<String, int> defectCounts = {
-      'casting': 0,
-      'tooling': 0,
-      'milling': 0,
-    };
 
     for (var defect in defects) {
-      defectCounts.forEach((key, value) {
-        if (defect.containsKey(key)) {
-          defectCounts[key] = defect[key];
-        }
+      defect.forEach((key, value) {
+        dataString += "$key: $value\n";
       });
     }
-
-    dataString += "casting: ${defectCounts['casting']}\n";
-    dataString += "tooling: ${defectCounts['tooling']}\n";
-    dataString += "milling: ${defectCounts['milling']}\n";
 
     return showDialog(
       context: context,
