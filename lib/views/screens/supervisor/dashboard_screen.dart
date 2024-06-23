@@ -24,18 +24,21 @@ class _SupervisorDashboardState extends State<SupervisorDashboard> {
     'Employee Monitoring',
     'Defect Monitoring',
     'My Attendance',
+    'Mark Attendance ',
   ];
 
   final List<String> icons = [
     'assets/icons/employee_monitoring.png',
     'assets/icons/defect_monitoring.png',
     'assets/icons/attendance.png',
+    'assets/icons/mark_attendance.png',
   ];
 
   final List<String> navigationVal = [
     'employee_monitoring',
     'before_defect_monitoring',
     'attendance',
+    'mark_attendance',
   ];
   @override
   void initState() {

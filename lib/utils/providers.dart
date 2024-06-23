@@ -34,6 +34,8 @@ import '../view-models/admin/production/products_viewmodel.dart';
 import '../view-models/admin/section/editSection_viewmodel.dart';
 import '../view-models/admin/section/sectionDetails_viewmodel.dart';
 import '../view-models/employee/editProfile_viewmodel.dart';
+import '../view-models/supervisor/mark_attendance_viewmodel.dart';
+import '../view-models/supervisor/single_defect_monitoring_viewmodel.dart';
 
 dynamic providers = [
   ChangeNotifierProvider(
@@ -140,5 +142,11 @@ dynamic providers = [
   ),
   ChangeNotifierProvider(
     create: (context) => DefectMonitoringViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => SingleDefectMonitoringViewModel(),
+  ),
+  ChangeNotifierProvider(
+    create: (context) => MarkAttendanceViewModel(),
   ),
 ];

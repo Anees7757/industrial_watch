@@ -18,6 +18,7 @@ showIPDialog() async {
   //   DataSharedPrefrences.setIp(deviceIp);
 
   TextEditingController ipController = TextEditingController();
+  ipController.text = '${ipUrl.split('//')[1].split(':').first}';
   return _customDialogBox(
     Column(children: [
       Row(

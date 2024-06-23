@@ -12,12 +12,11 @@ class CustomGridView extends StatefulWidget {
   final List<String> icons;
   final String dashboard;
 
-  const CustomGridView(
-      {super.key,
-      required this.titles,
-      required this.navigationVal,
-      required this.icons,
-      required this.dashboard});
+  const CustomGridView({super.key,
+    required this.titles,
+    required this.navigationVal,
+    required this.icons,
+    required this.dashboard});
 
   @override
   State<CustomGridView> createState() => _CustomGridViewState();
@@ -73,7 +72,10 @@ class _CustomGridViewState extends State<CustomGridView> {
                     width: 81,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      color: Theme
+                          .of(context)
+                          .primaryColor
+                          .withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Image.asset(
@@ -82,11 +84,16 @@ class _CustomGridViewState extends State<CustomGridView> {
                     ),
                   ),
                   (widget.titles[index].contains(' ') &&
-                          widget.titles[index].length > 13)
+                      widget.titles[index].length > 13)
                       ? const SizedBox(height: 9)
                       : const SizedBox(height: 18),
                   Text(
-                    widget.titles[index],
+                    (widget.titles[index].contains(' ') &&
+                        widget.titles[index].length > 13) ? '${widget
+                        .titles[index].split(' ')[0]}\n${widget.titles[index]
+                        .split(' ')[1]}'
+                    : widget
+                        .titles[index],
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 15,

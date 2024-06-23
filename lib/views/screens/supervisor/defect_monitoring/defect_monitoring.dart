@@ -138,7 +138,8 @@ class _DefectMonitoringState extends State<DefectMonitoring> {
                         onTap: () {
                           viewmodel.processImages(context);
                         },
-                        child: customButton(context, 'Upload Images', 50, 180),
+                        child:
+                            customButton(context, 'Start Monitoring', 50, 180),
                       )
                     : SizedBox()
               ],

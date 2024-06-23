@@ -54,7 +54,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                 Navigator.pushNamed(context, '/single_defect_monitoring');
               },
               child: customButton(
-                  context, 'Single Disc Monitoring', 60, double.infinity),
+                  context, 'Multiple Angle Monitoring', 60, double.infinity),
             ),
             InkWell(
               onTap: () {

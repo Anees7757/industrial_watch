@@ -328,36 +328,36 @@ class DefectMonitoringViewModel extends ChangeNotifier {
 
     String productNumber = selectedProduct['product_number'];
     String batchNumber = selectedBatch['batch_number'];
-
-    List<MultipartFile> imageFiles = [];
-    for (XFile file in imageFileList!) {
-      imageFiles.add(await MultipartFile.fromFile(file.path));
-    }
-
-    FormData formData = FormData.fromMap({
-      'product_number': productNumber,
-      'batch_number': batchNumber,
-      'images': imageFiles,
-    });
-
     try {
+      List<MultipartFile> imageFiles = [];
+      for (XFile file in imageFileList!) {
+        imageFiles.add(await MultipartFile.fromFile(file.path));
+      }
+
+      FormData formData = FormData.fromMap({
+        'product_number': productNumber,
+        'batch_number': batchNumber,
+        'images': imageFiles,
+      });
+
       Response response = await Dio().post(
         '${ApiConstants.instance.baseurl}Production/DefectMonitoring',
         data: formData,
       );
       if (response.statusCode == 200) {
+        Navigator.pop(context);
         defects_data = response.data;
         customSnackBar(context, 'Images successfully uploaded.');
-        Navigator.pop(context);
+
         showAlertDialog(context, defects_data);
       } else {
-        customSnackBar(context, 'Failed to upload images.');
         Navigator.pop(context);
+        customSnackBar(context, 'Failed to upload images.');
       }
     } catch (e) {
+      Navigator.pop(context);
       customSnackBar(context, 'Error: ${e.toString()}');
       print('Error: ${e.toString()}');
-      Navigator.pop(context);
     }
   }
 
@@ -367,12 +367,13 @@ class DefectMonitoringViewModel extends ChangeNotifier {
     dataString += "Defected pieces: ${data['total_defected_items']}\n";
     dataString += "\n";
     dataString += "Defects:\n";
-    print(data['defects']);
     List<dynamic> defects = data['defects'] ?? [];
 
     for (var defect in defects) {
       defect.forEach((key, value) {
-        dataString += "$key: $value\n";
+        if (value > 0) {
+          dataString += "$key: $value\n";
+        }
       });
     }
 
@@ -388,7 +389,7 @@ class DefectMonitoringViewModel extends ChangeNotifier {
               onPressed: () {
                 Navigator.of(context).pop();
                 imageFileList!.clear();
-                products.clear();
+                // products.clear();
                 selectedProduct.clear();
                 getProducts(context);
                 batches.clear();

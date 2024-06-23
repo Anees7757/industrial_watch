@@ -23,6 +23,7 @@ import '../views/screens/employee/pages/attendance_screen.dart';
 import '../views/screens/supervisor/defect_monitoring/onboarding_screen.dart';
 import '../views/screens/supervisor/defect_monitoring/single_defect_monitoring.dart';
 import '../views/screens/supervisor/employee_monitoring/employee_monitoring.dart';
+import '../views/screens/supervisor/mark_attendance_screen.dart';
 
 dynamic routes = {
   '/login': (context) => const LoginScreen(),
@@ -49,4 +50,5 @@ dynamic routes = {
   '/defect_monitoring': (context) => const DefectMonitoring(),
   '/single_defect_monitoring': (context) => const SingleDefectMonitoring(),
   '/attendance': (context) => const EmployeeAttendanceScreen(),
+  '/mark_attendance': (context) => const MarkAttendance(),
 };

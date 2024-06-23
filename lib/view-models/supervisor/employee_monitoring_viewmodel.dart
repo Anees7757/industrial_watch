@@ -199,8 +199,10 @@ class EmployeeMonitoringViewModel extends ChangeNotifier {
           duration: Duration(seconds: 3),
         );
         print(response.data);
+        var data = response.data;
         Navigator.pop(context);
-        _selectedVideo = null;
+        showAlertDialog(context, data);
+
         notifyListeners();
       } else {
         String message = response.data['message'] ?? 'Failed to upload video';
@@ -246,5 +248,43 @@ class EmployeeMonitoringViewModel extends ChangeNotifier {
       _selectedVideo = null;
       notifyListeners();
     }
+  }
+
+  showAlertDialog(BuildContext context, Map<String, dynamic> data) {
+    String dataString = "";
+    dataString += "Employee Name: ${data['employee_name']}\n";
+    dataString += "\n";
+    dataString += "Rules Violated:\n";
+
+    List<dynamic> rules = data['rules'] ?? [];
+
+    for (var rule in rules) {
+      if (rule['total_time'] > 0) {
+        rule.forEach((key, value) {
+          dataString += "$key: $value\n";
+        });
+        dataString += "\n";
+      }
+    }
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Result!"),
+          content: Text(dataString),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _selectedVideo = null;
+                notifyListeners();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
