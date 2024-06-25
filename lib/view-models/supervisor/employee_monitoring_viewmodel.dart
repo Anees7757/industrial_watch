@@ -250,24 +250,26 @@ class EmployeeMonitoringViewModel extends ChangeNotifier {
     }
   }
 
-  showAlertDialog(BuildContext context, Map<String, dynamic> data) {
+  void showAlertDialog(BuildContext context, Map<String, dynamic> data) {
     String dataString = "";
-    dataString += "Employee Name: ${data['employee_name']}\n";
-    dataString += "\n";
+    dataString += "${data['employee_name']}\n\n";
     dataString += "Rules Violated:\n";
 
     List<dynamic> rules = data['rules'] ?? [];
+    bool hasViolations = false;
 
     for (var rule in rules) {
       if (rule['total_time'] > 0) {
-        rule.forEach((key, value) {
-          dataString += "$key: $value\n";
-        });
-        dataString += "\n";
+        hasViolations = true;
+        dataString += "- ${rule['total_time']} second ${rule['rule_name']}\n";
       }
     }
 
-    return showDialog(
+    if (!hasViolations) {
+      dataString += "None\n";
+    }
+
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

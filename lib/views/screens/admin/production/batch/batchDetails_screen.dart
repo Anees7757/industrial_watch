@@ -79,7 +79,7 @@ class _BatchDetailScreenState extends State<BatchDetailScreen> {
                                   '%'),
                           const SizedBox(height: 15),
                           customProductCom('Total Yield',
-                              '${dataProvider.batchDetails['batch_yield']}%'),
+                              '${(dataProvider.batchDetails['batch_yield']).round()}%'),
                         ],
                       ),
                     );

@@ -9,7 +9,6 @@ import '../../../utils/request_methods.dart';
 import '../../../views/widgets/custom_snackbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:flutter_foreground_service/foreground_service.dart';
 
 class BatchViewModel extends ChangeNotifier {
   List<dynamic> batches = [];
@@ -108,12 +107,11 @@ class BatchViewModel extends ChangeNotifier {
   Future<String?> getDownloadPath() async {
     Directory? directory;
     try {
-      if (Platform.isIOS) {
-        directory = await getApplicationDocumentsDirectory();
-      } else {
-        directory = Directory('/storage/emulated/0/Download');
-        if (!await directory.exists())
-          directory = await getExternalStorageDirectory();
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
+        // directory = Directory('/storage/emulated/0/Download');
+        //   if (!await directory.exists())
+        //     directory = await getExternalStorageDirectory();
       }
     } catch (err) {
       print("Cannot get download folder path");
@@ -133,8 +131,9 @@ class BatchViewModel extends ChangeNotifier {
   }
 
   Future<void> createDirectory() async {
-    String newDirectoryName = "Industrial Watch";
-    String newDirectoryPath = "${await getDownloadPath()}/$newDirectoryName";
+    // String newDirectoryName = "Industrial Watch";
+    // String newDirectoryPath = "${await getDownloadPath()}/$newDirectoryName";
+    String newDirectoryPath = "${await getDownloadPath()}";
 
     // Check if the directory already exists
     if (await Directory(newDirectoryPath).exists()) {
@@ -164,25 +163,31 @@ class BatchViewModel extends ChangeNotifier {
       BuildContext context, String product_number, int index) async {
     final permission = await Permission.storage.request();
 
+    if (!permission.isGranted) {
+      await Permission.storage.request();
+    }
+
     if (permission.isGranted) {
+      customSnackBar(context, 'Downloading will start soon');
       createDirectory();
+      await startForegroundService;
       NotificationService notificationService = NotificationService();
 
       final downloadUrl =
           '${ApiConstants.instance.baseurl}Production/GetAllDefectedImages?product_number=${Uri.encodeComponent(product_number)}';
-      final fileName = 'defected_items_$product_number.zip';
+      final fileName = '$product_number.zip';
 
       final dio = Dio();
       try {
         await dio.get(downloadUrl).then((value) async {
           if (value.statusCode == 200 &&
               !(value.data.toString().contains('message'))) {
-            customSnackBar(context, 'Downloading will start soon');
-            await startForegroundService;
+            // customSnackBar(context, 'Downloading will start soon');
+            // await startForegroundService;
             String? dir = await getDownloadPath();
             dio.download(
               downloadUrl,
-              "${dir!}/Industrial Watch/$fileName",
+              "${dir!}/$fileName",
               onReceiveProgress: ((count, total) async {
                 if (total != 0) {
                   await Future.delayed(const Duration(seconds: 1), () async {
@@ -210,23 +215,24 @@ class BatchViewModel extends ChangeNotifier {
                     notifyListeners();
                   });
                 } else {
-                  throw ();
+                  throw Exception('Total size is zero');
                 }
               }),
-            ).onError((error, stackTrace) async {
-              throw ();
+            ).onError((error, stackTrace) {
+              print(error);
+              throw Exception('Error downloading file: $error');
             });
           } else {
+            await ForegroundService().stop;
             if (value.statusCode == 200) {
-              await ForegroundService().stop;
               customSnackBar(context, value.data['message']);
             } else {
-              await ForegroundService().stop;
               throw (value.toString());
             }
           }
         });
       } catch (e) {
+        await ForegroundService().stop;
         customSnackBar(context, 'Downloading failed, try again');
         print("error downloading file $e");
         await ForegroundService().stop;

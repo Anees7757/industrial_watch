@@ -27,7 +27,6 @@ class _EmployeeMonitoringState extends State<EmployeeMonitoring> {
               InkWell(
                 onTap: () async {
                   await viewmodel.getVideo(ImageSource.gallery);
-
                   viewmodel.uploadVideo(context);
                 },
                 child:
